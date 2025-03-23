@@ -54,3 +54,28 @@ Esses três termos são modelos de serviço na **computação em nuvem**:
 - **IaaS** → Infraestrutura bruta (você gerencia servidores).  
 - **PaaS** → Plataforma pronta para rodar aplicativos (você só desenvolve).  
 - **SaaS** → Software pronto para uso (você só usa).
+
+  Esses termos se referem a **diferentes tipos de implantação de computação em nuvem**.  
+
+### ☁️ **Nuvem Pública**  
+👉 A infraestrutura é **compartilhada** entre vários usuários e gerenciada por um provedor de nuvem.  
+✅ **Exemplo**: AWS, Google Cloud, Microsoft Azure.  
+🔹 **Vantagens**: Menor custo, escalabilidade, manutenção feita pelo provedor.  
+🔸 **Desvantagem**: Menos controle sobre segurança e personalização.  
+
+### 🏢 **Nuvem Privada**  
+👉 A infraestrutura é usada **exclusivamente** por uma única empresa ou organização. Pode estar dentro da empresa (on-premises) ou ser gerenciada por terceiros.  
+✅ **Exemplo**: Nuvem interna de um banco ou governo.  
+🔹 **Vantagens**: Maior segurança, controle total sobre dados e configurações.  
+🔸 **Desvantagem**: Mais caro, exige equipe especializada para gerenciar.  
+
+### 🔄 **Nuvem Híbrida**  
+👉 Combina **nuvem pública + nuvem privada**, permitindo mais flexibilidade.  
+✅ **Exemplo**: Uma empresa pode armazenar dados sigilosos em nuvem privada e usar nuvem pública para aplicativos escaláveis.  
+🔹 **Vantagens**: Equilíbrio entre segurança e custo, otimização de recursos.  
+🔸 **Desvantagem**: Mais complexa de gerenciar.  
+
+💡 **Resumo fácil:**  
+- **Pública** → Barata, escalável, mas menos controle (ex: AWS, Google Cloud).  
+- **Privada** → Segura, personalizável, mas mais cara.  
+- **Híbrida** → Mistura das duas, combinando segurança e custo.
