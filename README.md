@@ -29,4 +29,4 @@ https://aws.amazon.com/pt/free
 5. Criar alarme
 6. selecionar a metrica(Billing) Total Estimated Charge e colocar o valor
 7. Criar um novo topico e colocar seu email
-8. Configurar serviços de SNS
+8. Configurar serviços de SNS Ativar email
