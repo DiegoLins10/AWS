@@ -20,3 +20,13 @@ O **AWS Free Tier** é um programa da Amazon Web Services que permite aos usuár
 O **AWS Free Tier** é ideal para aprendizado, desenvolvimento e testes, mas é importante monitorar o uso para evitar cobranças ao ultrapassar os limites.
 
 https://aws.amazon.com/pt/free
+
+## Criando alerta de custo AWS
+1. Entrar nas configurações da conta
+2. Preferencias de faturamento
+3. Ativar alertas de faturamento do cloudwatch em preferencias de alerta
+4. Entrar no cloudwatch e acessar todos os alarmes
+5. Criar alarme
+6. selecionar a metrica(Billing) Total Estimated Charge e colocar o valor
+7. Criar um novo topico e colocar seu email
+8. Configurar serviços de SNS
