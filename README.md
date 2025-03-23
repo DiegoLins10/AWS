@@ -79,3 +79,39 @@ Esses três termos são modelos de serviço na **computação em nuvem**:
 - **Pública** → Barata, escalável, mas menos controle (ex: AWS, Google Cloud).  
 - **Privada** → Segura, personalizável, mas mais cara.  
 - **Híbrida** → Mistura das duas, combinando segurança e custo.
+
+  ## AWS SUPPORT PLANS
+
+  A AWS oferece **quatro planos de suporte**, dependendo das suas necessidades e orçamento:  
+
+### 🆓 **1. Basic (Gratuito)**  
+✅ Inclui:  
+- Suporte apenas para **problemas gerais da conta e cobrança**.  
+- Documentação, FAQs e fóruns.  
+❌ **Sem suporte técnico direto**.  
+
+### 💼 **2. Developer ($29/mês ou 3% do uso)**  
+✅ Inclui:  
+- Suporte técnico apenas por **e-mail**, com tempo de resposta em até **24 horas**.  
+- Melhor para **testes e desenvolvimento**.  
+❌ **Sem suporte por telefone ou análise de arquitetura**.  
+
+### 🚀 **3. Business ($100/mês ou 10% do uso)**  
+✅ Inclui:  
+- Suporte técnico **24/7 por chat, e-mail e telefone**.  
+- Tempo de resposta prioritário: **1 hora para problemas críticos**.  
+- **Guias de arquitetura e recomendações de boas práticas**.  
+💡 Ideal para **empresas que usam AWS em produção**.  
+
+### 🏢 **4. Enterprise (Personalizado, $$$)**  
+✅ Inclui:  
+- **Gerente de conta dedicado**.  
+- **Suporte 24/7 com tempo de resposta de 15 minutos para incidentes críticos**.  
+- **Análise e otimização da arquitetura AWS**.  
+💡 Indicado para **grandes empresas com uso crítico da AWS**.  
+
+**Resumo rápido:**  
+- **Basic** → Grátis, sem suporte técnico.  
+- **Developer** → E-mail, até 24h de resposta.  
+- **Business** → 24/7, suporte rápido, ideal para produção.  
+- **Enterprise** → Suporte premium para grandes empresas.
