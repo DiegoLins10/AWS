@@ -30,3 +30,27 @@ https://aws.amazon.com/pt/free
 6. selecionar a metrica(Billing) Total Estimated Charge e colocar o valor
 7. Criar um novo topico e colocar seu email
 8. Configurar serviços de SNS Ativar email
+
+## Tipos de cloud
+
+Esses três termos são modelos de serviço na **computação em nuvem**:  
+
+### ☁️ **IaaS (Infrastructure as a Service)** – **Infraestrutura como Serviço**  
+👉 **Fornece servidores, rede e armazenamento na nuvem**. Você gerencia o sistema operacional, aplicativos e configurações.  
+✅ Exemplo: **AWS EC2, Google Compute Engine, Azure Virtual Machines**  
+🔹 **Pense como:** Alugar um computador virtual na nuvem e configurar tudo do zero.  
+
+### ☁️ **PaaS (Platform as a Service)** – **Plataforma como Serviço**  
+👉 **Fornece um ambiente pronto para desenvolver, testar e rodar aplicativos**. Você só se preocupa com o código, sem gerenciar servidores.  
+✅ Exemplo: **AWS Elastic Beanstalk, Google App Engine, Heroku**  
+🔹 **Pense como:** Um serviço onde você só coloca seu código e ele roda sem precisar configurar servidores.  
+
+### ☁️ **SaaS (Software as a Service)** – **Software como Serviço**  
+👉 **Fornece um software pronto para uso na nuvem**, sem precisar instalar nada. Você só acessa e usa.  
+✅ Exemplo: **Gmail, Google Drive, Dropbox, Microsoft 365**  
+🔹 **Pense como:** Um site ou app que você usa sem precisar instalar ou configurar nada.  
+
+💡 **Resumo fácil:**  
+- **IaaS** → Infraestrutura bruta (você gerencia servidores).  
+- **PaaS** → Plataforma pronta para rodar aplicativos (você só desenvolve).  
+- **SaaS** → Software pronto para uso (você só usa).
