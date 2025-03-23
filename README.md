@@ -101,9 +101,20 @@ Esses três termos são modelos de serviço na **computação em nuvem**:
 - Suporte técnico **24/7 por chat, e-mail e telefone**.  
 - Tempo de resposta prioritário: **1 hora para problemas críticos**.  
 - **Guias de arquitetura e recomendações de boas práticas**.  
-💡 Ideal para **empresas que usam AWS em produção**.  
+💡 Ideal para **empresas que usam AWS em produção**.
 
-### 🏢 **4. Enterprise (Personalizado, $$$)**  
+
+### 🚀 **Enterprise On-Ramp ($5.500/mês ou 10% do uso)**  
+✅ Inclui:  
+- **Suporte 24/7 por e-mail, chat e telefone**.  
+- **Tempo de resposta de 30 minutos para problemas críticos**.  
+- **Consultas sobre arquitetura da AWS**.  
+- **Gerente técnico designado para ajudar na conta**.  
+💡 **Ideal para empresas que precisam de suporte avançado, mas não querem pagar o preço do Enterprise completo.**  
+
+Ou seja, ele é mais robusto que o **Business**, mas não tão caro e exclusivo quanto o **Enterprise**.
+
+### 🏢 **4. Enterprise (Personalizado, $$$15.000)**  
 ✅ Inclui:  
 - **Gerente de conta dedicado**.  
 - **Suporte 24/7 com tempo de resposta de 15 minutos para incidentes críticos**.  
