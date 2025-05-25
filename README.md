@@ -1,5 +1,9 @@
 # AWS cloud practioner CLF-C02
 
+## LOCALIZACAO DEFAULT AWS 
+- Norte da virginia 
+Aqui temos todos as funcionalidades disponivel no aws sem restrição
+
 ## AWS Free tier
 
 O **AWS Free Tier** é um programa da Amazon Web Services que permite aos usuários explorar e experimentar os serviços da AWS gratuitamente, dentro de certos limites. Ele se divide em três categorias principais:
