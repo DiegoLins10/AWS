@@ -1,4 +1,4 @@
-# AWS
+# AWS cloud practioner CLF-C02
 
 ## AWS Free tier
 
