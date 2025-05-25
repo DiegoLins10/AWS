@@ -77,7 +77,7 @@ Esses três termos são modelos de serviço na **computação em nuvem**:
 
 💡 **Resumo fácil:**  
 - **Pública** → Barata, escalável, mas menos controle (ex: AWS, Google Cloud).  
-- **Privada** → Segura, personalizável, mas mais cara.  
+- **Privada** → Segura, personalizável, mas mais cara. Um servidor que não é compartilhado com ninguem, pode ser dentro da AWS, mais utilizado por bancos, governo, financeiro  
 - **Híbrida** → Mistura das duas, combinando segurança e custo.
 
   ## AWS SUPPORT PLANS
