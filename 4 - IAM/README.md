@@ -203,6 +203,14 @@ print(buckets)
 
 ---
 
+## Reports
+## Credential Report (Relatorio de credenciais)
+
+Aqui é possivel baixar as informações sobre os usuarios, se tem MTF, ultima troca de senha, etc. Está localizado dentro do IAM.
+
+## Acess advisor (Consultor de acesso)
+
+Ele mostra de uma forma simples os serviços permitidos para o usuario. Está localizado dentro do usuario.
 
 
 ## 📚 Recomendações para a Prova CLF-C02
