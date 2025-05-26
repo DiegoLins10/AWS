@@ -92,6 +92,12 @@ Tamanho mínimo da senha
 
 ## Cloudshell e CLI
 
+Existem 3 formas para acessar e interagir com o aws services
+
+1 - Console Web
+2 - AWS CLI
+3 - CloudShell
+
 ---
 
 ## ☁️ O que é o **AWS CloudShell**?
