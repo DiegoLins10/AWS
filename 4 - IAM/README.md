@@ -89,6 +89,45 @@ Tamanho mínimo da senha
 - Nunca expirar senha
 - Não deve ser idêntico ao nome ou endereço de e-mail da sua conta da AWS
 
+
+## Cloudshell e CLI
+
+---
+
+## ☁️ O que é o **AWS CloudShell**?
+
+O **AWS CloudShell** é um terminal (shell) baseado na web que você acessa direto pelo navegador no console da AWS. Ele já vem configurado com as ferramentas da AWS, como o **AWS CLI**, além de outras como `Python`, `bash`, `git`, etc.
+
+👉 Com ele, você pode rodar comandos sem precisar instalar nada na sua máquina.
+
+---
+
+## 💻 O que é a **AWS CLI**?
+
+A **AWS CLI (Command Line Interface)** é uma ferramenta para você interagir com os serviços da AWS diretamente pelo terminal ou prompt de comando. Com ela, você pode:
+
+* Criar recursos (como usuários, buckets S3, funções Lambda etc.)
+* Gerenciar permissões
+* Automatizar tarefas
+
+Você pode usar a AWS CLI tanto no **CloudShell** quanto na sua máquina local (após instalar e configurar).
+
+---
+
+## 🛠️ Script para criar um usuário na AWS via CLI
+
+Aqui vai um script para criar um usuário simples usando o **AWS CLI** ou **CloudShell**:
+
+```bash
+
+# 1. Criar o usuário
+aws iam create-user --user-name "usuario-teste"
+
+---
+
+
+
+
 ## 📚 Recomendações para a Prova CLF-C02
 
 - Entenda a diferença entre **IAM** e **IAM Identity Center**.
