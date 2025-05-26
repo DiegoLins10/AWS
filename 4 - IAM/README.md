@@ -126,11 +126,82 @@ Aqui vai um script para criar um usuário simples usando o **AWS CLI** ou **Clou
 
 ```bash
 
+# Nome do usuário
+USERNAME="usuario-teste"
+
 # 1. Criar o usuário
-aws iam create-user --user-name "usuario-teste"
+aws iam create-user --user-name $USERNAME
+
+# 2. Criar um grupo (se quiser adicionar o usuário a um grupo)
+aws iam create-group --group-name grupo-teste
+
+# 3. Adicionar o usuário ao grupo
+aws iam add-user-to-group --user-name $USERNAME --group-name grupo-teste
+
+# 4. (Opcional) Anexar uma política ao grupo, como acesso total ao S3
+aws iam attach-group-policy --group-name grupo-teste --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess
+
+# 5. Criar credenciais de acesso (Access Key e Secret) para o usuário
+aws iam create-access-key --user-name $USERNAME
 
 ---
 
+## Acess Key e SDK
+
+---
+
+## 🔑 **Access Key**
+
+* Conjunto de **credenciais** (2 partes):
+
+  * `AccessKeyId` (como um usuário)
+  * `SecretAccessKey` (como a senha)
+* Usadas para **acessar a AWS programaticamente** (ex: via CLI, SDKs, scripts).
+* **Não são usadas para acessar o console web**.
+* Devem ser guardadas com segurança — a **Secret Access Key só aparece uma vez**!
+
+---
+
+## 🧰 **SDK (Software Development Kit)**
+
+* Conjunto de **bibliotecas** para você usar a AWS direto no seu código.
+* Existem SDKs para várias linguagens: **Python (Boto3)**, **Java**, **JavaScript**, **.NET**, **Go**, etc.
+* Com um SDK, você pode:
+
+  * Criar buckets S3
+  * Ler dados do DynamoDB
+  * Invocar funções Lambda
+  * Entre muitas outras ações, tudo via código
+
+### Exemplo: SDK em Python com Boto3
+
+```python
+import boto3
+
+# Criando cliente usando Access Key e Secret
+client = boto3.client(
+    's3',
+    aws_access_key_id='SUA_ACCESS_KEY',
+    aws_secret_access_key='SUA_SECRET_KEY',
+    region_name='sa-east-1'
+)
+
+# Listando buckets
+buckets = client.list_buckets()
+print(buckets)
+```
+
+---
+
+### 📌 Conexão entre eles
+
+| Acess Key                              | SDK                                     |
+| -------------------------------------- | --------------------------------------- |
+| São as **credenciais**                 | É o **código/libraria** para usar a AWS |
+| Usada com SDKs e CLI                   | Usa a Access Key por trás               |
+| Não é uma ferramenta, é dado de acesso | É uma ferramenta de programação         |
+
+---
 
 
 
