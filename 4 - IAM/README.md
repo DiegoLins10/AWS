@@ -64,6 +64,16 @@ O **IAM** permite gerenciar **usuários**, **grupos**, **funções (roles)** e *
 
 ---
 
+### 🧠 Quando usar: **Grupos**, **Roles**, e **Políticas** na AWS
+
+| Recurso       | Quando Usar                                                                                                                                                                                                         |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Grupos**    | Quando você tem **vários usuários** que precisam das **mesmas permissões**. Ex: grupo "Desenvolvedores" com acesso ao S3 e EC2.                                                                                     |
+| **Roles**     | Quando você quer conceder **acesso temporário** ou delegar permissões a **outros serviços AWS**, **contas externas** ou **usuários IAM/Identity Center**. Ex: uma função que permite uma Lambda acessar o DynamoDB. |
+| **Políticas** | São os documentos JSON que definem **quais ações** são permitidas ou negadas. Elas são **anexadas a usuários, grupos ou roles**. Ex: política que permite `s3:GetObject` em um bucket específico.                   |
+
+---
+
 ## 📚 Recomendações para a Prova CLF-C02
 
 - Entenda a diferença entre **IAM** e **IAM Identity Center**.
