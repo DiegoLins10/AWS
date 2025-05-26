@@ -74,6 +74,21 @@ O **IAM** permite gerenciar **usuários**, **grupos**, **funções (roles)** e *
 
 ---
 
+## Politica padrao de senha aws
+Tamanho mínimo da senha
+- 8 caracteres
+- Intensidade da senha
+- Inclua no mínimo três dos seguintes tipos de caracteres:
+
+- Maiúsculas
+- Minúsculas
+- Números
+- Caracteres não alfanuméricos
+
+### Outros requisitos
+- Nunca expirar senha
+- Não deve ser idêntico ao nome ou endereço de e-mail da sua conta da AWS
+
 ## 📚 Recomendações para a Prova CLF-C02
 
 - Entenda a diferença entre **IAM** e **IAM Identity Center**.
