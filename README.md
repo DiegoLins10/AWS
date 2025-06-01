@@ -1,5 +1,22 @@
 # AWS cloud practioner CLF-C02
 
+TOPICOS:
+
+✅ 4. Foque nos tópicos que realmente caem
+Evite estudar tudo em profundidade. Foque nos tópicos da prova, como:
+
+Modelo de responsabilidade compartilhada.
+
+Conceitos de regiões, zonas de disponibilidade.
+
+Pricing models (On-demand, Reserved, Spot).
+
+Ferramentas de suporte (Support plans, Trusted Advisor).
+
+Segurança (IAM, MFA, CloudTrail, etc.).
+
+Well-Architected Framework (pelo menos saber os pilares).
+
 ## LOCALIZACAO DEFAULT AWS 
 - Norte da virginia 
 Aqui temos todos as funcionalidades disponivel no aws sem restrição
