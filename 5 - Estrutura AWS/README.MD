@@ -29,4 +29,4 @@ Serviços de Infraestrutura, Contêiner e Abstração: Dependendo do tipo de ser
 
 A compreensão e a aplicação adequada do Modelo de Responsabilidade Compartilhada da AWS são fundamentais para garantir a segurança e a conformidade ao usar a AWS. Isso requer que os clientes estejam cientes de suas responsabilidades de segurança e implementem práticas de segurança robustas ao usar serviços da AWS.
 
-![]()
+![](https://github.com/DiegoLins10/AWS/blob/main/5%20-%20Estrutura%20AWS/customer.png)
