@@ -1,5 +1,22 @@
 # AWS cloud practioner CLF-C02
 
+TOPICOS:
+
+✅ 4. Foque nos tópicos que realmente caem
+Evite estudar tudo em profundidade. Foque nos tópicos da prova, como:
+
+Modelo de responsabilidade compartilhada.
+
+Conceitos de regiões, zonas de disponibilidade.
+
+Pricing models (On-demand, Reserved, Spot).
+
+Ferramentas de suporte (Support plans, Trusted Advisor).
+
+Segurança (IAM, MFA, CloudTrail, etc.).
+
+Well-Architected Framework (pelo menos saber os pilares).
+
 ## LOCALIZACAO DEFAULT AWS 
 - Norte da virginia 
 Aqui temos todos as funcionalidades disponivel no aws sem restrição
@@ -113,17 +130,79 @@ Esses três termos são modelos de serviço na **computação em nuvem**:
 - **Suporte 24/7 por e-mail, chat e telefone**.  
 - **Tempo de resposta de 30 minutos para problemas críticos**.  
 - **Consultas sobre arquitetura da AWS**.  
-- **Gerente técnico designado para ajudar na conta**.  
+- **Gerente técnico designado para ajudar na conta (TAM)**.  
 💡 **Ideal para empresas que precisam de suporte avançado, mas não querem pagar o preço do Enterprise completo.**  
 
 Ou seja, ele é mais robusto que o **Business**, mas não tão caro e exclusivo quanto o **Enterprise**.
 
 ### 🏢 **4. Enterprise (Personalizado, $$$15.000)**  
 ✅ Inclui:  
-- **Gerente de conta dedicado**.  
+- **Gerente de conta tecnico dedicado (TAM)**.  
 - **Suporte 24/7 com tempo de resposta de 15 minutos para incidentes críticos**.  
 - **Análise e otimização da arquitetura AWS**.  
-💡 Indicado para **grandes empresas com uso crítico da AWS**.  
+💡 Indicado para **grandes empresas com uso crítico da AWS**.
+
+Kkkkk clássico! Os **pilares do Well-Architected Framework** são tipo a parte mais teórica e menos usada no dia a dia — muita gente pula mesmo. Mas é uma das coisas que **caem direto na prova**, então vale decorar o básico.
+
+---
+
+### ✅ São 6 pilares (fácil de lembrar com a sigla “SCORE-O”):
+
+| Pilar                         | O que significa?                                                                 |
+| ----------------------------- | -------------------------------------------------------------------------------- |
+| **S**ecurity                  | Segurança — controle de acesso, criptografia, IAM, logs, etc.                    |
+| **C**ost Optimization         | Otimização de custos — pagar só pelo que usa, reservar instâncias, monitorar.    |
+| **O**perational Excellence    | Excelência operacional — monitorar, responder a eventos, melhorar continuamente. |
+| **R**eliability               | Confiabilidade — tolerância a falhas, recuperação rápida, backups.               |
+| **E**fficiency (Performance)  | Eficiência de performance — usar o tipo certo de recurso (EC2, Lambda, etc).     |
+| **O**rganizational Governance | (Novo, desde a versão 2 da prova: *Sustainability*) — uso sustentável da nuvem.  |
+
+---
+
+### 💡 Dica pra decorar:
+
+**"SCORE-O"** → *imagina um placar de arquitetura bem-feita na AWS kkk*
+
+---
+
+### 🎯 O que você precisa saber de cada um pra passar:
+
+#### 1. **Security**
+
+* Princípio de menor privilégio (least privilege).
+* MFA, IAM roles, logs com CloudTrail.
+* Proteção de dados (S3 encryption, KMS).
+
+#### 2. **Cost Optimization**
+
+* Evitar recursos ociosos.
+* Escolher instâncias reservadas quando faz sentido.
+* Usar o Cost Explorer.
+
+#### 3. **Operational Excellence**
+
+* Automatizar implantações (CodePipeline, CloudFormation).
+* Monitorar (CloudWatch).
+* Aprender com falhas.
+
+#### 4. **Reliability**
+
+* Design tolerante a falhas.
+* Multi-AZ / Multi-region.
+* Backups, failover.
+
+#### 5. **Performance Efficiency**
+
+* Escolher os serviços certos (EC2 x Lambda x Fargate).
+* Escalar horizontalmente.
+* Monitorar uso de CPU/memória.
+
+#### 6. **Sustainability (desde a versão nova da prova)**
+
+* Usar recursos com eficiência.
+* Desligar recursos não usados.
+* Escolher regiões mais sustentáveis.
+
 
 **Resumo rápido:**  
 - **Basic** → Grátis, sem suporte técnico.  
