@@ -16,12 +16,12 @@ Ele foca mais na **transformação organizacional** do que na arquitetura técni
 
 | Perspectiva    | Foco principal                                                    | Quem se envolve?                 |
 | -------------- | ----------------------------------------------------------------- | -------------------------------- |
-| **Business**   | Objetivos de negócio, retorno sobre investimento                  | Executivos, Finanças             |
-| **People**     | Gestão de mudança organizacional, treinamento, papéis e cultura   | RH, Gerentes de Mudança          |
-| **Governance** | Estratégias de governança, gerenciamento de portfólio, compliance | PMO, Riscos, Auditoria           |
-| **Platform**   | Arquitetura da nuvem, infraestrutura, automação                   | Engenheiros de Infra e DevOps    |
-| **Security**   | Gerenciamento de identidade, segurança de dados e conformidade    | Equipe de Segurança e Compliance |
-| **Operations** | Operações de TI, monitoramento, suporte e gestão de incidentes    | Equipe de Operações de TI        |
+| **Business (negocio)**   | Objetivos de negócio, retorno sobre investimento                  | Executivos, Finanças             |
+| **People (Pessoas)**     | Gestão de mudança organizacional, treinamento, papéis e cultura   | RH, Gerentes de Mudança          |
+| **Governance (Governança)** | Estratégias de governança, gerenciamento de portfólio, compliance | PMO, Riscos, Auditoria           |
+| **Platform (Plataforma)**   | Arquitetura da nuvem, infraestrutura, automação                   | Engenheiros de Infra e DevOps    |
+| **Security (Segurança)**   | Gerenciamento de identidade, segurança de dados e conformidade    | Equipe de Segurança e Compliance |
+| **Operations (Operações)** | Operações de TI, monitoramento, suporte e gestão de incidentes    | Equipe de Operações de TI        |
 
 ---
 

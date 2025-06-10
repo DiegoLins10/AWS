@@ -30,17 +30,57 @@ O **Amazon EC2 (Elastic Compute Cloud)** é um serviço da AWS que fornece capac
 
 ---
 
-## 💰 Modelos de Aquisição
+## 🧩 Tipos de Instâncias EC2
 
-A AWS oferece diferentes **modelos de aquisição de instâncias EC2**, permitindo escolher o melhor custo-benefício conforme o uso:
+O Amazon EC2 oferece uma variedade de tipos de instâncias otimizadas para atender diferentes casos de uso. Esses tipos compreendem combinações variadas de capacidade de **CPU, memória, armazenamento e rede**, proporcionando a flexibilidade necessária para selecionar o recurso ideal para cada aplicação.
+
+### Principais categorias de instâncias:
+
+| Tipo | Descrição | Casos de Uso |
+|------|-----------|--------------|
+| **Instâncias de Uso Geral (A, T, M)** | Equilíbrio entre computação, memória e rede. | Aplicações web, servidores de pequenas e médias empresas, bancos de dados pequenos. |
+| **Instâncias Otimizadas para Computação (C)** | Alta performance de CPU. | Computação científica, modelagem, análise financeira, renderização. |
+| **Instâncias Otimizadas para Memória (R, X, Z)** | Alta capacidade de memória RAM. | Bancos de dados em memória, caches, análise de dados, big data. |
+| **Instâncias Otimizadas para Armazenamento (D, I, H)** | Armazenamento local com alto desempenho. | Bancos de dados escaláveis, data warehouses, ETL em larga escala. |
+| **Instâncias Otimizadas para GPU (P, G, F, Inf)** | Potência gráfica para tarefas intensivas. | Machine learning, renderização 3D, mineração, jogos e streaming gráfico. |
+| **Instâncias Arm (A1, M6g, C6g, R6g)** | Baseadas em arquitetura Arm (Graviton). | Workloads otimizados para custo-benefício e compatibilidade com Arm. |
+
+> 🔄 Os tipos de instâncias são frequentemente atualizados e ampliados pela AWS. Consulte a [documentação oficial](https://aws.amazon.com/ec2/instance-types/) para ver os mais recentes.
+
+---
+
+## 💰 Modelos de Aquisição
 
 | Modelo | Descrição | Indicado para |
 |--------|-----------|---------------|
 | **Sob Demanda (On-Demand)** | Pague por hora ou segundo de uso, sem compromisso a longo prazo. | Ambientes de teste, desenvolvimento ou cargas imprevisíveis. |
 | **Instâncias Reservadas (Reserved Instances)** | Contrato de 1 ou 3 anos com desconto significativo (até 75%) comparado ao On-Demand. | Aplicações estáveis e com uso constante. |
 | **Instâncias Spot** | Oferece capacidade ociosa da AWS com até 90% de desconto, mas pode ser interrompida a qualquer momento. | Processos tolerantes a falhas, como análise de dados e jobs em batch. |
-| **Instâncias Savings Plans** | Compromisso de uso (em dólar/hora) por 1 ou 3 anos, aplicável a diferentes tipos de instância. | Flexibilidade com economia similar às reservadas. |
+| **Savings Plans** | Compromisso de uso (em dólar/hora) por 1 ou 3 anos, aplicável a diferentes tipos de instância. | Flexibilidade com economia similar às reservadas. |
 | **Instâncias Dedicadas (Dedicated Hosts)** | Servidor físico exclusivo para o cliente. Ideal para compliance e licenciamento. | Necessidades regulatórias específicas ou de isolamento físico. |
+
+---
+
+## 📊 Estimando Custos com AWS Pricing Calculator
+
+A **AWS Pricing Calculator** é uma ferramenta gratuita que permite estimar o custo mensal de uso de serviços AWS, incluindo EC2.
+
+### ✅ Vantagens:
+- Interface amigável e personalizável.
+- Comparação de diferentes tipos de instância e modelos de aquisição.
+- Geração de relatórios exportáveis em PDF.
+- Planejamento de ambientes completos com múltiplos serviços (EC2, RDS, S3, etc).
+
+### 🔗 Acesse:
+👉 [https://calculator.aws.amazon.com/](https://calculator.aws.amazon.com/)
+
+### 📌 Como Usar:
+1. Acesse o link acima.
+2. Clique em **Create estimate**.
+3. Adicione um serviço (ex: EC2).
+4. Configure os parâmetros (região, tipo de instância, modelo de compra, tempo de uso, armazenamento).
+5. Visualize o custo estimado por mês.
+6. Exporte ou salve o planejamento.
 
 ---
 
@@ -85,7 +125,7 @@ A AWS oferece diferentes **modelos de aquisição de instâncias EC2**, permitin
 - [AWS Free Tier](https://aws.amazon.com/free/)
 - [Preços do Amazon EC2](https://aws.amazon.com/ec2/pricing/)
 - [Amazon EC2 Instance Types](https://aws.amazon.com/ec2/instance-types/)
-- [Savings Plans vs Reserved Instances](https://aws.amazon.com/savingsplans/)
+- [AWS Pricing Calculator](https://calculator.aws.amazon.com/)
 
 ---
 

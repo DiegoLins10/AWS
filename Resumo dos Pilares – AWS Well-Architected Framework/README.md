@@ -71,10 +71,10 @@ Aqui está um resumo visual dos **6 pilares do AWS Well-Architected Framework**,
 
 | Pilar                         | Foco Principal                                             | Palavras-chave                      |
 | ----------------------------- | ---------------------------------------------------------- | ----------------------------------- |
-| 🔐 **Security**               | Proteger dados e sistemas                                  | IAM, MFA, Criptografia, Logs        |
+| 🔐 **Security (segurança)**               | Proteger dados e sistemas                                  | IAM, MFA, Criptografia, Logs        |
 | 💰 **Cost Optimization**      | Evitar gastos desnecessários                               | Reserved Instances, Cost Explorer   |
-| ⚙️ **Operational Excellence** | Monitorar, automatizar e melhorar continuamente            | CloudWatch, CodePipeline, rollback  |
-| 🔁 **Reliability**            | Garantir que o sistema se recupere e continue funcionando  | Multi-AZ, Failover, Backup          |
+| ⚙️ **Operational Excellence (excelencia operacional)** | Monitorar, automatizar e melhorar continuamente            | CloudWatch, CodePipeline, rollback  |
+| 🔁 **Reliability (confiabilidade)**| Garantir que o sistema se recupere e continue funcionando, com testes e recuperacao em falhas  | Multi-AZ, Failover, Backup          |
 | 🚀 **Performance Efficiency** | Usar os recursos ideais para máxima performance            | Auto Scaling, Lambda, S3, Aurora    |
 | 🌱 **Sustainability**         | Reduzir impacto ambiental e aumentar eficiência energética | Apagar recursos ociosos, eficiência |
 
