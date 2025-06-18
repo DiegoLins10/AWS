@@ -78,3 +78,5 @@ AWS Batch: O AWS Batch possibilita a execução de modo fácil e eficiente de ce
 AWS Wavelength: O AWS Wavelength é uma região geográfica especializada da AWS que fornece infraestrutura de computação na borda das redes de telecomunicações, próxima aos clientes.
 
  Amazon Route 53: Criar um novo domínio no Amazon Route 53.
+
+ - AWS Config: é um serviço que permite avaliar, auditar e avaliar as configurações dos seus recursos da AWS. O AWS Config monitora e registra continuamente as configurações dos seus recursos da AWS e permite automatizar a avaliação das configurações registradas em relação às configurações desejadas. O AWS Config também pode rastrear mudanças nas suas instâncias do EC2 ao longo do tempo e fornecer um relatório histórico das modificações. 
