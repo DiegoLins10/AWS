@@ -71,6 +71,8 @@ AWS Budgets: O AWS Budgets é o serviço utilizado para definir orçamentos dese
 
 AWS CostExplorer: Com o AWS Cost Explorer é possível consultar detalhes dos custos da sua infraestrutura a todo momento.
 
+- O AWS Trusted Advisor: é uma ferramenta online que fornece orientações em tempo real para ajudá-lo a provisionar seus recursos seguindo as melhores práticas da AWS
+
 AWS Batch: O AWS Batch possibilita a execução de modo fácil e eficiente de centenas de milhares de tarefas de computação em lote na AWS.
 
 AWS Wavelength: O AWS Wavelength é uma região geográfica especializada da AWS que fornece infraestrutura de computação na borda das redes de telecomunicações, próxima aos clientes.
