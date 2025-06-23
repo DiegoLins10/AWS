@@ -71,8 +71,12 @@ AWS Budgets: O AWS Budgets é o serviço utilizado para definir orçamentos dese
 
 AWS CostExplorer: Com o AWS Cost Explorer é possível consultar detalhes dos custos da sua infraestrutura a todo momento.
 
+- O AWS Trusted Advisor: é uma ferramenta online que fornece orientações em tempo real para ajudá-lo a provisionar seus recursos seguindo as melhores práticas da AWS
+
 AWS Batch: O AWS Batch possibilita a execução de modo fácil e eficiente de centenas de milhares de tarefas de computação em lote na AWS.
 
 AWS Wavelength: O AWS Wavelength é uma região geográfica especializada da AWS que fornece infraestrutura de computação na borda das redes de telecomunicações, próxima aos clientes.
 
  Amazon Route 53: Criar um novo domínio no Amazon Route 53.
+
+ - AWS Config: é um serviço que permite avaliar, auditar e avaliar as configurações dos seus recursos da AWS. O AWS Config monitora e registra continuamente as configurações dos seus recursos da AWS e permite automatizar a avaliação das configurações registradas em relação às configurações desejadas. O AWS Config também pode rastrear mudanças nas suas instâncias do EC2 ao longo do tempo e fornecer um relatório histórico das modificações. 
