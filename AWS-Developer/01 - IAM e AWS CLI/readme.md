@@ -209,4 +209,190 @@ Essas boas práticas aparecem **disfarçadas como requisitos da questão**.
 IAM garante **segurança**, **controle de acesso** e **auditoria** na AWS.
 CLI e SDK permitem **automação e integração segura** com aplicações.
 
+---
+
+## 22. AWS CLI — Hands On
+
+### O que é
+
+A **AWS CLI** permite gerenciar recursos da AWS via terminal usando comandos (`aws ec2`, `aws iam`, etc.).
+
+### Pontos-chave
+
+* Usa **Access Key ID** + **Secret Access Key**
+* Configuração via:
+
+  ```bash
+  aws configure
+  ```
+* Pode usar **profiles** (`--profile dev`)
+
+### 💡 Dicas de prova
+
+* **CLI ≠ Console** → CLI é programática
+* Se a pergunta falar em **automação**, **scripts**, **CI/CD**, pense em **AWS CLI**
+* CLI **não é recomendada em produção em EC2** → prefira **IAM Role**
+
+---
+
+## 23. AWS CloudShell
+
+### O que é
+
+Terminal **direto no console da AWS**, já autenticado, sem precisar configurar credenciais.
+
+### Pontos-chave
+
+* Não precisa de Access Keys
+* Ideal para comandos rápidos
+* Ambiente temporário
+
+### 💡 Dicas de prova
+
+* Pergunta falou **“sem instalar nada”** → **CloudShell**
+* CloudShell **não substitui** EC2 ou Cloud9
+* Ótimo para troubleshooting rápido
+
+---
+
+## 24. IAM Roles for AWS Services
+
+### O que é
+
+**IAM Role** permite que **serviços da AWS assumam permissões** temporárias.
+
+### Exemplos clássicos
+
+* EC2 acessando S3
+* Lambda acessando DynamoDB
+* ECS puxando imagem do ECR
+
+### Pontos-chave
+
+* **Não usa Access Keys**
+* Usa **credenciais temporárias**
+* Associada a **serviços**, não usuários
+
+### 💡 Dicas de prova (MUITO IMPORTANTE)
+
+* ❌ Nunca use Access Key dentro do código
+* ✅ Sempre usar **IAM Role**
+* Se a pergunta falar em **EC2 acessando outro serviço**, a resposta quase sempre é **IAM Role**
+
+---
+
+## 25. IAM Roles — Hands On
+
+### O que acontece na prática
+
+1. Cria a Role
+2. Define **Trust Policy** (quem pode assumir)
+3. Anexa **Permission Policy**
+4. Associa ao serviço (EC2, Lambda, etc.)
+
+### 💡 Dicas de prova
+
+* **Trust Policy ≠ Permission Policy**
+* Trust Policy define **QUEM assume**
+* Permission Policy define **O QUE pode fazer**
+
+---
+
+## 26. IAM Security Tools
+
+### Principais ferramentas
+
+* **IAM Credentials Report**
+* **IAM Access Advisor**
+* **Password Policy**
+
+### O que fazem
+
+* Detectam chaves antigas
+* Mostram permissões não usadas
+* Ajudam em auditoria
+
+### 💡 Dicas de prova
+
+* Auditoria de usuários → **Credentials Report**
+* Ver permissões usadas → **Access Advisor**
+
+---
+
+## 27. IAM Security Tools — Hands On
+
+### Na prática
+
+* Geração de relatórios
+* Análise de risco
+* Limpeza de permissões excessivas
+
+### 💡 Dica de prova
+
+* Pergunta sobre **revisão de permissões** → ferramentas de segurança IAM
+
+---
+
+## 28. IAM Best Practices
+
+### Boas práticas (DECORAR)
+
+* ❌ Não usar root
+* ✅ MFA no root
+* ❌ Não usar Access Key em EC2
+* ✅ Usar Roles
+* ✅ Princípio do menor privilégio
+* ✅ Rotação de credenciais
+
+### 💡 Dicas de prova
+
+* **Root User** → só setup inicial
+* Qualquer cenário seguro → **Least Privilege**
+* MFA sempre aparece como resposta correta
+
+---
+
+## 29. Shared Responsibility Model for IAM
+
+### Quem é responsável por quê
+
+| AWS            | Cliente            |
+| -------------- | ------------------ |
+| Infraestrutura | Usuários IAM       |
+| Datacenters    | Policies           |
+| Hardware       | MFA                |
+| Software base  | Controle de acesso |
+
+### 💡 Dicas de prova
+
+* IAM é **responsabilidade do cliente**
+* AWS **não gerencia permissões do seu usuário**
+
+---
+
+## 30. IAM Summary (Resumo Final)
+
+### Conceitos que mais caem
+
+* IAM User vs Role
+* Policies (JSON)
+* Least Privilege
+* Roles para serviços
+* Security Tools
+* Shared Responsibility
+
+---
+
+# 🧠 RESUMÃO DE PROVA (COLA FINAL)
+
+* EC2 acessando S3 → **IAM Role**
+* Código com Access Key → ❌ errado
+* Auditoria de usuários → **Credentials Report**
+* Permissões excessivas → **Least Privilege**
+* CLI em produção → **Role**
+* Sem instalar nada → **CloudShell**
+* Segurança → **MFA**
+
+---
+
 
