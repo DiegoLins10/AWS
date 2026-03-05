@@ -1094,3 +1094,281 @@ Application
    RDS / Aurora
 ```
 
+# ⚡ Amazon ElastiCache – AWS Developer Associate (DVA)
+
+## 1️⃣ O que é o Amazon ElastiCache
+
+O **Amazon ElastiCache** é um serviço gerenciado da AWS para **caches em memória**.
+
+Ele funciona de forma semelhante ao RDS, mas para **bancos de dados em memória**.
+
+Ou seja:
+
+```text
+RDS → bancos relacionais gerenciados
+ElastiCache → Redis / Memcached gerenciados
+```
+
+Caches em memória oferecem:
+
+* **latência extremamente baixa**
+* **altíssima performance**
+* acesso muito mais rápido que bancos tradicionais
+
+---
+
+# 2️⃣ Para que usar ElastiCache
+
+O principal objetivo é **reduzir carga no banco de dados**.
+
+Arquitetura tradicional:
+
+```text
+Application
+      │
+      │
+Database
+```
+
+Arquitetura com cache:
+
+```text
+Application
+   │
+   │
+ElastiCache
+   │
+   │
+Database
+```
+
+Fluxo típico:
+
+1. Aplicação tenta ler do cache
+2. Se existir → retorna imediatamente
+3. Se não existir → consulta o banco
+4. Salva resultado no cache
+
+Isso reduz:
+
+* consultas ao banco
+* latência
+* custo de infraestrutura
+
+---
+
+# 3️⃣ Engines suportadas
+
+O ElastiCache suporta dois motores:
+
+| Engine    | Características                                |
+| --------- | ---------------------------------------------- |
+| Redis     | alta disponibilidade, replicação, persistência |
+| Memcached | cache simples e altamente distribuído          |
+
+---
+
+# 4️⃣ Redis vs Memcached
+
+## Redis
+
+Características principais:
+
+* **Multi-AZ com Auto Failover**
+* **Read Replicas**
+* Persistência de dados (AOF / snapshots)
+* Backup e restore
+* Suporte a estruturas de dados avançadas
+
+Exemplos de estruturas:
+
+* sets
+* sorted sets
+* hashes
+* lists
+
+Arquitetura:
+
+```text
+Primary Redis
+     │
+     │ replication
+     │
+Read Replica
+```
+
+Redis é mais **feature-rich** e mais usado na AWS.
+
+---
+
+## Memcached
+
+Características principais:
+
+* arquitetura **multi-node**
+* usa **sharding** para distribuir dados
+* **não possui replicação**
+* **não possui persistência**
+
+Arquitetura:
+
+```text
+Application
+   │
+   ├─ Node
+   ├─ Node
+   └─ Node
+```
+
+Memcached é focado em:
+
+* simplicidade
+* performance pura
+
+---
+
+# 5️⃣ Sessões de usuário (Use case comum)
+
+Um uso clássico do ElastiCache é armazenar **session state**.
+
+Problema:
+
+Quando temos múltiplas instâncias da aplicação:
+
+```text
+User
+   │
+Load Balancer
+   │
+ ├─ App Instance
+ ├─ App Instance
+ └─ App Instance
+```
+
+A sessão pode não existir na instância atual.
+
+Solução:
+
+Armazenar sessão no cache.
+
+Arquitetura:
+
+```text
+User
+   │
+Application
+   │
+   │ write session
+   │
+ElastiCache
+   │
+   │ retrieve session
+   │
+Application instance
+```
+
+Isso permite:
+
+* aplicações **stateless**
+* escalabilidade horizontal
+* melhor experiência do usuário
+
+---
+
+# 6️⃣ Benefícios do ElastiCache
+
+* latência extremamente baixa (in-memory)
+* redução de carga no banco
+* melhora performance da aplicação
+* facilita aplicações stateless
+* totalmente gerenciado pela AWS
+
+AWS também gerencia:
+
+* patching
+* manutenção
+* monitoramento
+* failover
+
+---
+
+# 7️⃣ Ponto importante para desenvolvimento
+
+Usar cache geralmente exige **mudanças na aplicação**.
+
+A aplicação precisa:
+
+* consultar o cache
+* atualizar o cache
+* lidar com cache miss
+
+Por isso muitas vezes envolve **alterações no código**.
+
+---
+
+# 8️⃣ Pegadinhas comuns na prova DVA
+
+### Aplicação com muitas leituras no banco
+
+Resposta:
+
+```
+Use Amazon ElastiCache
+```
+
+---
+
+### Precisa de cache com alta disponibilidade e replicação
+
+Resposta:
+
+```
+ElastiCache Redis
+```
+
+---
+
+### Cache simples distribuído sem persistência
+
+Resposta:
+
+```
+ElastiCache Memcached
+```
+
+---
+
+### Aplicação precisa ser stateless
+
+Resposta comum:
+
+```
+Session store no ElastiCache
+```
+
+---
+
+# 🧠 Resumo rápido para prova
+
+ElastiCache:
+
+* cache em memória
+* latência muito baixa
+* reduz carga no banco
+
+Engines:
+
+```
+Redis → replicação, persistência, HA
+Memcached → simples, sharding, sem persistência
+```
+
+Arquitetura comum:
+
+```text
+Application
+     │
+ElastiCache
+     │
+Database
+```
