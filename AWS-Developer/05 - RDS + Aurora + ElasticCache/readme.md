@@ -802,3 +802,295 @@ RDS / Aurora
 
 ---
 
+# 🧩 RDS Proxy – AWS Developer Associate (DVA)
+
+## 1️⃣ O que é o RDS Proxy
+
+O **RDS Proxy** é um **proxy totalmente gerenciado para bancos Amazon RDS e Aurora**.
+
+Ele fica **entre a aplicação e o banco de dados**, gerenciando conexões de forma eficiente.
+
+Arquitetura:
+
+```text
+Application
+     │
+     │
+RDS Proxy
+     │
+     │
+RDS / Aurora
+```
+
+---
+
+# 2️⃣ Problema que o RDS Proxy resolve
+
+Bancos relacionais possuem **limite de conexões simultâneas**.
+
+Aplicações modernas podem gerar milhares de conexões:
+
+* aplicações serverless
+* microservices
+* Lambda
+* APIs de alta escala
+
+Sem proxy:
+
+```text
+Application
+   ├─ connection
+   ├─ connection
+   ├─ connection
+   ├─ connection
+   └─ connection
+        ↓
+        RDS
+```
+
+Isso pode causar:
+
+* excesso de conexões
+* alto uso de CPU
+* timeouts
+* falhas no banco
+
+---
+
+# 3️⃣ Connection Pooling
+
+O **RDS Proxy gerencia um pool de conexões**.
+
+Aplicações compartilham conexões abertas com o banco.
+
+Arquitetura com proxy:
+
+```text
+Application
+   ├─ request
+   ├─ request
+   ├─ request
+   └─ request
+        │
+        │
+     RDS Proxy
+        │
+        │ (pool)
+        │
+        ├─ DB connection
+        ├─ DB connection
+        └─ DB connection
+```
+
+Benefícios:
+
+* menos conexões abertas
+* melhor uso de recursos
+* maior estabilidade
+
+---
+
+# 4️⃣ Muito importante para Lambda
+
+O RDS Proxy é **muito usado com AWS Lambda**.
+
+Problema comum:
+
+Lambda escala muito rápido e pode abrir **milhares de conexões simultâneas**.
+
+Exemplo:
+
+```text
+1000 Lambda executions
+↓
+1000 DB connections
+↓
+RDS crash
+```
+
+Com RDS Proxy:
+
+```text
+1000 Lambda executions
+↓
+RDS Proxy
+↓
+20 DB connections
+```
+
+Isso protege o banco.
+
+---
+
+# 5️⃣ Alta disponibilidade
+
+O RDS Proxy é:
+
+* **Multi-AZ**
+* **auto scaling**
+* **fully managed**
+
+Ele também melhora o tempo de **failover do banco**.
+
+📌 Pode reduzir o tempo de failover em até **66%**.
+
+---
+
+# 6️⃣ Segurança
+
+O RDS Proxy suporta:
+
+### IAM Authentication
+
+Aplicações podem autenticar usando **IAM roles**.
+
+Fluxo:
+
+```text
+Application
+   │
+   │ IAM authentication
+   │
+RDS Proxy
+   │
+   │
+RDS / Aurora
+```
+
+---
+
+### AWS Secrets Manager
+
+Credenciais do banco podem ser armazenadas no:
+
+```
+AWS Secrets Manager
+```
+
+O proxy recupera automaticamente essas credenciais.
+
+Benefícios:
+
+* rotação de senha
+* armazenamento seguro
+* evitar hardcoded credentials
+
+---
+
+# 7️⃣ Localização na VPC
+
+O RDS Proxy **sempre roda dentro da VPC**.
+
+Características importantes:
+
+* fica em **subnets privadas**
+* não é publicamente acessível
+* aplicações devem estar na mesma VPC
+
+Arquitetura:
+
+```text
+VPC
+│
+├── Application (EC2 / Lambda)
+│
+└── Private Subnet
+      ├─ RDS Proxy
+      └─ RDS / Aurora
+```
+
+---
+
+# 8️⃣ Bancos suportados
+
+RDS Proxy funciona com:
+
+| Banco             | Suporte |
+| ----------------- | ------- |
+| MySQL             | ✔       |
+| PostgreSQL        | ✔       |
+| MariaDB           | ✔       |
+| SQL Server        | ✔       |
+| Aurora MySQL      | ✔       |
+| Aurora PostgreSQL | ✔       |
+
+---
+
+# 9️⃣ Quando usar RDS Proxy
+
+Use RDS Proxy quando:
+
+* aplicações **serverless (Lambda)**
+* muitos microservices
+* alto número de conexões
+* problemas de conexão no banco
+
+---
+
+# 🔟 Pegadinhas comuns na prova DVA
+
+### Aplicação Lambda abrindo muitas conexões no banco
+
+Resposta correta:
+
+```
+Use RDS Proxy
+```
+
+---
+
+### Aplicação precisa melhorar eficiência de conexões
+
+Resposta:
+
+```
+RDS Proxy (connection pooling)
+```
+
+---
+
+### Credenciais do banco devem ser armazenadas de forma segura
+
+Resposta:
+
+```
+AWS Secrets Manager
+```
+
+---
+
+### Autenticação usando IAM em banco
+
+Resposta:
+
+```
+IAM Authentication + RDS Proxy
+```
+
+---
+
+# 🧠 Resumo rápido para prova
+
+RDS Proxy:
+
+* proxy gerenciado para RDS/Aurora
+* connection pooling
+* melhora escalabilidade
+* reduz conexões abertas
+* melhora failover
+* usado com Lambda
+* roda dentro da VPC
+* integra com IAM e Secrets Manager
+
+Arquitetura:
+
+```text
+Application
+      │
+      │
+   RDS Proxy
+      │
+      │
+   RDS / Aurora
+```
+
