@@ -501,3 +501,304 @@ Aurora = banco relacional
 
 ---
 
+# 🔐 RDS & Aurora Security – AWS Developer Associate (DVA)
+
+Segurança em **Amazon RDS** e **Amazon Aurora** envolve principalmente:
+
+* Controle de acesso
+* Criptografia
+* Segurança de rede
+* Gerenciamento de credenciais
+
+Esses pontos aparecem frequentemente na prova **AWS Developer Associate**.
+
+---
+
+# 1️⃣ Segurança de Rede (VPC)
+
+RDS e Aurora são executados dentro de uma **VPC**.
+
+Controle de acesso acontece através de:
+
+| Componente      | Função                        |
+| --------------- | ----------------------------- |
+| Security Groups | controlam acesso ao banco     |
+| Subnets         | definem onde a instância roda |
+| NACLs           | camada adicional de segurança |
+
+📌 Regra importante para prova:
+
+Banco normalmente deve estar em **subnets privadas**.
+
+Arquitetura típica:
+
+```id="vns8u4"
+VPC
+│
+├── Public Subnet
+│      └─ Application / Load Balancer
+│
+└── Private Subnet
+       └─ RDS / Aurora
+```
+
+---
+
+# 2️⃣ Security Groups
+
+Security Groups controlam **quem pode conectar no banco**.
+
+Exemplo:
+
+| Porta | Banco                |
+| ----- | -------------------- |
+| 3306  | MySQL / Aurora MySQL |
+| 5432  | PostgreSQL           |
+| 1433  | SQL Server           |
+| 1521  | Oracle               |
+
+Regra comum:
+
+```id="4frygo"
+Allow inbound
+source = Security Group da aplicação
+port = database port
+```
+
+📌 Boa prática: **não liberar acesso público ao banco**.
+
+---
+
+# 3️⃣ IAM Database Authentication
+
+RDS e Aurora podem usar **IAM Authentication**.
+
+Isso permite conectar no banco usando **credenciais IAM ao invés de senha estática**.
+
+Fluxo:
+
+```id="osx97g"
+Application
+   │
+   │ IAM token
+   │
+IAM Authentication
+   │
+   │
+RDS / Aurora
+```
+
+Benefícios:
+
+* não precisa armazenar senha
+* autenticação temporária
+* integração com IAM
+
+Muito usado com:
+
+* Lambda
+* aplicações serverless
+
+---
+
+# 4️⃣ Encryption at Rest
+
+RDS e Aurora suportam **criptografia em repouso**.
+
+Usa:
+
+```id="4rtjng"
+AWS KMS
+```
+
+Criptografia cobre:
+
+* storage
+* snapshots
+* read replicas
+* backups
+
+📌 Importante para prova:
+
+Se o banco estiver criptografado:
+
+* **read replicas também serão criptografadas**
+
+---
+
+# 5️⃣ Encryption in Transit
+
+Dados podem ser criptografados **durante a comunicação**.
+
+Usa:
+
+```id="rbgup0"
+SSL / TLS
+```
+
+Fluxo seguro:
+
+```id="rd1vdi"
+Application
+   │
+   │ TLS
+   │
+RDS / Aurora
+```
+
+Isso protege contra:
+
+* sniffing de rede
+* interceptação de dados
+
+---
+
+# 6️⃣ Gerenciamento de Senhas
+
+Credenciais do banco podem ser armazenadas no:
+
+| Serviço                             | Uso                  |
+| ----------------------------------- | -------------------- |
+| AWS Secrets Manager                 | armazenamento seguro |
+| AWS Systems Manager Parameter Store | alternativa          |
+
+Secrets Manager permite:
+
+* rotação automática de senha
+* integração com aplicações
+
+Fluxo:
+
+```id="khv72c"
+Application
+   │
+   │ request secret
+   │
+Secrets Manager
+   │
+   │
+RDS / Aurora
+```
+
+---
+
+# 7️⃣ Auditoria e Monitoramento
+
+Atividades do banco podem ser monitoradas usando:
+
+| Serviço             | Função                    |
+| ------------------- | ------------------------- |
+| CloudWatch          | métricas e logs           |
+| CloudTrail          | auditoria de chamadas API |
+| Enhanced Monitoring | métricas detalhadas       |
+
+Isso permite detectar:
+
+* conexões suspeitas
+* mudanças de configuração
+* acessos administrativos
+
+---
+
+# 8️⃣ Database Activity Streams (Aurora)
+
+Aurora possui recurso chamado:
+
+```id="6q1l9x"
+Database Activity Streams
+```
+
+Ele permite monitorar **atividades do banco em tempo real**.
+
+Captura:
+
+* queries
+* logins
+* operações de dados
+
+Muito usado para **compliance e auditoria**.
+
+---
+
+# 9️⃣ Melhores práticas de segurança
+
+Boas práticas recomendadas:
+
+* usar **subnets privadas**
+* restringir acesso via **Security Groups**
+* habilitar **encryption at rest**
+* usar **TLS**
+* armazenar credenciais no **Secrets Manager**
+* usar **IAM Authentication quando possível**
+
+---
+
+# 🔟 Pegadinhas comuns na prova DVA
+
+### Aplicação não deve armazenar senha do banco
+
+Use:
+
+```id="t3s42x"
+AWS Secrets Manager
+```
+
+---
+
+### Banco precisa ser criptografado
+
+Use:
+
+```id="kklw5s"
+KMS encryption
+```
+
+---
+
+### Conexão segura com banco
+
+Use:
+
+```id="n0csap"
+TLS / SSL
+```
+
+---
+
+### Controle de acesso ao banco
+
+Use:
+
+```id="r3yv0c"
+Security Groups
+```
+
+---
+
+# 🧠 Resumo rápido para prova
+
+Segurança em RDS / Aurora envolve:
+
+* Security Groups
+* KMS encryption
+* TLS
+* IAM Authentication
+* Secrets Manager
+* CloudWatch / CloudTrail
+
+Arquitetura segura:
+
+```id="yfrn8e"
+Application
+   │
+   │ TLS
+   │
+Security Group
+   │
+   │
+RDS / Aurora
+(encrypted with KMS)
+```
+
+---
+
