@@ -212,3 +212,292 @@ Read Replica = Read Scaling
 
 ---
 
+# 🐬 Amazon Aurora – AWS Developer Associate (DVA) Study Notes
+
+## 1️⃣ O que é o Amazon Aurora
+
+O **Amazon Aurora** é um banco de dados relacional totalmente gerenciado pela AWS, compatível com **MySQL** e **PostgreSQL**, projetado para oferecer **alta performance, alta disponibilidade e escalabilidade automática**.
+
+Ele faz parte do ecossistema do **Amazon RDS**, mas possui uma **arquitetura diferente e otimizada**.
+
+Principais características:
+
+* Até **5x mais rápido que MySQL**
+* Até **3x mais rápido que PostgreSQL**
+* Alta disponibilidade nativa
+* Replicação automática entre AZs
+* Escala leitura com várias replicas
+* Storage que cresce automaticamente
+
+---
+
+# 2️⃣ Arquitetura do Aurora
+
+Aurora separa **compute** e **storage**, diferente do RDS tradicional.
+
+```
+Aurora Cluster
+│
+├── Writer Instance (Primary)
+├── Reader Instance (Replica)
+├── Reader Instance (Replica)
+│
+└── Shared Storage Layer
+```
+
+O storage é **compartilhado entre todas as instâncias**.
+
+Isso permite:
+
+* failover muito rápido
+* replicas sem replicação pesada
+* escalabilidade maior
+
+---
+
+# 3️⃣ Replicação do Storage (Importante para prova)
+
+Aurora replica automaticamente os dados:
+
+* **6 cópias dos dados**
+* distribuídas em **3 Availability Zones**
+
+Distribuição:
+
+```
+AZ-1 → 2 cópias
+AZ-2 → 2 cópias
+AZ-3 → 2 cópias
+```
+
+Isso garante:
+
+* tolerância a falha de **até 2 cópias**
+* alta durabilidade
+* failover rápido
+
+---
+
+# 4️⃣ Aurora Cluster
+
+Um **Aurora Cluster** é composto por:
+
+| Componente       | Função                                 |
+| ---------------- | -------------------------------------- |
+| Writer Instance  | instância principal que aceita escrita |
+| Reader Instances | replicas usadas para leitura           |
+| Shared Storage   | storage distribuído entre AZs          |
+
+Endpoints importantes:
+
+| Endpoint          | Função                              |
+| ----------------- | ----------------------------------- |
+| Cluster Endpoint  | conecta na instância writer         |
+| Reader Endpoint   | balanceia consultas entre replicas  |
+| Instance Endpoint | conecta em uma instância específica |
+
+---
+
+# 5️⃣ Quantas instâncias podem existir
+
+Um cluster Aurora pode ter:
+
+| Tipo            | Quantidade |
+| --------------- | ---------- |
+| Writer          | 1          |
+| Reader Replicas | até **15** |
+
+Total possível:
+
+```
+1 Writer + 15 Readers
+```
+
+---
+
+# 6️⃣ Aurora Replicas
+
+Aurora replicas são usadas para **escalar leitura**.
+
+Características:
+
+* compartilham o mesmo storage
+* replicação **muito rápida (ms)**
+* podem ser promovidas a **Writer**
+
+Benefícios:
+
+* escala leitura
+* failover rápido
+* balanceamento de consultas
+
+---
+
+# 7️⃣ Failover no Aurora
+
+Se a instância **Writer falhar**:
+
+1. Aurora promove automaticamente uma **Reader Replica**
+2. Ela vira a nova **Writer**
+3. O endpoint do cluster continua o mesmo
+
+Tempo típico de failover:
+
+```
+~30 segundos
+```
+
+Mais rápido que **RDS Multi-AZ tradicional**.
+
+---
+
+# 8️⃣ Auto Scaling de Replicas
+
+Aurora permite **Auto Scaling de Read Replicas**.
+
+Baseado em:
+
+* CPU
+* número de conexões
+* métricas do CloudWatch
+
+Fluxo:
+
+```
+alta carga de leitura
+↓
+Aurora cria novas replicas
+↓
+Reader Endpoint distribui queries
+```
+
+---
+
+# 9️⃣ Storage do Aurora
+
+Aurora usa storage distribuído.
+
+Características:
+
+* cresce automaticamente
+* até **128 TB**
+* não precisa provisionar previamente
+
+Escala automaticamente conforme dados aumentam.
+
+---
+
+# 🔟 Aurora vs RDS (diferença importante)
+
+| Característica | RDS         | Aurora              |
+| -------------- | ----------- | ------------------- |
+| Replicação     | Multi-AZ    | Storage distribuído |
+| Replicas       | até 5       | até 15              |
+| Storage        | limitado    | até 128 TB          |
+| Failover       | mais lento  | mais rápido         |
+| Arquitetura    | tradicional | cluster             |
+
+---
+
+# 1️⃣1️⃣ Aurora Serverless
+
+Aurora possui modo **Serverless**.
+
+Nesse modo:
+
+* não precisa gerenciar instâncias
+* capacidade escala automaticamente
+* cobrança por uso
+
+Ideal para:
+
+* workloads variáveis
+* aplicações event-driven
+* ambientes de desenvolvimento
+
+---
+
+# 1️⃣2️⃣ Integrações importantes
+
+Aurora integra facilmente com:
+
+* AWS Lambda
+* AWS DMS
+* CloudWatch
+* IAM
+* Secrets Manager
+
+Muito usado em arquiteturas **serverless e microservices**.
+
+---
+
+# 1️⃣3️⃣ Pegadinhas comuns na prova DVA
+
+### Alta disponibilidade + leitura escalável
+
+Use:
+
+```
+Aurora + Aurora Replicas
+```
+
+---
+
+### Banco relacional com alta performance
+
+Resposta geralmente:
+
+```
+Amazon Aurora
+```
+
+---
+
+### Replicação automática entre AZs
+
+Aurora já possui isso **nativamente**.
+
+---
+
+### Aplicação precisa escalar leitura
+
+Use:
+
+```
+Reader Endpoint
+```
+
+---
+
+# 1️⃣4️⃣ Resumo rápido para revisão
+
+Aurora:
+
+* 6 cópias de dados
+* 3 AZs
+* até **15 replicas**
+* storage até **128 TB**
+* failover automático
+* reader endpoint para leitura
+
+Arquitetura:
+
+```
+1 Writer
++ até 15 Readers
++ storage distribuído
+```
+
+---
+
+# 🧠 Regra rápida para prova
+
+```
+Aurora = banco relacional
+        + alta performance
+        + replicação automática
+        + escalabilidade
+```
+
+---
+
