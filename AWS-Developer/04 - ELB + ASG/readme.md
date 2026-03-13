@@ -413,3 +413,201 @@ Se você quiser agora eu posso:
 * 📘 Montar mapa mental textual conectando tudo
 
 
+Vou montar no estilo **README de estudo para certificação** (como você prefere para AWS), com pontos objetivos e foco de prova. 🚀
+
+---
+
+# 6️⃣ Auto Scaling Group (ASG)
+
+O **Amazon EC2 Auto Scaling Auto Scaling Group (ASG)** permite **escalar automaticamente instâncias EC2** para lidar com variações de carga, mantendo disponibilidade e otimizando custos.
+
+Ele **cria, remove e substitui instâncias automaticamente** baseado em métricas ou regras.
+
+OBS. AUTO SCALING GROUP SÓ PODE SER USADO NA MESMA REGIÃO
+
+---
+
+# 6.1 🎯 Objetivo do Auto Scaling
+
+O ASG resolve três problemas principais:
+
+| Objetivo              | Descrição                                        |
+| --------------------- | ------------------------------------------------ |
+| **High Availability** | substitui instâncias que falham                  |
+| **Elasticity**        | adiciona ou remove instâncias conforme a demanda |
+| **Cost Optimization** | evita pagar por recursos ociosos                 |
+
+Exemplo:
+
+```
+Tráfego aumenta → ASG cria novas EC2
+Tráfego diminui → ASG remove EC2
+```
+
+---
+
+# 6.2 ⚙️ Componentes de um ASG
+
+Um Auto Scaling Group é composto por:
+
+| Componente                                 | Função                          |
+| ------------------------------------------ | ------------------------------- |
+| **Launch Template / Launch Configuration** | define como criar as instâncias |
+| **Min Capacity**                           | número mínimo de instâncias     |
+| **Desired Capacity**                       | quantidade desejada             |
+| **Max Capacity**                           | limite máximo                   |
+
+Exemplo:
+
+| Configuração | Valor |
+| ------------ | ----- |
+| Min          | 2     |
+| Desired      | 3     |
+| Max          | 10    |
+
+Resultado:
+
+```
+Sempre terá pelo menos 2 instâncias
+Normalmente roda com 3
+Nunca passará de 10
+```
+
+---
+
+# 6.3 🌎 Escopo do Auto Scaling Group
+
+Um **ASG é um recurso regional**.
+
+| Escopo            | Permitido |
+| ----------------- | --------- |
+| múltiplas AZs     | ✅         |
+| múltiplas regiões | ❌         |
+
+Exemplo válido:
+
+```
+Region: us-east-1
+
+ASG
+ ├ EC2 (us-east-1a)
+ ├ EC2 (us-east-1b)
+ └ EC2 (us-east-1c)
+```
+
+❌ Não é possível ter um ASG em duas regiões.
+
+Para **multi-region**, é necessário criar **um ASG por região**.
+
+---
+
+# 6.4 📈 Scaling Policies
+
+O ASG usa **políticas de scaling** para decidir quando escalar.
+
+Tipos principais:
+
+| Tipo                | Descrição                          |
+| ------------------- | ---------------------------------- |
+| **Target Tracking** | mantém uma métrica alvo            |
+| **Step Scaling**    | escala em passos conforme métricas |
+| **Simple Scaling**  | scaling baseado em um alarme       |
+
+Exemplo comum:
+
+```
+Target Tracking:
+CPU target = 50%
+```
+
+Se CPU subir:
+
+```
+ASG adiciona instâncias
+```
+
+---
+
+# 6.5 📊 Métricas usadas para scaling
+
+Geralmente vêm do **Amazon CloudWatch**.
+
+Métricas comuns:
+
+* CPU Utilization
+* Request Count
+* Network In/Out
+* Custom Metrics
+
+Exemplo:
+
+```
+CPU > 70% → scale out
+CPU < 30% → scale in
+```
+
+---
+
+# 6.6 ❤️ Health Checks
+
+O ASG monitora a saúde das instâncias.
+
+Tipos:
+
+| Tipo                 | Descrição                             |
+| -------------------- | ------------------------------------- |
+| **EC2 Health Check** | verifica status da instância          |
+| **ELB Health Check** | verifica se responde ao load balancer |
+
+Se falhar:
+
+```
+ASG termina a instância
+ASG cria uma nova automaticamente
+```
+
+---
+
+# 6.7 🔁 Integração com Load Balancer
+
+Arquitetura comum:
+
+```
+Users
+   ↓
+Application Load Balancer
+   ↓
+Auto Scaling Group
+   ↓
+EC2 Instances
+```
+
+O **Elastic Load Balancing** distribui o tráfego entre as instâncias criadas pelo ASG.
+
+---
+
+# 6.8 🧠 Pontos importantes para prova (CLF / DVA)
+
+✔ Auto Scaling Group é **regional**
+✔ Pode usar **múltiplas AZs**
+✔ Pode **substituir instâncias automaticamente**
+✔ Usa métricas do **CloudWatch**
+✔ Pode **escalar para cima e para baixo automaticamente**
+
+❌ Não pode abranger múltiplas regiões.
+
+---
+
+✅ **Resumo rápido**
+
+| Característica       | ASG        |
+| -------------------- | ---------- |
+| Escopo               | Regional   |
+| Alta disponibilidade | Multi-AZ   |
+| Escala automática    | Sim        |
+| Baseado em métricas  | CloudWatch |
+
+---
+
+
+
