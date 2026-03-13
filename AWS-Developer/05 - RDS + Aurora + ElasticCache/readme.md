@@ -1372,3 +1372,240 @@ ElastiCache
      │
 Database
 ```
+
+Segue uma **seção estilo README focada na prova AWS Developer Associate (DVA)**, com os pontos mais cobrados sobre **estratégias de cache usando ElastiCache**.
+
+---
+
+# 📦 AWS Cache Strategies (ElastiCache) — DVA-C02
+
+## 1️⃣ Por que usar Cache?
+
+Cache é usado para **reduzir latência e diminuir carga no banco de dados**.
+
+Benefícios principais:
+
+* 🚀 **Resposta mais rápida**
+* 💰 **Redução de custo de banco**
+* 📉 **Menos carga no backend**
+* 📈 **Melhor escalabilidade**
+
+Exemplo comum:
+
+```
+Application → Cache (Redis/Memcached) → Database
+```
+
+A aplicação **consulta o cache primeiro**.
+Se não encontrar, consulta o **database**.
+
+---
+
+# 2️⃣ Lazy Loading (Cache Aside)
+
+📌 **Estratégia mais comum**
+
+Fluxo:
+
+1. Aplicação consulta o **cache**
+2. Se existir → retorna
+3. Se não existir → consulta **database**
+4. Salva no **cache**
+5. Retorna resposta
+
+```
+App → Cache → (miss) → Database → Cache → App
+```
+
+### 👍 Vantagens
+
+* Fácil implementação
+* Cache armazena **apenas dados realmente usados**
+* Reduz uso de memória
+
+### 👎 Desvantagens
+
+* Primeira consulta é lenta (**cache miss**)
+* Possível **stale data**
+
+### 📌 Quando usar
+
+* Workloads **read-heavy**
+* APIs
+* Perfis de usuários
+* Blogs
+* Catálogos
+
+💡 **Importante para prova**
+
+> Lazy Loading também é chamado de **Cache Aside**
+
+---
+
+# 3️⃣ Write-Through Cache
+
+Aqui os dados são escritos **no cache e no banco ao mesmo tempo**.
+
+Fluxo:
+
+```
+App → Cache → Database
+```
+
+Ou:
+
+```
+Write → Cache → Database
+```
+
+### 👍 Vantagens
+
+* Cache sempre atualizado
+* Evita **cache miss após write**
+
+### 👎 Desvantagens
+
+* Dados podem ficar no cache **mesmo sem serem lidos**
+* Pode aumentar uso de memória
+
+---
+
+# 4️⃣ Lazy Loading + Write Through (Combinação)
+
+💡 **Arquitetura muito comum**
+
+Usa:
+
+* Lazy Loading → para **reads**
+* Write Through → para **writes**
+
+Fluxo típico:
+
+```
+Read:
+App → Cache → (miss) → DB → Cache
+
+Write:
+App → Cache → DB
+```
+
+Resultado:
+
+* Dados frequentemente acessados **já estarão no cache**
+
+---
+
+# 5️⃣ TTL (Time To Live)
+
+TTL define **quanto tempo um item permanece no cache**.
+
+Depois do TTL:
+
+```
+Item expira → removido do cache
+```
+
+Exemplo:
+
+```
+User Profile TTL = 3600 seconds
+```
+
+Depois de 1 hora → novo fetch no database.
+
+### 👍 Benefícios
+
+* Evita **dados desatualizados**
+* Libera memória
+
+### 📌 Para prova
+
+TTL é **recomendado na maioria dos casos**, exceto quando usando **Write-Through bem controlado**.
+
+---
+
+# 6️⃣ Cache apenas dados que fazem sentido
+
+Nem todo dado precisa ser cacheado.
+
+Boas opções:
+
+* 👤 User profiles
+* 📰 Blog posts
+* 🛍️ Product catalog
+* 📊 Queries pesadas
+
+Evitar cache em:
+
+* Dados que mudam **muito frequentemente**
+* Dados sensíveis a consistência forte
+
+---
+
+# 7️⃣ Problema clássico: Cache Invalidation
+
+Existe uma frase famosa na computação:
+
+> “There are only two hard things in Computer Science: cache invalidation and naming things”
+
+Cache invalidation = **saber quando atualizar ou remover o cache**
+
+Problemas comuns:
+
+* Dados desatualizados
+* Inconsistência entre cache e banco
+
+Soluções comuns:
+
+* TTL
+* Write-through
+* Atualizar cache após write
+
+---
+
+# 🎯 O que a prova DVA costuma cobrar
+
+Você precisa saber:
+
+### Estratégias
+
+* Lazy Loading (Cache Aside)
+* Write Through
+
+### Conceitos
+
+* Cache miss
+* Cache hit
+* TTL
+* Cache invalidation
+
+### Serviços AWS
+
+Cache geralmente usando:
+
+* **Amazon ElastiCache**
+
+  * Redis
+  * Memcached
+
+---
+
+# 🧠 Resumo rápido (para revisão)
+
+| Estratégia         | Funcionamento             | Uso               |
+| ------------------ | ------------------------- | ----------------- |
+| Lazy Loading       | Cache consultado primeiro | Mais comum        |
+| Write Through      | Escreve no cache e DB     | Consistência      |
+| TTL                | Expiração automática      | Evita stale data  |
+| Cache Invalidation | Atualizar cache           | Problema clássico |
+
+---
+
+✅ **Regra de ouro para prova:**
+
+> **Lazy Loading + TTL + ElastiCache = arquitetura padrão de cache na AWS**
+
+---
+
+
+
