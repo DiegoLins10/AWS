@@ -1607,5 +1607,33 @@ Cache geralmente usando:
 
 ---
 
+Segue uma **seção README no mesmo estilo que você está estudando**, focada **somente no que é relevante para a prova AWS Developer Associate (DVA-C02)**.
+
+---
+
+# 🧠 Amazon MemoryDB for Redis — DVA-C02
+
+## 1️⃣ O que é o MemoryDB?
+
+**Amazon MemoryDB for Redis** é um **banco de dados em memória totalmente gerenciado**, compatível com **Redis**, que fornece:
+
+* ⚡ **latência ultra baixa (microsegundos)**
+* 💾 **durabilidade persistente**
+* 📈 **alta escalabilidade**
+
+Diferente do **ElastiCache**, ele pode ser usado como **database primário**, não apenas como cache.
+
+---
+
+# 2️⃣ MemoryDB vs ElastiCache
+
+| Característica       | MemoryDB             | ElastiCache   |
+| -------------------- | -------------------- | ------------- |
+| Uso principal        | **Primary Database** | **Cache**     |
+| Persistência         | Sim (durável)        | Não é foco    |
+| Latência             | Microsegundos        | Microsegundos |
+| Compatível com Redis | Sim                  | Sim           |
+| Durabilidade         | Multi-AZ log         | Opcional      |
+
 
 
