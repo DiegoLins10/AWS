@@ -603,6 +603,7 @@ Cada endpoint pode ter **health check**. Apenas em endpoint publico é possivel 
 | Geolocation  | localização do usuário  | conteúdo regional  |
 | Geoproximity | proximidade geográfica  | controle avançado  |
 | Multi Value  | múltiplos IPs saudáveis | load balancing DNS |
+| Ip-based     | CIDR IP do cliente      | cliente decide qual usar |
 
 ---
 
@@ -764,6 +765,173 @@ Route53 → balanceamento global
 ```
 
 ---
+
+# 🌐 IP-Based Routing Policy
+
+## 8️⃣ IP-Based Routing Policy
+
+### 📌 Conceito
+
+A **IP-Based Routing Policy** permite rotear tráfego **com base no endereço IP do cliente**.
+
+O **Route 53 verifica o IP de origem** e decide qual endpoint retornar.
+
+---
+
+# 1️⃣ Como funciona
+
+Você define **intervalos de IP (CIDR blocks)**.
+
+Exemplo:
+
+| IP Range        | Destino    |
+| --------------- | ---------- |
+| 203.0.113.0/24  | servidor A |
+| 198.51.100.0/24 | servidor B |
+
+Fluxo:
+
+```
+Client IP
+   ↓
+Route53 verifica CIDR
+   ↓
+retorna endpoint correspondente
+```
+
+---
+
+# 2️⃣ Exemplo prático
+
+```
+api.example.com
+```
+
+Configuração:
+
+```
+203.0.113.0/24 → ALB us-east-1
+198.51.100.0/24 → ALB eu-west-1
+```
+
+Usuário:
+
+```
+203.0.113.45
+```
+
+Resposta DNS:
+
+```
+→ ALB us-east-1
+```
+
+---
+
+# 3️⃣ Quando usar
+
+### ✔ Redirecionar tráfego por rede
+
+Exemplo:
+
+```
+clientes corporativos
+clientes internos
+parceiros
+```
+
+---
+
+### ✔ Regras específicas de infraestrutura
+
+Exemplo:
+
+```
+ISP específico
+empresa específica
+datacenter específico
+```
+
+---
+
+### ✔ Controle avançado de tráfego
+
+Mais preciso que **Geolocation**.
+
+---
+
+# 4️⃣ Diferença para Geolocation
+
+| Feature    | IP-Based          | Geolocation |
+| ---------- | ----------------- | ----------- |
+| Baseado em | CIDR IP           | país/região |
+| Precisão   | alta              | menor       |
+| Controle   | redes específicas | países      |
+
+---
+
+# 5️⃣ Diferença para Latency
+
+| Policy   | Base             |
+| -------- | ---------------- |
+| Latency  | latência de rede |
+| IP-Based | endereço IP      |
+
+---
+
+# 6️⃣ Exemplo de arquitetura
+
+```
+User
+  ↓
+Route53 (IP-based)
+  ↓
+ALB / EC2 / endpoints
+```
+
+---
+
+# 🎯 Quando escolher IP-Based
+
+Use quando a pergunta mencionar:
+
+* **CIDR ranges**
+* **source IP ranges**
+* **specific networks**
+* **routing based on client IP**
+
+---
+
+# 🧠 Resumo rápido de todas as Routing Policies
+
+| Policy       | Base                 |
+| ------------ | -------------------- |
+| Simple       | único destino        |
+| Weighted     | porcentagem          |
+| Latency      | menor latência       |
+| Failover     | backup               |
+| Geolocation  | país/região          |
+| Geoproximity | proximidade          |
+| Multi Value  | vários IPs saudáveis |
+| IP-Based     | CIDR do cliente      |
+
+---
+
+💡 **Dica de prova:**
+
+Se a questão falar algo como:
+
+> route traffic based on specific IP ranges
+
+A resposta quase sempre é:
+
+```
+IP-based routing policy
+```
+
+---
+
+
 
 
 
