@@ -528,11 +528,11 @@ Exemplo:
 
 ```
 Recurso em São Paulo
-Recurso em Virgínia
+Recurso em Singapura
 ```
 
-Usuários mais próximos de SP → SP
-Usuários mais próximos da Virgínia → US
+Usuários mais próximos da America do sul → SP
+Usuários mais próximos da Asia → singapura
 
 ### 🔧 Bias (cai em prova)
 
@@ -542,6 +542,8 @@ Você pode ajustar **bias** para expandir área.
 Bias positivo → aumenta área
 Bias negativo → reduz área
 ```
+
+![img](https://github.com/DiegoLins10/AWS/blob/main/AWS-Developer/06%20-%20Route%2053/geoproximity_map.png)
 
 ### 🎯 Quando usar
 
