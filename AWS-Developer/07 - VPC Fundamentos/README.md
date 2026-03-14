@@ -1045,3 +1045,4 @@ Database Layer
 ---
 
 ![arquitetura](https://github.com/DiegoLins10/AWS/blob/main/AWS-Developer/07%20-%20VPC%20Fundamentos/arquitetura_vpc.png)
+![wordpress](https://github.com/DiegoLins10/AWS/blob/main/AWS-Developer/07%20-%20VPC%20Fundamentos/arquitetura_vpc_wordPress.png)
