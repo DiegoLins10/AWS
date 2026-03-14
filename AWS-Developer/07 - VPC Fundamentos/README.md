@@ -1046,3 +1046,42 @@ Database Layer
 
 ![arquitetura](https://github.com/DiegoLins10/AWS/blob/main/AWS-Developer/07%20-%20VPC%20Fundamentos/arquitetura_vpc.png)
 ![wordpress](https://github.com/DiegoLins10/AWS/blob/main/AWS-Developer/07%20-%20VPC%20Fundamentos/arquitetura_vpc_wordPress.png)
+
+
+## 🧩 LAMP Stack
+
+**LAMP** é um conjunto de tecnologias usadas para rodar aplicações web tradicionais.
+
+| Letra | Tecnologia | Função                          |
+| ----- | ---------- | ------------------------------- |
+| **L** | Linux      | Sistema operacional do servidor |
+| **A** | Apache     | Servidor web                    |
+| **M** | MySQL      | Banco de dados                  |
+| **P** | PHP        | Linguagem backend               |
+
+Fluxo básico:
+
+```text
+Usuário
+  ↓
+Apache (web server)
+  ↓
+PHP (lógica da aplicação)
+  ↓
+MySQL (banco de dados)
+```
+
+### ☁️ Exemplo na AWS
+
+```text
+Internet
+   ↓
+Load Balancer
+   ↓
+EC2 (Linux + Apache + PHP)
+   ↓
+RDS MySQL
+```
+
+📌 **Resumo:**
+LAMP é uma arquitetura clássica de aplicações web usada para explicar **deploy de aplicações na AWS** (muito citada em exemplos da prova DVA).
