@@ -556,7 +556,7 @@ Bias negativo → reduz área
 
 ### 📌 Conceito
 
-Permite retornar **vários IPs saudáveis** para o cliente.
+Permite retornar **vários IPs saudáveis** para o cliente. O cliente decide qual vai usar.
 
 Funciona como **DNS-based load balancing simples**.
 
