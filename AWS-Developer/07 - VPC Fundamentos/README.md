@@ -276,3 +276,230 @@ Private Subnet → NAT Gateway → Internet Gateway
 
 ![img](https://github.com/DiegoLins10/AWS/blob/main/AWS-Developer/07%20-%20VPC%20Fundamentos/vpc.png)
 
+---
+
+# 🔐 NACL, Security Groups & VPC Flow Logs (AWS DVA)
+
+## 1️⃣ Security Groups (SG)
+
+**Security Groups são firewalls no nível da instância.**
+
+Eles controlam **tráfego que entra e sai da EC2**.
+
+📌 Características importantes:
+
+* Funcionam no **nível da instância**
+* São **stateful**
+* Suportam apenas **ALLOW rules**
+* Avaliam **todas as regras antes de decidir**
+
+---
+
+### Stateful (ponto importante da prova)
+
+Se você permitir entrada, a resposta **é automaticamente permitida**.
+
+Exemplo:
+
+```text
+Allow: HTTP (80) inbound
+```
+
+Resposta da EC2:
+
+```text
+Outbound automaticamente permitido
+```
+
+📌 Não precisa criar regra de retorno.
+
+---
+
+### Exemplo de Security Group
+
+| Type | Port | Source    |
+| ---- | ---- | --------- |
+| HTTP | 80   | 0.0.0.0/0 |
+| SSH  | 22   | My IP     |
+
+---
+
+### Security Groups podem referenciar outros SG
+
+Muito comum em arquitetura.
+
+Exemplo:
+
+```text
+Load Balancer SG → permite tráfego para → EC2 SG
+```
+
+---
+
+# 2️⃣ Network ACL (NACL)
+
+**NACL é um firewall no nível da subnet.**
+
+Ele controla **tráfego que entra e sai da subnet inteira**.
+
+📌 Características importantes:
+
+* Funcionam no **nível da subnet**
+* São **stateless**
+* Suportam **ALLOW e DENY**
+* Regras são avaliadas **em ordem numérica**
+
+---
+
+### Stateless (ponto de prova)
+
+Para permitir comunicação você precisa:
+
+* regra **inbound**
+* regra **outbound**
+
+Exemplo:
+
+```text
+Inbound: Allow 80
+Outbound: Allow ephemeral ports
+```
+
+---
+
+### Ordem das regras
+
+As regras são avaliadas **do menor número para o maior**.
+
+Exemplo:
+
+| Rule | Type       | Action |
+| ---- | ---------- | ------ |
+| 100  | Allow HTTP | ALLOW  |
+| 200  | Deny All   | DENY   |
+
+📌 A primeira regra que bate **é aplicada**.
+
+---
+
+# 3️⃣ Security Group vs NACL
+
+Tabela clássica de prova:
+
+| Feature     | Security Group | NACL           |
+| ----------- | -------------- | -------------- |
+| Nível       | Instância      | Subnet         |
+| Stateful    | ✅              | ❌              |
+| Allow rules | ✅              | ✅              |
+| Deny rules  | ❌              | ✅              |
+| Avaliação   | Todas regras   | Ordem numérica |
+
+📌 **Resumo para lembrar na prova**
+
+```text
+Security Group → Instance Firewall
+NACL → Subnet Firewall
+```
+
+---
+
+# 4️⃣ VPC Flow Logs
+
+O **VPC Flow Logs** captura informações de tráfego de rede.
+
+Pode registrar tráfego de:
+
+* **VPC**
+* **Subnet**
+* **Network Interface (ENI)**
+
+---
+
+### Para onde os logs vão
+
+Os logs podem ser enviados para:
+
+* **CloudWatch Logs**
+* **S3**
+
+---
+
+### O que ele registra
+
+Exemplos de dados registrados:
+
+* IP origem
+* IP destino
+* Porta
+* Protocolo
+* ACCEPT / REJECT
+* quantidade de bytes
+
+---
+
+### Exemplo de registro
+
+```text
+srcaddr=10.0.1.5
+dstaddr=52.95.110.1
+action=ACCEPT
+protocol=TCP
+```
+
+---
+
+# 5️⃣ Uso comum na prova
+
+Flow Logs ajudam a:
+
+* diagnosticar **problemas de rede**
+* verificar **tráfego bloqueado**
+* auditoria de segurança
+
+Exemplo clássico:
+
+```text
+EC2 não consegue acessar internet
+→ verificar VPC Flow Logs
+```
+
+---
+
+# 🎯 Pontos que mais caem na prova DVA
+
+### 1️⃣ Security Groups
+
+* firewall de **instância**
+* **stateful**
+* **apenas allow**
+
+---
+
+### 2️⃣ NACL
+
+* firewall de **subnet**
+* **stateless**
+* **allow e deny**
+
+---
+
+### 3️⃣ VPC Flow Logs
+
+Usado para **analisar tráfego de rede**.
+
+---
+
+# 🧠 Forma rápida de lembrar
+
+```text
+Security Group → Instance → Stateful
+
+NACL → Subnet → Stateless
+
+VPC Flow Logs → Monitorar tráfego
+```
+
+---
+
+
+
