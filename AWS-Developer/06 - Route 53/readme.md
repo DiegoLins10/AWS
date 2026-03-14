@@ -268,3 +268,367 @@ Alias → recurso AWS
 
 ---
 
+Vou manter o **mesmo padrão de README que você está usando para estudar a DVA**, com **numeração contínua, comparações e foco em prova**.
+
+---
+
+# 🌐 Route 53 – Routing Policies (AWS DVA)
+
+## 1️⃣ Simple Routing Policy
+
+### 📌 Conceito
+
+A **Simple Routing Policy** é o roteamento mais básico do **Amazon Web Services Route 53**.
+
+Ela retorna **um único recurso** para o cliente.
+
+### ⚙️ Características
+
+* 1 domínio → 1 recurso
+* Sem lógica de distribuição
+* Sem controle de tráfego
+
+### 📊 Exemplo
+
+```
+api.example.com → EC2
+```
+
+### ⚠️ Limitações (cai em prova)
+
+* ❌ Não suporta **Health Checks**
+* ❌ Não controla porcentagem de tráfego
+* ❌ Não faz roteamento inteligente
+
+### 🎯 Quando usar
+
+* Aplicações simples
+* Apenas um endpoint
+
+---
+
+# 2️⃣ Weighted Routing Policy
+
+### 📌 Conceito
+
+A **Weighted Routing Policy** distribui tráfego **com base em pesos**.
+
+Você define quanto tráfego cada recurso recebe.
+
+### ⚙️ Funcionamento
+
+Exemplo:
+
+| Endpoint | Peso |
+| -------- | ---- |
+| EC2-A    | 80   |
+| EC2-B    | 20   |
+
+Distribuição aproximada:
+
+```
+80% → EC2-A
+20% → EC2-B
+```
+
+### 💡 Usos comuns
+
+#### Canary Deployment
+
+```
+versão antiga → 90
+nova versão → 10
+```
+
+#### A/B Testing
+
+```
+versão A → 50
+versão B → 50
+```
+
+#### Migração gradual
+
+Mover tráfego aos poucos.
+
+### ❤️ Health Checks
+
+Se habilitado:
+
+```
+endpoint com falha → removido do DNS
+```
+
+### 🎯 Quando usar
+
+* Deploy gradual
+* A/B testing
+* Canary releases
+
+---
+
+# 3️⃣ Latency Routing Policy
+
+### 📌 Conceito
+
+A **Latency Routing Policy** envia o usuário para a **região AWS com menor latência**.
+
+⚠️ Não é baseado em localização, e sim em **latência da rede**.
+
+### ⚙️ Funcionamento
+
+O Route 53 mede latência entre:
+
+```
+Usuário ↔ Região AWS
+```
+
+E escolhe a mais rápida.
+
+### 📊 Exemplo
+
+Infraestrutura:
+
+```
+us-east-1
+eu-west-1
+ap-southeast-1
+```
+
+Usuário no Brasil:
+
+```
+→ us-east-1
+```
+
+Usuário na Europa:
+
+```
+→ eu-west-1
+```
+
+### 🎯 Quando usar
+
+* Aplicações globais
+* SaaS multi-região
+* Melhor experiência para usuários
+
+---
+
+# 4️⃣ Failover Routing Policy
+
+### 📌 Conceito
+
+A **Failover Routing Policy** implementa **alta disponibilidade (HA)**.
+
+Existem dois endpoints:
+
+```
+Primary
+Secondary (backup)
+```
+
+### ⚙️ Funcionamento
+
+```
+Usuário → Primary
+```
+
+Se falhar:
+
+```
+Usuário → Secondary
+```
+
+### ❤️ Health Checks (obrigatório)
+
+O **Route 53 monitora o Primary**.
+
+Se o health check falhar:
+
+```
+tráfego → Secondary
+```
+
+### 📊 Exemplo
+
+```
+Primary → ALB (us-east-1)
+Secondary → ALB (us-west-2)
+```
+
+### 🎯 Quando usar
+
+* Disaster recovery
+* Alta disponibilidade
+* Backup de infraestrutura
+
+---
+
+# 5️⃣ Geolocation Routing Policy
+
+### 📌 Conceito
+
+A **Geolocation Routing Policy** roteia tráfego **com base na localização do usuário**.
+
+Baseado em:
+
+* continente
+* país
+* estado
+
+### ⚙️ Funcionamento
+
+Exemplo:
+
+```
+Usuários do Brasil → servidor BR
+Usuários da Europa → servidor EU
+Usuários dos EUA → servidor US
+```
+
+### 📊 Exemplo
+
+```
+app.example.com
+ → BR endpoint
+ → EU endpoint
+ → US endpoint
+```
+
+### ⚠️ Importante
+
+Se nenhuma regra corresponder:
+
+```
+usar Default record
+```
+
+### 🎯 Quando usar
+
+* Conteúdo regional
+* Regras legais por país
+* Sites multilíngues
+
+---
+
+# 6️⃣ Geoproximity Routing Policy
+
+### 📌 Conceito
+
+A **Geoproximity Routing Policy** roteia usuários **com base na proximidade geográfica** de um recurso.
+
+Ela permite **expandir ou reduzir o alcance de uma região**.
+
+⚠️ Requer **Traffic Flow**.
+
+### ⚙️ Funcionamento
+
+Exemplo:
+
+```
+Recurso em São Paulo
+Recurso em Virgínia
+```
+
+Usuários mais próximos de SP → SP
+Usuários mais próximos da Virgínia → US
+
+### 🔧 Bias (cai em prova)
+
+Você pode ajustar **bias** para expandir área.
+
+```
+Bias positivo → aumenta área
+Bias negativo → reduz área
+```
+
+### 🎯 Quando usar
+
+* Controle fino de distribuição geográfica
+* Balanceamento global
+
+---
+
+# 7️⃣ Multi-Value Answer Routing Policy
+
+### 📌 Conceito
+
+Permite retornar **vários IPs saudáveis** para o cliente.
+
+Funciona como **DNS-based load balancing simples**.
+
+### ⚙️ Funcionamento
+
+Route 53 retorna **até 8 registros saudáveis**.
+
+Exemplo:
+
+```
+api.example.com
+ → EC2-A
+ → EC2-B
+ → EC2-C
+```
+
+Se um falhar:
+
+```
+não aparece na resposta DNS
+```
+
+### ❤️ Health Checks
+
+Cada endpoint pode ter **health check**. Apenas em endpoint publico é possivel utilizar o seja um alb.
+
+### 🎯 Quando usar
+
+* Load balancing simples
+* Alta disponibilidade básica
+
+⚠️ Não substitui **Elastic Load Balancer**.
+
+---
+
+# 📊 Comparação (MUITO cobrado)
+
+| Policy       | Baseado em              | Uso                |
+| ------------ | ----------------------- | ------------------ |
+| Simple       | nenhum                  | DNS simples        |
+| Weighted     | peso (%)                | deploy gradual     |
+| Latency      | latência                | apps globais       |
+| Failover     | health check            | disaster recovery  |
+| Geolocation  | localização do usuário  | conteúdo regional  |
+| Geoproximity | proximidade geográfica  | controle avançado  |
+| Multi Value  | múltiplos IPs saudáveis | load balancing DNS |
+
+---
+
+# 🧠 Dica rápida para prova
+
+| Se a questão falar em        | Resposta     |
+| ---------------------------- | ------------ |
+| Distribuir % de tráfego      | Weighted     |
+| Região mais rápida           | Latency      |
+| Backup automático            | Failover     |
+| Conteúdo por país            | Geolocation  |
+| Controle geográfico avançado | Geoproximity |
+| Vários IPs com health check  | Multi Value  |
+
+---
+
+💡 **Resumo mental para prova**
+
+```
+Simple → 1 destino
+Weighted → porcentagem
+Latency → menor latência
+Failover → backup
+Geolocation → país
+Geoproximity → proximidade
+Multi Value → vários IPs
+```
+
+---
+
+
