@@ -274,3 +274,5 @@ Private Subnet → NAT Gateway → Internet Gateway
 
 ---
 
+![img](https://github.com/DiegoLins10/AWS/blob/main/AWS-Developer/07%20-%20VPC%20Fundamentos/vpc.png)
+
