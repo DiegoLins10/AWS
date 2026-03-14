@@ -809,7 +809,7 @@ Direct Connect → conexão dedicada
 
 ## 
 
-## 🏗️ 3-Tier Solution Architecture (AWS DVA)
+## 🏗️ 3-Tier Solution Architecture (AWS DVA) Arquitetura de 3 camadas
 
 A **3-Tier Architecture** é um padrão clássico usado para aplicações web na AWS.
 Ela separa a aplicação em **3 camadas independentes**, aumentando **segurança, escalabilidade e organização**.
