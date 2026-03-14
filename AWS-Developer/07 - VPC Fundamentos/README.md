@@ -807,3 +807,241 @@ Direct Connect → conexão dedicada
 ---
 
 
+## 
+
+## 🏗️ 3-Tier Solution Architecture (AWS DVA)
+
+A **3-Tier Architecture** é um padrão clássico usado para aplicações web na AWS.
+Ela separa a aplicação em **3 camadas independentes**, aumentando **segurança, escalabilidade e organização**.
+
+Estrutura:
+
+```
+Presentation Layer
+Application Layer
+Data Layer
+```
+
+---
+
+# 1️⃣ Presentation Layer (Web Layer)
+
+Essa camada é responsável por **receber requisições dos usuários**.
+
+Componentes comuns:
+
+* **Application Load Balancer (ALB)**
+* **CloudFront**
+* **EC2 Web Servers**
+* **API Gateway**
+
+Fluxo:
+
+```
+User → Internet → Load Balancer
+```
+
+📌 Na arquitetura AWS geralmente fica em **Public Subnets**.
+
+Funções:
+
+* distribuir tráfego
+* proteger backend
+* SSL termination
+
+---
+
+# 2️⃣ Application Layer
+
+Essa camada contém a **lógica da aplicação**.
+
+Exemplos:
+
+* EC2 application servers
+* ECS / EKS containers
+* AWS Lambda
+* microservices
+
+Fluxo:
+
+```
+Load Balancer
+      ↓
+Application Servers
+```
+
+📌 Geralmente ficam em **Private Subnets**.
+
+Motivo:
+
+```
+❌ não expostos à internet
+✔ mais seguros
+```
+
+Escalabilidade comum:
+
+```
+Auto Scaling Group
+```
+
+---
+
+# 3️⃣ Data Layer (Database Layer)
+
+Responsável por **armazenamento de dados**.
+
+Serviços comuns:
+
+* **RDS**
+* **Aurora**
+* **DynamoDB**
+* **ElastiCache**
+
+Fluxo:
+
+```
+Application Servers
+       ↓
+Database
+```
+
+📌 Sempre fica em **Private Subnets**.
+
+Boa prática:
+
+```
+Database sem acesso público
+```
+
+---
+
+# 4️⃣ Arquitetura completa (AWS)
+
+Fluxo típico da aplicação:
+
+```
+Users
+   │
+Internet Gateway
+   │
+Public Subnet
+   │
+Load Balancer
+   │
+Private Subnet
+   │
+Application Servers (EC2 / ECS)
+   │
+Private Subnet
+   │
+Database (RDS / Aurora)
+```
+
+---
+
+# 5️⃣ Segurança na 3-Tier Architecture
+
+Cada camada possui **regras de acesso específicas**.
+
+### Web Layer
+
+Security Group:
+
+```
+Allow HTTP/HTTPS from Internet
+```
+
+---
+
+### Application Layer
+
+Security Group:
+
+```
+Allow traffic from Load Balancer
+```
+
+---
+
+### Database Layer
+
+Security Group:
+
+```
+Allow traffic from Application Servers
+```
+
+📌 Isso cria **isolamento entre camadas**.
+
+---
+
+# 6️⃣ Escalabilidade
+
+Cada camada pode escalar **independentemente**.
+
+Exemplo:
+
+```
+Load Balancer
+       ↓
+Auto Scaling Group (EC2)
+```
+
+Se o tráfego aumentar:
+
+```
+mais instâncias EC2 são criadas
+```
+
+---
+
+# 🎯 Pontos importantes para a prova DVA
+
+### Web Layer
+
+Recebe tráfego da internet.
+
+---
+
+### Application Layer
+
+Executa lógica da aplicação.
+
+---
+
+### Data Layer
+
+Armazena dados.
+
+---
+
+### Segurança
+
+```
+Internet → Web Layer
+Web Layer → App Layer
+App Layer → Data Layer
+```
+
+---
+
+# 🧠 Forma fácil de lembrar
+
+```
+User
+  ↓
+Web Layer
+  ↓
+Application Layer
+  ↓
+Database Layer
+```
+
+---
+
+✅ **Esse padrão aparece muito em questões de arquitetura na DVA.**
+
+---
+
+![arquitetura](https://github.com/DiegoLins10/AWS/blob/main/AWS-Developer/07%20-%20VPC%20Fundamentos/arquitetura_vpc.png)
