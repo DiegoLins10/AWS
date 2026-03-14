@@ -632,3 +632,136 @@ Multi Value → vários IPs
 ---
 
 
+# 🌍 Route 53 + ALB + Health Checks (Arquitetura Multi-Region)
+
+## 1️⃣ Limitação do Load Balancer
+
+O **Application Load Balancer** é **regional**.
+
+Ou seja:
+
+```
+ALB → funciona apenas dentro de uma região AWS
+```
+
+Exemplo:
+
+```
+ALB (us-east-1)
+ → EC2
+ → EC2
+ → EC2
+```
+
+O ALB **balanceia tráfego apenas dentro da região**.
+
+---
+
+# 2️⃣ Papel do Route 53
+
+O **Amazon Route 53** fica **acima das regiões** e decide **para qual região enviar o usuário**.
+
+Arquitetura típica:
+
+```
+User
+  ↓
+Route53
+  ↓
+ALB us-east-1
+ALB eu-west-1
+```
+
+### Regra importante
+
+```
+Route53 → escolhe a região
+ALB → balanceia dentro da região
+```
+
+---
+
+# 3️⃣ Health Checks (Diferença importante)
+
+### Health Check do ALB
+
+O ALB verifica **instâncias individuais**.
+
+```
+ALB
+ ├ EC2 (healthy)
+ ├ EC2 (unhealthy)
+ └ EC2 (healthy)
+```
+
+Se uma falhar:
+
+```
+ALB para de enviar tráfego para ela
+```
+
+👉 Geralmente **não precisa de Route53 health check** nesse caso.
+
+---
+
+### Health Check do Route 53
+
+O Route 53 verifica **o endpoint inteiro**.
+
+Exemplo:
+
+```
+Route53
+ ├ ALB us-east-1
+ └ ALB eu-west-1
+```
+
+Se uma região falhar:
+
+```
+Route53 remove esse endpoint do DNS
+```
+
+---
+
+# 4️⃣ Quando usar Health Check do Route 53
+
+Use principalmente em:
+
+### 🌎 Multi-Region Failover
+
+```
+Primary → ALB us-east-1
+Secondary → ALB eu-west-1
+```
+
+Se a região primária falhar:
+
+```
+Route53 redireciona tráfego
+```
+
+---
+
+# 5️⃣ Resumo para prova (DVA)
+
+| Serviço              | Responsabilidade     |
+| -------------------- | -------------------- |
+| Route53              | escolhe região       |
+| ALB                  | balanceia instâncias |
+| Health check ALB     | verifica EC2         |
+| Health check Route53 | verifica região      |
+
+---
+
+# 🧠 Regra mental para certificação
+
+```
+ALB → balanceamento regional
+Route53 → balanceamento global
+```
+
+---
+
+
+
