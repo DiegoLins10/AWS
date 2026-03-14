@@ -502,4 +502,308 @@ VPC Flow Logs → Monitorar tráfego
 ---
 
 
+# 🌐 VPC Peering, Endpoints, VPN & Direct Connect (AWS DVA)
+
+## 1️⃣ VPC Peering
+
+**VPC Peering conecta duas VPCs diretamente usando a rede da AWS.**
+
+Permite que recursos em duas VPCs se comuniquem **como se estivessem na mesma rede**.
+
+📌 Características:
+
+* tráfego **privado**
+* usa **rede interna da AWS**
+* baixa latência
+* alta performance
+
+---
+
+### Arquitetura
+
+```text
+VPC A  ───── VPC Peering ───── VPC B
+10.0.0.0/16                  172.31.0.0/16
+```
+
+EC2 em uma VPC pode acessar EC2 na outra usando **IP privado**.
+
+---
+
+### Regras importantes para prova
+
+#### CIDR não pode sobrepor
+
+```text
+10.0.0.0/16
+10.0.1.0/24 ❌
+```
+
+CIDRs precisam ser **diferentes**.
+
+---
+
+#### Não é transitivo
+
+Se:
+
+```text
+VPC A ↔ VPC B
+VPC B ↔ VPC C
+```
+
+Então:
+
+```text
+VPC A ❌ NÃO acessa VPC C
+```
+
+📌 Muito cobrado em prova.
+
+---
+
+#### Route tables precisam ser atualizadas
+
+Você precisa adicionar rota:
+
+```text
+CIDR da outra VPC → VPC Peering Connection
+```
+
+---
+
+# 2️⃣ VPC Endpoints
+
+Permitem acessar **serviços da AWS sem usar internet**.
+
+Tráfego fica **dentro da rede AWS**.
+
+---
+
+## Tipos de VPC Endpoint
+
+### 1️⃣ Gateway Endpoint
+
+Usado apenas para:
+
+* **S3**
+* **DynamoDB**
+
+📌 Características:
+
+* **gratuito**
+* funciona via **route table**
+
+Exemplo:
+
+```text
+Private EC2 → Gateway Endpoint → S3
+```
+
+Sem:
+
+* NAT Gateway
+* Internet Gateway
+
+---
+
+### 2️⃣ Interface Endpoint (PrivateLink)
+
+Cria uma **ENI privada dentro da subnet**.
+
+Permite acessar:
+
+* serviços AWS
+* serviços de terceiros
+* serviços entre VPCs
+
+Exemplo:
+
+```text
+EC2 → Interface Endpoint → AWS Service
+```
+
+---
+
+### Exemplo de uso
+
+EC2 privada precisa acessar **S3**:
+
+Solução:
+
+```text
+Gateway Endpoint
+```
+
+---
+
+# 3️⃣ AWS PrivateLink
+
+O **PrivateLink usa Interface Endpoints**.
+
+Permite expor serviços **privadamente entre VPCs**.
+
+Arquitetura:
+
+```text
+Consumer VPC
+     │
+Interface Endpoint
+     │
+PrivateLink
+     │
+Service VPC (NLB)
+```
+
+📌 Muito usado para:
+
+* SaaS
+* microservices
+* serviços entre contas AWS
+
+---
+
+# 4️⃣ Site-to-Site VPN
+
+Conecta **datacenter on-premises com AWS**.
+
+Usa **internet pública**, mas com **túnel criptografado**.
+
+---
+
+### Arquitetura
+
+```text
+On-Premise
+    │
+Customer Gateway
+    │
+VPN Tunnel
+    │
+Virtual Private Gateway
+    │
+VPC
+```
+
+---
+
+### Características
+
+* criptografado
+* rápido de configurar
+* mais barato que Direct Connect
+
+📌 Porém depende da **internet pública**.
+
+---
+
+# 5️⃣ AWS Direct Connect (DX)
+
+Conexão **dedicada entre datacenter e AWS**.
+
+Não usa internet pública.
+
+---
+
+### Arquitetura
+
+```text
+On-Premise
+    │
+Direct Connect
+    │
+AWS Direct Connect Location
+    │
+VPC
+```
+
+---
+
+### Características
+
+* conexão privada
+* baixa latência
+* alta banda
+* mais estável
+
+📌 Muito usado por:
+
+* bancos
+* empresas grandes
+* workloads críticos
+
+---
+
+# 6️⃣ VPN vs Direct Connect
+
+| Feature          | VPN         | Direct Connect |
+| ---------------- | ----------- | -------------- |
+| Usa internet     | ✅           | ❌              |
+| Conexão dedicada | ❌           | ✅              |
+| Latência         | maior       | menor          |
+| Custo            | mais barato | mais caro      |
+| Setup            | rápido      | demorado       |
+
+📌 Pergunta clássica de prova.
+
+---
+
+# 🎯 Cenários que caem muito na DVA
+
+### EC2 privada precisa acessar S3
+
+Resposta:
+
+```text
+Gateway Endpoint
+```
+
+---
+
+### Conectar duas VPCs
+
+Resposta:
+
+```text
+VPC Peering
+```
+
+---
+
+### Conectar datacenter com AWS rápido
+
+Resposta:
+
+```text
+VPN
+```
+
+---
+
+### Conexão dedicada empresa → AWS
+
+Resposta:
+
+```text
+Direct Connect
+```
+
+---
+
+# 🧠 Resumo mental rápido (prova)
+
+```text
+VPC Peering → conectar VPCs
+
+Gateway Endpoint → S3 / DynamoDB
+
+Interface Endpoint → PrivateLink
+
+VPN → conexão segura pela internet
+
+Direct Connect → conexão dedicada
+```
+
+---
+
 
