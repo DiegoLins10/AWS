@@ -931,6 +931,179 @@ IP-based routing policy
 
 ---
 
+# 🌐 3rd Party Domains & Route 53
+
+## 1️⃣ Conceito
+
+Um **3rd Party Domain** é um domínio **registrado fora da AWS**.
+
+Exemplos de registradores:
+
+* GoDaddy
+* Namecheap
+* Google Domains
+
+Mesmo assim, você ainda pode usar o **Amazon Route 53** para gerenciar o DNS.
+
+---
+
+# 2️⃣ Arquitetura básica
+
+Fluxo típico:
+
+```
+User
+ ↓
+DNS
+ ↓
+Route 53 Hosted Zone
+ ↓
+AWS resources (ALB, EC2, CloudFront, etc.)
+```
+
+O domínio continua no **registrador externo**, mas o **DNS fica no Route 53**.
+
+---
+
+# 3️⃣ Como conectar um domínio externo ao Route 53
+
+### Passo 1 — Criar Hosted Zone
+
+Criar uma **Public Hosted Zone** no Route 53:
+
+```
+example.com
+```
+
+Isso gera **4 Name Servers (NS)**.
+
+Exemplo:
+
+```
+ns-123.awsdns-45.com
+ns-678.awsdns-90.net
+```
+
+---
+
+### Passo 2 — Atualizar Nameservers no registrador
+
+No registrador externo (ex: GoDaddy):
+
+Trocar os **nameservers** para os do Route 53.
+
+```
+Registrar
+ ↓
+NS records
+ ↓
+Route 53 nameservers
+```
+
+Depois disso:
+
+```
+Route 53 passa a controlar o DNS
+```
+
+---
+
+# 4️⃣ Exemplo prático
+
+Domínio comprado no GoDaddy:
+
+```
+myapp.com
+```
+
+Nameservers alterados para:
+
+```
+ns-xxx.awsdns-xx.com
+ns-xxx.awsdns-xx.net
+```
+
+No Route 53:
+
+```
+A record → ALB
+```
+
+Arquitetura:
+
+```
+myapp.com
+   ↓
+Route 53
+   ↓
+ALB
+   ↓
+EC2
+```
+
+---
+
+# 5️⃣ Pontos importantes para prova
+
+### ✔ O domínio **não precisa estar registrado na AWS**
+
+Você pode usar Route 53 **apenas como DNS**.
+
+---
+
+### ✔ O que precisa mudar no registrador
+
+```
+Nameservers (NS)
+```
+
+⚠️ **Não é A record**
+
+---
+
+### ✔ Hosted Zone é obrigatória
+
+Para usar Route 53 com domínio externo:
+
+```
+Public Hosted Zone
+```
+
+---
+
+# 🧠 Regra mental para prova
+
+```
+Domínio externo + Route53
+→ alterar Nameservers no registrador
+```
+
+---
+
+# 📊 Resumo
+
+| Item         | Onde fica           |
+| ------------ | ------------------- |
+| Domínio      | registrador externo |
+| DNS          | Route 53            |
+| Configuração | Hosted Zone         |
+
+---
+
+💡 **Pegadinha comum na prova:**
+
+Pergunta:
+
+> Um domínio foi comprado em um registrador externo. Como usar Route 53 para gerenciar DNS?
+
+Resposta:
+
+```
+Criar Hosted Zone e atualizar Nameservers no registrador
+```
+
+---
+
 
 
 
