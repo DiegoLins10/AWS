@@ -230,15 +230,16 @@ dados raramente acessados → mais barato
 
 ## 📊 Comparação das Storage Classes
 
-| Storage Class                          | 💰 Custo | Uso Principal                    | Frequência de Acesso | Latência        | Durabilidade  | Disponibilidade | Multi-AZ | Retenção mínima |
-| -------------------------------------- | -------- | -------------------------------- | -------------------- | --------------- | ------------- | --------------- | -------- | --------------- |
-| **S3 Standard**                        | 💲💲💲💲 | aplicações, sites, dados ativos  | frequente            | ms              | 99.999999999% | 99.99%          | ✔        | nenhuma         |
-| **S3 Standard-IA (INFREQUENT ACCESS)** | 💲💲💲   | backups, DR, arquivos ocasionais | pouco frequente      | ms              | 99.999999999% | 99.9%           | ✔        | 30 dias         |
-| **S3 One Zone-IA (INFREQUENT ACCESS)** | 💲💲     | backups secundários              | pouco frequente      | ms              | 99.999999999% | 99.5%           | ❌        | 30 dias         |
-| **S3 Intelligent-Tiering**             | 💲💲💲   | acesso imprevisível              | variável             | ms              | 99.999999999% | 99.9%           | ✔        | nenhuma         |
-| **S3 Glacier Instant Retrieval**       | 💲💲     | arquivamento com acesso rápido   | raro                 | ms              | 99.999999999% | 99.9%           | ✔        | 90 dias         |
-| **S3 Glacier Flexible Retrieval**      | 💲       | arquivamento barato              | muito raro           | minutos / horas | 99.999999999% | 99.99%          | ✔        | 90 dias         |
-| **S3 Glacier Deep Archive**            | 💲       | arquivamento de longo prazo      | quase nunca          | horas           | 99.999999999% | 99.99%          | ✔        | 180 dias        |
+| Storage Class                     | 💰 Custo | Uso Principal                   | Frequência de Acesso | Latência        | Retrieval                       | Durabilidade  | Disponibilidade | Multi-AZ | Retenção mínima |
+| --------------------------------- | -------- | ------------------------------- | -------------------- | --------------- | ------------------------------- | ------------- | --------------- | -------- | --------------- |
+| **S3 Standard**                   | 💲💲💲💲 | aplicações, sites, dados ativos | frequente            | ms              | —                               | 99.999999999% | 99.99%          | ✔        | nenhuma         |
+| **S3 Standard-IA**                | 💲💲💲   | backups, DR                     | pouco frequente      | ms              | —                               | 99.999999999% | 99.9%           | ✔        | 30 dias         |
+| **S3 One Zone-IA**                | 💲💲     | backups secundários             | pouco frequente      | ms              | —                               | 99.999999999% | 99.5%           | ❌        | 30 dias         |
+| **S3 Intelligent-Tiering**        | 💲💲💲   | acesso imprevisível             | variável             | ms              | automático                      | 99.999999999% | 99.9%           | ✔        | nenhuma         |
+| **S3 Glacier Instant Retrieval**  | 💲💲     | arquivamento rápido             | raro                 | ms              | instant                         | 99.999999999% | 99.9%           | ✔        | 90 dias         |
+| **S3 Glacier Flexible Retrieval** | 💲       | arquivamento barato             | muito raro           | minutos / horas | **Expedited / Standard / Bulk** | 99.999999999% | 99.99%          | ✔        | 90 dias         |
+| **S3 Glacier Deep Archive**       | 💲       | arquivamento longo prazo        | quase nunca          | horas           | **Standard / Bulk**             | 99.999999999% | 99.99%          | ✔        | 180 dias        |
+
 
 ---
 
