@@ -255,6 +255,8 @@ x-amz-meta-project: aws-study
 
 📌 Metadata são armazenadas **junto com o objeto**.
 
+Obs. Não é possivel filtrar por tags e metadata direto do S3, é necessario utilizar um banco de dados dynamodb e registrar essas informações para filtrar.
+
 ---
 
 # 🧠 Resumo para prova
