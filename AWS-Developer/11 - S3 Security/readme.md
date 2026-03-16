@@ -1,0 +1,248 @@
+Aqui está um **README focado na prova AWS Developer (DVA-C02)** com os tópicos da sua seção **Amazon S3 Security**. Mantive **curto, estruturado, numerado e com pontos que realmente caem na prova**.
+
+---
+
+# 📦 AWS Developer – S3 Security (README)
+
+## 1️⃣ S3 Encryption
+
+O **Amazon S3** suporta criptografia para proteger dados **em repouso (at rest)**.
+
+Amazon S3
+
+### Tipos de criptografia
+
+| Tipo                       | Quem gerencia a chave | Característica                                        |
+| -------------------------- | --------------------- | ----------------------------------------------------- |
+| **SSE-S3**                 | AWS                   | Criptografia automática com chave gerenciada pela AWS |
+| **SSE-KMS**                | AWS KMS               | Controle de chaves + auditoria                        |
+| **DSSE-KMS**               | AWS KMS               | **Dupla criptografia**                                |
+| **SSE-C**                  | Cliente               | Cliente fornece chave                                 |
+| **Client-side encryption** | Cliente               | Criptografia antes do upload                          |
+
+---
+
+## 2️⃣ DSSE-KMS (Dual-layer Encryption)
+
+DSSE-KMS = **Dual-layer server-side encryption com KMS**.
+
+AWS Key Management Service
+
+Características:
+
+* Duas camadas independentes de criptografia
+* Ambas usam **KMS**
+* Maior nível de proteção
+
+⚠️ Usado em cenários com **compliance rigoroso**.
+
+---
+
+## 3️⃣ Default Encryption
+
+Você pode configurar **criptografia automática no bucket**.
+
+```
+Bucket → Default Encryption → SSE-S3 ou SSE-KMS
+```
+
+Vantagens:
+
+* Todos objetos enviados ficam criptografados
+* Não depende do cliente lembrar de criptografar
+
+💡 **Pergunta comum de prova**
+
+> Como garantir que todos objetos enviados sejam criptografados automaticamente?
+
+Resposta: **S3 Default Encryption**
+
+---
+
+# 🌐 4️⃣ S3 CORS
+
+**CORS (Cross-Origin Resource Sharing)** permite que aplicações web em outro domínio acessem o bucket.
+
+Exemplo:
+
+```
+Frontend: app.com
+Bucket: images-bucket.s3.amazonaws.com
+```
+
+Sem CORS → navegador bloqueia.
+
+Exemplo de configuração:
+
+```json
+[
+  {
+    "AllowedOrigins": ["https://app.com"],
+    "AllowedMethods": ["GET"]
+  }
+]
+```
+
+Usado quando:
+
+* Frontend acessa S3 diretamente
+* Upload direto para S3
+* Download de assets
+
+---
+
+# 🔐 5️⃣ S3 MFA Delete
+
+Proteção extra contra exclusão acidental ou maliciosa.
+
+Quando ativado:
+
+Para deletar objetos ou desativar versioning é necessário:
+
+```
+Password + MFA code
+```
+
+⚠️ Importante:
+
+* Só pode ser configurado via **CLI**
+* Funciona apenas com **versioning ativado**
+
+---
+
+# 📜 6️⃣ S3 Access Logs
+
+Permite registrar **todas as requisições feitas ao bucket**.
+
+Exemplo de logs:
+
+* GET Object
+* PUT Object
+* DELETE Object
+* IP do cliente
+* User Agent
+
+Fluxo:
+
+```
+Bucket A
+   ↓
+Access Logs
+   ↓
+Bucket B (log bucket)
+```
+
+Usado para:
+
+* auditoria
+* segurança
+* análise de acesso
+
+---
+
+# 🔗 7️⃣ S3 Pre-Signed URLs
+
+Permite conceder **acesso temporário a um objeto privado**.
+
+Exemplo:
+
+Backend gera URL temporária:
+
+```
+https://bucket.s3.amazonaws.com/file.jpg?signature=xyz
+```
+
+Características:
+
+* Expiração configurável
+* Acesso temporário
+* Muito usado em APIs
+
+Casos comuns:
+
+* Upload direto para S3
+* Download seguro
+* Compartilhamento temporário
+
+---
+
+# 🎯 8️⃣ S3 Access Points
+
+Amazon S3 Access Points
+
+Permitem criar **pontos de acesso específicos para um bucket**.
+
+Cada Access Point pode ter **políticas próprias**.
+
+Exemplo:
+
+```
+Bucket: data-bucket
+
+Access Points:
+- analytics-access
+- mobile-access
+- backup-access
+```
+
+Vantagens:
+
+* simplifica controle de acesso
+* ideal para múltiplas aplicações
+
+---
+
+# 🧠 9️⃣ S3 Object Lambda
+
+Amazon S3 Object Lambda
+
+Permite modificar objetos **durante a leitura** usando Lambda.
+
+Fluxo:
+
+```
+Client
+  ↓
+S3 Object Lambda
+  ↓
+Lambda function
+  ↓
+S3 Object
+```
+
+Exemplos:
+
+* remover dados sensíveis
+* redimensionar imagens
+* transformar JSON
+
+Cliente recebe **objeto modificado**, sem alterar o original.
+
+---
+
+# 🚀 Resumo rápido para prova
+
+| Feature            | Função                            |
+| ------------------ | --------------------------------- |
+| S3 Encryption      | Protege dados em repouso          |
+| DSSE-KMS           | Dupla criptografia com KMS        |
+| Default Encryption | Criptografia automática no bucket |
+| CORS               | Permite acesso web cross-origin   |
+| MFA Delete         | Protege contra deleção            |
+| Access Logs        | Registra requisições ao bucket    |
+| Pre-Signed URL     | Acesso temporário                 |
+| Access Points      | Políticas específicas de acesso   |
+| Object Lambda      | Transformar objetos via Lambda    |
+
+---
+
+✅ **Dica para prova Developer**
+
+Três tópicos que **caem muito**:
+
+* **Pre-Signed URLs**
+* **CORS**
+* **SSE-KMS vs SSE-S3**
+
+---
+
