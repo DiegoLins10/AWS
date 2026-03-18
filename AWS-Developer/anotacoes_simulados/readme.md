@@ -5,7 +5,7 @@
 
 👉 Ele divide o item em **blocos de 4 KB**
 ---
-## 🧠 Como pensar
+## 🧠 Como pensar sem arredondar pra mim cima... 
 * 1–4 KB → **1 RCU**
 * 5–8 KB → **2 RCUs**
 * 9–12 KB → **3 RCUs**
