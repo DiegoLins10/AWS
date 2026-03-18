@@ -51,3 +51,22 @@ Perfeito pra prova 👍
 
 
 --dry-run verifica se o usuário possui as permissões necessárias para executar a ação, sem realmente executar a operação. Se o usuário tiver permissão, a resposta será DryRunOperation; caso contrário, UnauthorizedOperation. Essa é a forma recomendada para testar permissões.
+
+🧠 Hack pra decorar
+
+gp2 → “3 por GB”
+
+gp3 → “3 mil fixo”
+
+io → “eu escolho”
+
+🧠 Regra chave
+
+gp2 = 3 IOPS por GB
+
+👉 até um limite de:
+
+16.000 IOPS
+
+divide o limite de 16000 por 3
+16000 / 3 ≈ 5334 GB
