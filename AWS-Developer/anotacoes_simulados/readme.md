@@ -48,3 +48,6 @@ Perfeito pra prova 👍
 
 * Quer evitar criação no Update?
   👉 use `ConditionExpression` (`attribute_exists`)
+
+
+--dry-run verifica se o usuário possui as permissões necessárias para executar a ação, sem realmente executar a operação. Se o usuário tiver permissão, a resposta será DryRunOperation; caso contrário, UnauthorizedOperation. Essa é a forma recomendada para testar permissões.
