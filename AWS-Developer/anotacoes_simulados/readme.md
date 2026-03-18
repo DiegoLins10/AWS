@@ -30,3 +30,21 @@
 
 Perfeito pra prova 👍
 
+# ⚡ DynamoDB — PutItem vs UpdateItem (resumo)
+
+* **PutItem** → cria ou **substitui tudo**
+* **UpdateItem** → atualiza campos **ou cria (upsert)**
+
+---
+
+## 🧠 Regra de prova
+
+> **Put = replace**
+> **Update = patch + pode criar**
+
+---
+
+## ⚠️ Pegadinha
+
+* Quer evitar criação no Update?
+  👉 use `ConditionExpression` (`attribute_exists`)
