@@ -1,6 +1,4 @@
-Aqui vai um **README estilo prova DVA (Developer Associate)**, direto ao ponto, com foco no que realmente cai 👇
 
----
 
 # 📦 Seção 16: ECS, ECR & Fargate (Docker in AWS)
 
@@ -230,6 +228,3 @@ Define ONDE os containers rodam
 
 ---
 
-Se quiser, posso:
-✅ montar questões estilo prova DVA desse conteúdo
-✅ ou fazer um comparativo rápido ECS vs Lambda (cai bastante também)
