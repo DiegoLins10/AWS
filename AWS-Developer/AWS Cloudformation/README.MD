@@ -502,3 +502,175 @@ Ex:
 
 ---
 
+# ➕ 1️⃣6️⃣ Pseudo Parameters 🧠 (CAI MUITO)
+
+👉 São variáveis **automáticas da AWS** no AWS CloudFormation
+👉 Você NÃO precisa declarar — já existem no template
+
+---
+
+## 🎯 Principais Pseudo Parameters
+
+---
+
+### 🔹 `AWS::Region`
+
+👉 Região atual da stack
+
+```yaml
+!Ref AWS::Region
+```
+
+💡 Ex:
+
+* us-east-1
+* sa-east-1
+
+---
+
+### 🔹 `AWS::AccountId`
+
+👉 ID da conta AWS
+
+```yaml
+!Ref AWS::AccountId
+```
+
+💡 Ex:
+
+* 123456789012
+
+---
+
+### 🔹 `AWS::StackName`
+
+👉 Nome da stack
+
+```yaml
+!Ref AWS::StackName
+```
+
+---
+
+### 🔹 `AWS::StackId`
+
+👉 ID único da stack
+
+```yaml
+!Ref AWS::StackId
+```
+
+---
+
+### 🔹 `AWS::Partition`
+
+👉 Tipo de partição
+
+💡 Ex:
+
+* aws (normal)
+* aws-cn (China)
+
+---
+
+### 🔹 `AWS::URLSuffix`
+
+👉 Sufixo de domínio
+
+💡 Ex:
+
+* amazonaws.com
+
+---
+
+### 🔹 `AWS::NoValue` ⭐
+
+👉 Remove propriedade condicionalmente
+
+```yaml
+Conditions:
+  IsProd: !Equals [!Ref Env, prod]
+
+Resources:
+  MyBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !If [IsProd, "prod-bucket", !Ref "AWS::NoValue"]
+```
+
+💡 **Muito importante:**
+👉 Remove o campo se condição for falsa
+
+---
+
+## 🔥 Uso mais comum (Fn::Sub) ⭐
+
+👉 Onde mais aparece na prova
+
+```yaml
+BucketName: !Sub "my-bucket-${AWS::Region}-${AWS::AccountId}"
+```
+
+✔️ Nome único global
+✔️ Evita conflito
+
+---
+
+## 🧪 Exemplo completo (nível prova)
+
+```yaml
+Resources:
+  MyBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "app-${AWS::StackName}-${AWS::Region}"
+```
+
+---
+
+## ⚔️ Comparação importante
+
+| Pseudo Parameter | Uso                 |
+| ---------------- | ------------------- |
+| AWS::Region      | Região              |
+| AWS::AccountId   | Conta               |
+| AWS::StackName   | Nome stack          |
+| AWS::NoValue ⭐   | Remover propriedade |
+
+---
+
+## 🚨 Pegadinhas de prova
+
+### ❗ “Valor automático da conta/região”
+
+👉 Pseudo parameter
+
+---
+
+### ❗ “Gerar nome único global”
+
+👉 `Sub + AWS::Region + AWS::AccountId`
+
+---
+
+### ❗ “Remover campo condicional”
+
+👉 `AWS::NoValue`
+
+---
+
+### ❗ “Não precisa declarar no template”
+
+👉 Pseudo parameters
+
+---
+
+# 🧠 Resumo pra decorar
+
+* Não precisam ser definidos
+* Usados com `Ref` ou `Sub`
+* `NoValue` remove propriedades ⭐
+* Muito usados pra naming dinâmico
+
+---
+
