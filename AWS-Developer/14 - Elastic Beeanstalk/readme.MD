@@ -78,17 +78,173 @@ Quando você faz deploy, ele cria automaticamente:
 
 ---
 
-## 6️⃣ Deployment Strategies 🔄 (Cai em prova)
-
-* **All at once** → rápido, downtime 😬
-* **Rolling** → atualiza em batches
-* **Rolling with additional batch** → mais seguro
-* **Immutable** ⭐ → cria novas instâncias (mais seguro)
-
-💡 **DVA tip:**
-👉 Immutable = zero downtime + rollback fácil
+Perfeito — vou deixar essa seção **completa nível prova DVA (com tudo que pode cair)** 👇
 
 ---
+
+# 🔄 6️⃣ Deployment Strategies (Elastic Beanstalk)
+
+## 1️⃣ All at once ⚡
+
+👉 Atualiza **todas as instâncias de uma vez**
+
+* ✅ Mais rápido
+* ❌ **Downtime total**
+* ❌ Sem rollback gradual
+
+💡 **Quando usar:**
+
+* Dev / teste
+* Aplicações não críticas
+
+---
+
+## 2️⃣ Rolling 🔁
+
+👉 Atualiza em **lotes (batches)**
+
+* Parte das instâncias sai do ar por vez
+* Outras continuam atendendo
+
+✔️ Sem downtime total
+❌ Pode degradar performance durante deploy
+
+💡 **Risco:**
+
+* Se der erro, parte do sistema já foi atualizada
+
+---
+
+## 3️⃣ Rolling with Additional Batch ➕
+
+👉 Igual ao Rolling, mas cria **instâncias extras temporárias**
+
+* Mantém capacidade total
+* Mais seguro que Rolling
+
+✔️ Menor impacto no usuário
+❌ Custo temporariamente maior
+
+💡 **DVA tip:**
+👉 Muito usado quando não pode perder capacidade
+
+---
+
+## 4️⃣ Immutable ⭐
+
+👉 Cria **novo Auto Scaling Group com novas instâncias**
+
+* Não mexe nas instâncias antigas
+* Só troca quando tudo estiver OK
+
+✔️ **Zero downtime**
+✔️ **Rollback fácil**
+✔️ Mais seguro
+
+❌ Mais caro (instâncias duplicadas temporariamente)
+
+💡 **Regra de ouro:**
+👉 **Mais seguro de todos**
+
+---
+
+## 5️⃣ Traffic Splitting 🚦
+
+👉 Divide tráfego entre:
+
+* versão antiga
+* versão nova
+
+Ex:
+
+* 90% old
+* 10% new
+
+✔️ Teste gradual (canary)
+✔️ Detecta problemas antes de impactar tudo
+
+❌ Mais complexo
+
+💡 Usa:
+
+* Elastic Load Balancing
+
+---
+
+## 6️⃣ Blue/Green 🔵🟢
+
+👉 Cria **ambiente totalmente novo**
+
+* Blue = atual
+* Green = novo
+
+Depois:
+👉 troca o tráfego (swap)
+
+✔️ Zero downtime
+✔️ Deploy seguro
+✔️ Testes completos antes de ir pra produção
+
+❌ Mais caro (2 ambientes rodando)
+
+---
+
+# ⚔️ Comparação geral (CAI MUITO)
+
+| Strategy          | Downtime       | Segurança    | Custo           | Complexidade     |
+| ----------------- | -------------- | ------------ | --------------- | ---------------- |
+| All at once       | ❌ Alto         | ❌ Baixa      | 💰 Baixo        | 😀 Fácil         |
+| Rolling           | ⚠️ Parcial     | ⚠️ Médio     | 💰 Médio        | 🙂 Médio         |
+| Rolling + extra   | ⚠️ Muito baixo | 👍 Alto      | 💰💰 Médio/Alto | 🙂 Médio         |
+| Immutable         | ✅ Zero         | ⭐ Muito alto | 💰💰 Alto       | 🙂 Médio         |
+| Traffic Splitting | ✅ Zero         | ⭐ Alto       | 💰💰 Médio      | 😐 Mais complexo |
+| Blue/Green        | ✅ Zero         | ⭐ Muito alto | 💰💰💰 Alto     | 😐 Mais complexo |
+
+---
+
+# 🧠 Pegadinhas de prova (IMPORTANTÍSSIMO)
+
+### ❗ “Zero downtime + rollback fácil”
+
+👉 **Immutable**
+
+---
+
+### ❗ “Testar nova versão com parte do tráfego”
+
+👉 **Traffic Splitting**
+
+---
+
+### ❗ “Ambiente separado e troca completa”
+
+👉 **Blue/Green**
+
+---
+
+### ❗ “Mais rápido possível”
+
+👉 **All at once**
+
+---
+
+### ❗ “Atualização gradual”
+
+👉 **Rolling**
+
+---
+
+# 🧠 Resumo pra decorar
+
+* All at once → rápido 💀
+* Rolling → gradual ⚖️
+* Rolling + extra → seguro + capacidade
+* Immutable → ⭐ padrão seguro
+* Traffic splitting → canary 🧪
+* Blue/Green → swap completo 🔄
+
+---
+
 
 ## 7️⃣ Vantagens ✅
 
