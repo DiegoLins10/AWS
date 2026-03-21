@@ -306,3 +306,210 @@ Evite quando:
 
 ---
 
+# ➕ 1️⃣1️⃣ Beanstalk CLI & Deployment Process 🖥️
+
+## 🔧 CLI
+
+👉 Ferramenta:
+
+* EB CLI
+
+### Comandos importantes:
+
+```bash
+eb init
+eb create
+eb deploy
+eb status
+eb logs
+```
+
+💡 **DVA tip:**
+
+* `eb deploy` → faz deploy de nova versão
+* `eb logs` → troubleshooting (cai em cenário)
+
+---
+
+## 🔄 Deployment process (interno)
+
+1. Upload código → Amazon S3
+2. Beanstalk cria versão
+3. Provisiona/atualiza infra via AWS CloudFormation
+4. Deploy nas instâncias
+
+💡 **Pegadinha:**
+👉 Beanstalk = usa CloudFormation por baixo
+
+---
+
+# ➕ 1️⃣2️⃣ Lifecycle Policy 🧹
+
+👉 Controla versões antigas da aplicação
+
+✔️ Evita acumular versões
+✔️ Reduz custo no S3
+
+### Tipos:
+
+* Baseado em quantidade (ex: manter últimas 10)
+* Baseado em tempo (ex: apagar após X dias)
+
+💡 **DVA tip:**
+👉 Sempre ligado a versões armazenadas no S3
+
+---
+
+# ➕ 1️⃣3️⃣ Beanstalk Extensions (.ebextensions) ⚙️
+
+👉 Arquivos `.config` (YAML/JSON)
+
+Usados para:
+
+* Configurar EC2
+* Instalar pacotes
+* Rodar scripts
+* Customizar infra
+
+📁 Exemplo:
+
+```
+.ebextensions/
+  config.config
+```
+
+💡 **Muito importante:**
+👉 Permite customização além do default
+
+---
+
+# ➕ 1️⃣4️⃣ Beanstalk + CloudFormation 🔗
+
+👉 Relação interna:
+
+* Cada environment = **1 stack do CloudFormation**
+* Recursos são criados via CF
+
+✔️ Você pode ver a stack no console
+✔️ Não precisa escrever template manualmente
+
+💡 **DVA pegadinha:**
+👉 Mesmo usando Beanstalk → CloudFormation está sendo usado
+
+---
+
+# ➕ 1️⃣5️⃣ Cloning 🧬
+
+👉 Copiar um environment existente
+
+✔️ Mesma configuração
+✔️ Rápido para criar staging
+
+💡 Use para:
+
+* Testes
+* Backup de configuração
+
+---
+
+# ➕ 1️⃣6️⃣ Migration 🔄
+
+👉 Mover environment entre:
+
+* Tipos de instância
+* Configurações
+* Regiões (manual)
+
+💡 Normalmente envolve:
+
+* Cloning
+* DNS swap (Route 53)
+
+---
+
+# ➕ 1️⃣7️⃣ Cleanup 🧹
+
+👉 Ao deletar environment:
+
+* EC2 → deletado
+* ELB → deletado
+* ASG → deletado
+
+⚠️ Pode sobrar:
+
+* S3 (versões)
+* Snapshots RDS
+
+💡 **DVA tip:**
+👉 Sempre revisar recursos órfãos
+
+---
+
+# ➕ 1️⃣8️⃣ Health Monitoring ❤️
+
+👉 Beanstalk monitora:
+
+* Status da aplicação
+* EC2 health
+* Load balancer
+
+Integra com:
+
+* Amazon CloudWatch
+
+Estados:
+
+* Green ✅
+* Yellow ⚠️
+* Red ❌
+
+---
+
+# ➕ 1️⃣9️⃣ Configurações importantes (cai em prova) ⚙️
+
+### 🔹 Capacity
+
+* Min / Max instances
+
+### 🔹 Load Balancer
+
+* ALB configuration
+
+### 🔹 Scaling
+
+* Baseado em métricas (CloudWatch)
+
+### 🔹 Rolling updates
+
+* Configuráveis
+
+---
+
+# ➕ 2️⃣0️⃣ Security & IAM 🔐
+
+👉 Beanstalk usa roles:
+
+* Service Role (Beanstalk)
+* EC2 Instance Profile
+
+💡 Permissões comuns:
+
+* S3 access
+* CloudWatch logs
+* X-Ray (opcional)
+
+---
+
+# 🧠 EXTRA — Pegadinhas finais de prova
+
+* Beanstalk usa **CloudFormation internamente** ⭐
+* Deploy pode causar downtime dependendo da strategy
+* `.ebextensions` = customização avançada
+* Lifecycle Policy = limpa versões no S3
+* Cloning = copiar environment rápido
+
+---
+
+
+
+
