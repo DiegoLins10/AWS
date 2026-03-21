@@ -1,7 +1,3 @@
-Perfeito — vou montar no seu estilo **README DVA (objetivo + pegadinhas + estrutura clara)** 👇
-
----
-
 # ☁️ CloudFormation — README (AWS Developer DVA)
 
 ## 1️⃣ O que é? 🤔
