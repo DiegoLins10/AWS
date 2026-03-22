@@ -854,5 +854,309 @@ Event Source → Poller → Batch → Lambda
 ---
 
 
+# 2️⃣2️⃣ Lambda Event & Context Objects 📦
+
+## 📌 Event
+
+➡️ Contém os dados de entrada da Lambda
+
+### 🔹 Exemplos
+
+* S3 → info do bucket/objeto
+* API Gateway → HTTP request
+* SQS → mensagens
+
+---
+
+## 📌 Context
+
+➡️ Metadados da execução
+
+### 🔹 Contém
+
+* `awsRequestId`
+* `functionName`
+* `remainingTimeInMillis`
+
+---
+
+## 🧠 Uso comum
+
+👉 Timeout handling
+👉 Logging
+👉 Debug
+
+---
+
+## 🚨 Pegadinha
+
+👉 Event = input
+👉 Context = metadata
+
+---
+
+# 2️⃣3️⃣ Lambda Destinations 🎯
+
+## 📌 O que é
+
+➡️ Define o destino após execução async
+
+---
+
+## 🔹 Tipos
+
+| Tipo       | Quando          |
+| ---------- | --------------- |
+| On Success | Execução OK     |
+| On Failure | Execução falhou |
+
+---
+
+## 🔹 Destinos
+
+* Lambda
+* SNS
+* SQS
+* EventBridge
+
+---
+
+## ⚠️ Diferença importante
+
+👉 **DLQ ≠ Destination**
+
+| Feature        | DLQ | Destination |
+| -------------- | --- | ----------- |
+| Só erro        | ✅   | ❌           |
+| Sucesso também | ❌   | ✅           |
+
+---
+
+## 🚨 Pegadinha
+
+👉 Destinations = async only
+
+---
+
+# 2️⃣4️⃣ Lambda Permissions 🔐
+
+## 📌 Dois tipos
+
+---
+
+## 🔹 1. IAM Role (Execution Role)
+
+➡️ O que a Lambda **PODE FAZER**
+
+### 🔹 Exemplo
+
+* Ler S3
+* Escrever DynamoDB
+
+---
+
+## 🔹 2. Resource-based Policy
+
+➡️ Quem pode **invocar a Lambda**
+
+### 🔹 Exemplo
+
+* S3 invocar Lambda
+* EventBridge invocar
+
+---
+
+## ⚔️ Resumo
+
+| Tipo            | Controle     |
+| --------------- | ------------ |
+| IAM Role        | Lambda → AWS |
+| Resource Policy | AWS → Lambda |
+
+---
+
+## 🚨 Pegadinha
+
+👉 “Permitir S3 chamar Lambda”
+
+❌ IAM Role
+✅ Resource-based policy
+
+---
+
+# 2️⃣5️⃣ Lambda Environment Variables 🌱
+
+## 📌 O que é
+
+➡️ Configuração dinâmica da função
+
+---
+
+## 🔹 Usos
+
+* URLs
+* API keys
+* Config flags
+
+---
+
+## 🔐 Segurança
+
+👉 Pode usar:
+
+* KMS encryption
+
+---
+
+## 🚨 Pegadinha
+
+👉 NÃO guardar secrets sensíveis direto
+👉 Use **Secrets Manager / SSM Parameter Store**
+
+---
+
+# 2️⃣6️⃣ Lambda Monitoring & X-Ray 📊
+
+## 📌 CloudWatch
+
+➡️ Logs + métricas
+
+---
+
+## 🔹 Métricas importantes
+
+* Invocations
+* Errors
+* Duration
+* Throttles
+
+---
+
+## 📌 X-Ray
+
+➡️ **Tracing distribuído**
+
+* Latência
+* Fluxo
+* Gargalos
+
+---
+
+## 🚨 Pegadinha
+
+👉 CloudWatch = métricas/logs
+👉 X-Ray = tracing
+
+---
+
+# 2️⃣7️⃣ Lambda@Edge & CloudFront Functions 🌍
+
+## 📌 Lambda@Edge
+
+➡️ Executa código no edge (CloudFront)
+
+---
+
+## 🔹 Características
+
+* Mais pesado
+* Pode acessar recursos AWS
+* Maior latência que CF Functions
+
+---
+
+## 📌 CloudFront Functions
+
+➡️ Mais leve e rápido
+
+---
+
+## 🔹 Características
+
+* Ultra low latency
+* Apenas manipulação HTTP simples
+* Sem acesso a rede externa
+
+---
+
+## ⚔️ Comparação
+
+| Feature      | Lambda@Edge     | CF Functions        |
+| ------------ | --------------- | ------------------- |
+| Complexidade | Alta            | Baixa               |
+| Latência     | Média           | Muito baixa         |
+| Uso          | Lógica complexa | Headers / redirects |
+
+---
+
+## 🚨 Pegadinha
+
+👉 Precisa lógica complexa → Lambda@Edge
+👉 Precisa ultra rápido → CF Functions
+
+---
+
+# 2️⃣8️⃣ Lambda in VPC 🌐
+
+## 📌 O que é
+
+➡️ Lambda dentro de uma VPC
+
+---
+
+## 🔹 Quando usar
+
+* Acessar RDS
+* Acessar recursos privados
+
+---
+
+## ⚠️ Problema clássico
+
+👉 Lambda perde acesso à internet
+
+---
+
+## 🔹 Solução
+
+* NAT Gateway (para internet)
+* VPC endpoints (melhor opção)
+
+---
+
+## 🧠 Características
+
+* Mais lenta (cold start maior)
+* Mais complexa
+
+---
+
+## 🚨 Pegadinhas
+
+❗ Lambda na VPC NÃO tem internet por padrão
+❗ Precisa NAT ou endpoint
+
+---
+
+# 🎯 Resumo Final (Última Revisão)
+
+👉 Event = input
+👉 Context = metadata
+
+👉 IAM Role = o que Lambda faz
+👉 Resource Policy = quem chama Lambda
+
+👉 Destinations = async flow
+👉 DLQ = só erro
+
+👉 CloudWatch = logs
+👉 X-Ray = tracing
+
+👉 Lambda@Edge vs CF Functions = complexidade vs performance
+
+👉 Lambda VPC = acesso privado (com custo de rede)
+
+---
+
 
 
