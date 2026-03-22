@@ -599,4 +599,476 @@ aws sqs delete-queue --queue-url URL
 ---
 
 
+# ➕ 1️⃣5️⃣ Amazon SNS — Pub/Sub & Fan-Out 📢
+
+## 1️⃣ O que é o SNS? 🤔
+
+➡️ O **Amazon SNS** é um serviço de:
+
+### 👉 **Pub/Sub (Publish/Subscribe)**
+
+* 1 produtor → vários consumidores
+
+---
+
+## 🧠 Tradução simples
+
+* SNS = **disparador de mensagens**
+* Ele NÃO armazena (como SQS)
+* Ele **entrega imediatamente**
+
+---
+
+## 2️⃣ Como funciona 📬
+
+### 📌 Fluxo:
+
+```id="sns-flow"
+Publisher → SNS Topic → Subscribers
+```
+
+---
+
+### Componentes:
+
+* **Publisher** → envia mensagem
+* **Topic** → canal
+* **Subscribers** → recebem
+
+---
+
+## 3️⃣ Tipos de Subscribers 👀
+
+SNS pode enviar para:
+
+* SQS ✅ (mais comum)
+* Lambda
+* HTTP/HTTPS
+* Email
+* SMS
+
+---
+
+💡 **Para prova:**
+
+* Integração mais importante = **SNS + SQS**
+
+---
+
+## 4️⃣ Fan-Out Pattern 📡 (🔥 MUITO IMPORTANTE)
+
+➡️ Um evento → múltiplos destinos
+
+---
+
+### 📌 Exemplo:
+
+```id="fanout"
+App → SNS → SQS1
+          → SQS2
+          → Lambda
+```
+
+---
+
+💡 Cada consumidor recebe **sua própria cópia**
+
+---
+
+## 🧠 Vantagem
+
+* Desacoplamento total
+* Escala independente
+* Paralelismo
+
+---
+
+## 5️⃣ SNS vs SQS 🧠
+
+| SNS              | SQS              |
+| ---------------- | ---------------- |
+| Push             | Pull             |
+| Entrega imediata | Consumidor busca |
+| Não armazena     | Armazena         |
+| Fan-out          | Processamento    |
+
+---
+
+💡 **Resumo:**
+
+* SNS = distribuir
+* SQS = processar
+
+---
+
+## 6️⃣ SNS + SQS (🔥 Arquitetura clássica)
+
+➡️ Melhor dos dois mundos:
+
+* SNS → distribui
+* SQS → garante processamento
+
+---
+
+### Benefícios:
+
+* Retry automático
+* Buffer
+* Resiliência
+
+---
+
+## 7️⃣ Message Filtering 🎯
+
+➡️ Subscriber recebe só mensagens específicas
+
+---
+
+### Exemplo:
+
+* Mensagem: `{ tipo: "pedido" }`
+* Filtro: só `pedido`
+
+---
+
+💡 Evita processamento desnecessário
+
+---
+
+## 8️⃣ FIFO SNS ⚠️
+
+➡️ SNS também suporta FIFO
+
+---
+
+### Regras:
+
+* Topic termina com `.fifo`
+* Compatível com SQS FIFO
+* Mantém ordem
+
+---
+
+💡 Pegadinha:
+
+* Só funciona com endpoints compatíveis (ex: SQS FIFO)
+
+---
+
+## 9️⃣ Delivery & Retry 🔄
+
+➡️ SNS tenta entregar automaticamente
+
+* Retry configurável
+* Pode usar DLQ
+
+---
+
+## 🔟 Segurança 🔐
+
+* IAM policies
+* Resource policies (cross-account)
+* Encryption (KMS)
+
+---
+
+## 🔥 Pegadinhas de prova
+
+### ❗ 1. SNS NÃO armazena mensagens
+
+* Se subscriber falhar → pode perder (sem SQS)
+
+---
+
+### ❗ 2. Fan-out = múltiplos destinos
+
+* Não confundir com fila
+
+---
+
+### ❗ 3. SNS + SQS = padrão recomendado
+
+* Alta confiabilidade
+
+---
+
+### ❗ 4. Filtering evita custo
+
+* Muito cobrado
+
+---
+
+### ❗ 5. Push vs Pull
+
+* SNS → push
+* SQS → pull
+
+---
+
+## 🧠 Mnemonics
+
+* **SNS = megafone 📢**
+* **Fan-out = espalhar mensagem**
+* **SNS entrega / SQS segura**
+
+---
+
+## 🧪 Resumo de Prova
+
+| Conceito     | Cai MUITO |
+| ------------ | --------- |
+| Fan-out      | 🔥🔥🔥    |
+| SNS vs SQS   | 🔥🔥🔥    |
+| Filtering    | 🔥🔥      |
+| SNS + SQS    | 🔥🔥🔥    |
+| Push vs Pull | 🔥🔥      |
+
+---
+
+# ➕ 1️⃣6️⃣ Kinesis Data Streams vs Firehose 🔥🌊
+
+## 1️⃣ Visão geral 🤔
+
+### 🌊 **Amazon Kinesis Data Streams**
+
+➡️ Serviço de **streaming real-time com controle total**
+
+---
+
+### 🔥 **Amazon Kinesis Data Firehose**
+
+➡️ Serviço para **entregar dados automaticamente para destinos**
+
+---
+
+## 2️⃣ Diferença principal (ESSÊNCIA DA PROVA) 🧠
+
+| Kinesis Data Streams | Firehose          |
+| -------------------- | ----------------- |
+| Você PROCESSA dados  | AWS ENTREGA dados |
+| Precisa de consumer  | Não precisa       |
+| Real-time            | Near real-time    |
+| Armazena dados       | Não armazena      |
+| Replay possível      | ❌ Não tem replay  |
+
+---
+
+💡 **Resumo de ouro:**
+
+* **KDS = você controla**
+* **Firehose = AWS faz tudo**
+
+---
+
+## 3️⃣ Kinesis Data Streams 🌊
+
+### Características:
+
+* Real-time
+* Usa **shards**
+* Retention até **365 dias**
+* Permite **reprocessar (replay)**
+
+---
+
+### Você precisa implementar:
+
+* Producer
+* Consumer
+* Processamento
+
+---
+
+💡 Use quando:
+
+* Precisa de lógica customizada
+* Precisa replay
+* Processamento em tempo real
+
+---
+
+## 4️⃣ Firehose 🔥
+
+### Características:
+
+* Fully managed ✅
+* Auto scaling ✅
+* Entrega para:
+
+  * S3
+  * Redshift
+  * OpenSearch
+  * HTTP endpoint
+
+---
+
+### NÃO precisa:
+
+* Consumer
+* Gerenciar shard
+* Escalar
+
+---
+
+💡 Use quando:
+
+* Só quer **entregar dados**
+* ETL simples
+* Logs → S3
+
+---
+
+## 5️⃣ Fluxo mental 🧠
+
+### Kinesis Data Streams:
+
+```id="kds-flow"
+App → Kinesis → Consumer (Lambda/EC2)
+```
+
+---
+
+### Firehose:
+
+```id="firehose-flow"
+App → Firehose → S3 / Redshift / etc
+```
+
+---
+
+## 6️⃣ Replay (🔥 MUITO COBRADO)
+
+| Serviço              | Replay |
+| -------------------- | ------ |
+| Kinesis Data Streams | ✅      |
+| Firehose             | ❌      |
+
+---
+
+💡 Pegadinha clássica:
+
+> “Precisa reprocessar dados”
+
+👉 Resposta:
+
+* **Kinesis Data Streams**
+
+---
+
+## 7️⃣ Latência ⏱️
+
+| Serviço  | Latência                |
+| -------- | ----------------------- |
+| Kinesis  | Real-time               |
+| Firehose | Near real-time (buffer) |
+
+---
+
+💡 Firehose usa buffer:
+
+* Tempo ou tamanho
+
+---
+
+## 8️⃣ Escalabilidade 📈
+
+| Serviço  | Escala          |
+| -------- | --------------- |
+| Kinesis  | Manual (shards) |
+| Firehose | Automático      |
+
+---
+
+💡 Pegadinha:
+
+* “Não quer gerenciar capacidade” → Firehose
+
+---
+
+## 9️⃣ Armazenamento 🗂️
+
+| Serviço  | Armazena |
+| -------- | -------- |
+| Kinesis  | ✅        |
+| Firehose | ❌        |
+
+---
+
+💡 Firehose = só entrega
+
+---
+
+## 🔟 Casos de uso 🎯
+
+### Kinesis:
+
+* Analytics real-time
+* Processamento customizado
+* Machine learning streaming
+
+---
+
+### Firehose:
+
+* Logs → S3
+* ETL simples
+* Data lake ingestion
+
+---
+
+## 🔥 Pegadinhas de prova
+
+### ❗ 1. Firehose NÃO permite replay
+
+---
+
+### ❗ 2. Kinesis precisa de consumer
+
+---
+
+### ❗ 3. Firehose NÃO armazena dados
+
+---
+
+### ❗ 4. Firehose é quase sempre resposta quando:
+
+* “Menor esforço operacional”
+* “Fully managed”
+* “Enviar para S3/Redshift”
+
+---
+
+### ❗ 5. Kinesis quando:
+
+* “Precisa processar”
+* “Precisa replay”
+* “Real-time estrito”
+
+---
+
+## 🧠 Mnemonics
+
+* **Kinesis = controle total**
+* **Firehose = entrega automática**
+* **Replay? → Kinesis**
+* **Zero esforço? → Firehose**
+
+---
+
+## 🧪 Resumo final (PROVA)
+
+| Cenário             | Escolha  |
+| ------------------- | -------- |
+| Processar streaming | Kinesis  |
+| Enviar para S3      | Firehose |
+| Replay necessário   | Kinesis  |
+| Sem gerenciamento   | Firehose |
+| Tempo real absoluto | Kinesis  |
+
+---
+
+
+
+
+
 
