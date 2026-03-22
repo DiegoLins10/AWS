@@ -304,4 +304,242 @@ Evento → Regra → Target
 
 ---
 
+# 🔍 Seção: AWS X-Ray & CloudTrail (Tracing vs Auditoria)
+
+---
+
+## 1️⃣ Visão Geral 🧠
+
+| Serviço       | Função                                     |
+| ------------- | ------------------------------------------ |
+| X-Ray 🔍      | **Tracing (debug da aplicação)**           |
+| CloudTrail 📜 | **Auditoria (ações de usuário / API AWS)** |
+
+---
+
+## 🚨 REGRA DE OURO (CAI NA PROVA)
+
+👉 **X-Ray = tracing (fluxo da request)**
+👉 **CloudTrail = ações de usuário (API AWS)**
+
+---
+
+# 🔍 2️⃣ AWS X-Ray (TRACING)
+
+## 📌 O que é
+
+➡️ Serviço de **distributed tracing**
+
+👉 Analisa **requisições dentro da aplicação**
+
+---
+
+## 📊 O que ele mostra
+
+* Latência
+* Erros
+* Fluxo entre serviços
+* Gargalos
+
+---
+
+## 🔹 Exemplo de fluxo
+
+Usuário → API Gateway → Lambda → DynamoDB
+
+👉 X-Ray mostra:
+
+* Tempo em cada etapa
+* Onde falhou
+* Dependências
+
+---
+
+## 🧱 Conceitos importantes
+
+| Conceito   | Definição                         |
+| ---------- | --------------------------------- |
+| Trace      | Requisição completa               |
+| Segment    | Serviço (Lambda, EC2…)            |
+| Subsegment | Operação interna (DB call, HTTP…) |
+
+---
+
+## ⚙️ Instrumentação
+
+➡️ Pode exigir código (SDK)
+➡️ Pode ser automático em alguns serviços
+
+### 🔹 Casos comuns:
+
+* Lambda → só ativar X-Ray
+* ECS → daemon + config
+* EC2 → SDK/manual
+
+---
+
+## 🎯 Sampling Rules
+
+➡️ Controla quantas requests serão rastreadas
+
+💡 Evita custo alto
+
+---
+
+## 🔌 X-Ray APIs
+
+* `PutTraceSegments`
+* `PutTelemetryRecords`
+
+💡 Pouco cobrado, mas bom saber
+
+---
+
+## 🐳 X-Ray com ECS / Beanstalk
+
+➡️ Usa **X-Ray daemon**
+
+* Sidecar container (ECS)
+* Integrado no Beanstalk
+
+---
+
+## 🌐 AWS Distro for OpenTelemetry (ADOT)
+
+➡️ Alternativa moderna ao X-Ray SDK
+
+* Padrão open-source
+* Integra com X-Ray
+
+💡 **Trend atual da AWS**
+
+---
+
+## 🧠 Quando usar X-Ray
+
+✔️ Debug de API
+✔️ Analisar latência
+✔️ Microservices
+✔️ Serverless tracing
+
+---
+
+# 📜 3️⃣ AWS CloudTrail (AUDITORIA)
+
+## 📌 O que é
+
+➡️ Serviço de **auditoria de ações na AWS**
+
+👉 Registra chamadas de API
+
+---
+
+## 🔍 O que ele registra
+
+* Quem fez (IAM user/role)
+* Qual ação (API)
+* Quando
+* De onde (IP)
+
+---
+
+## 🔹 Exemplos
+
+* `CreateUser`
+* `DeleteBucket`
+* `RunInstances`
+
+---
+
+## 🧩 Tipos de eventos
+
+| Tipo              | Descrição                   |
+| ----------------- | --------------------------- |
+| Management Events | Ações administrativas       |
+| Data Events       | Ações em dados (S3, Lambda) |
+
+---
+
+## 📦 Armazenamento
+
+➡️ Logs enviados para:
+
+* S3
+* CloudWatch Logs (opcional)
+
+---
+
+## ⚡ Integração com EventBridge
+
+➡️ CloudTrail → EventBridge → ação automática
+
+### 🔹 Exemplo
+
+* DeleteBucket → dispara alerta (Lambda/SNS)
+
+💡 Muito cobrado em prova
+
+---
+
+## 🧠 Quando usar CloudTrail
+
+✔️ Saber quem fez algo
+✔️ Auditoria / compliance
+✔️ Segurança
+✔️ Investigar incidentes
+
+---
+
+# ⚔️ 4️⃣ CloudTrail vs X-Ray vs CloudWatch
+
+| Serviço       | Uso                        |
+| ------------- | -------------------------- |
+| CloudTrail 📜 | Ações de usuário (API AWS) |
+| X-Ray 🔍      | Tracing da aplicação       |
+| CloudWatch 📊 | Métricas + Logs            |
+
+---
+
+# 🔥 5️⃣ Cenários de Prova
+
+## ❓ Quem deletou um bucket S3?
+
+👉 ✅ CloudTrail
+
+---
+
+## ❓ API está lenta, onde está o problema?
+
+👉 ✅ X-Ray
+
+---
+
+## ❓ Monitorar CPU de EC2?
+
+👉 ✅ CloudWatch
+
+---
+
+## ❓ Detectar ação e disparar automação?
+
+👉 ✅ CloudTrail + EventBridge
+
+---
+
+# ⚠️ Pegadinhas
+
+❌ CloudTrail NÃO mostra latência
+❌ X-Ray NÃO mostra usuário/API calls
+❌ X-Ray NÃO substitui logs
+
+---
+
+# 🧠 Resumo Final
+
+👉 **X-Ray = tracing (fluxo da request, debug)**
+👉 **CloudTrail = ações de usuário (API AWS, auditoria)**
+
+---
+
+
 
