@@ -1190,6 +1190,177 @@ Porque Kinesis:
 * Arquitetura comum e recomendada
 
 ---
+Perfeito — esse aqui é mais “low frequency” na prova, mas quando cai… derruba 😈
+Vou te deixar no formato DVA direto 👇
+
+---
+
+# ➕ 1️⃣8️⃣ Amazon Managed Service for Apache Flink 🌊⚡
+
+## 1️⃣ O que é? 🤔
+
+➡️ O **Amazon Managed Service for Apache Flink** é um serviço para:
+
+### 👉 **processar dados em streaming com lógica complexa**
+
+---
+
+## 🧠 Tradução simples
+
+* Kinesis = recebe dados
+* Flink = **processa dados em tempo real com inteligência**
+
+---
+
+💡 Pense assim:
+
+* SQS = fila
+* Kinesis = stream
+* Flink = **cérebro do streaming**
+
+---
+
+## 2️⃣ Como funciona 📊
+
+```id="flink-flow"
+Kinesis → Flink → Output (S3 / DB / etc)
+```
+
+---
+
+### Entrada:
+
+* Kinesis Data Streams
+* Kinesis Firehose
+
+---
+
+### Saída:
+
+* S3
+* Redshift
+* OpenSearch
+* Outros serviços
+
+---
+
+## 3️⃣ O que ele faz? 🧠
+
+* Transformações
+* Filtros
+* Agregações
+* Enriquecimento de dados
+
+---
+
+💡 Exemplo:
+
+* Contar cliques por minuto
+* Detectar fraude em tempo real
+
+---
+
+## 4️⃣ Por que usar Flink?
+
+➡️ Quando precisa de:
+
+* Processamento **stateful**
+* Cálculos contínuos
+* Baixa latência
+* Lógica complexa
+
+---
+
+## 5️⃣ Linguagens 👨‍💻
+
+* Java
+* SQL (Flink SQL) ✅ (muito cobrado)
+
+---
+
+💡 Pegadinha:
+
+* AWS gosta de citar **SQL streaming**
+
+---
+
+## 6️⃣ Flink vs Kinesis Data Streams 🧠
+
+| Kinesis          | Flink          |
+| ---------------- | -------------- |
+| Transporta dados | Processa dados |
+| Não transforma   | Transforma     |
+| Simples          | Avançado       |
+
+---
+
+## 7️⃣ Flink vs Lambda ⚡
+
+| Lambda       | Flink              |
+| ------------ | ------------------ |
+| Stateless    | Stateful           |
+| Simples      | Complexo           |
+| Event-driven | Streaming contínuo |
+
+---
+
+💡 **Resumo:**
+
+* Lambda = eventos simples
+* Flink = streaming complexo
+
+---
+
+## 8️⃣ Casos de uso 🎯
+
+* Fraud detection
+* Analytics em tempo real
+* Monitoramento
+* IoT
+
+---
+
+## 🔥 Pegadinhas de prova
+
+### ❗ 1. Flink é para processamento avançado
+
+---
+
+### ❗ 2. NÃO é para simples ETL
+
+👉 Use Firehose nesse caso
+
+---
+
+### ❗ 3. Usa Kinesis como fonte
+
+---
+
+### ❗ 4. Suporta SQL streaming
+
+👉 Cai bastante
+
+---
+
+## 🧠 Mnemonics
+
+* **Kinesis = fluxo**
+* **Flink = inteligência**
+* **Firehose = entrega**
+
+---
+
+## 🧪 Resumo de prova
+
+| Cenário               | Serviço  |
+| --------------------- | -------- |
+| Processamento simples | Lambda   |
+| Streaming avançado    | Flink    |
+| Só entrega            | Firehose |
+| Streaming básico      | Kinesis  |
+
+---
+
 
 
 
