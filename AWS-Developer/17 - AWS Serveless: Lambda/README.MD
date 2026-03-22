@@ -528,4 +528,331 @@ Shard → Records → Batches → Lambda execuções
 
 ---
 
+# 1️⃣4️⃣ Lambda Event Source Mapping 🔗
+
+---
+
+## 📌 O que é
+
+➡️ Configuração que conecta **Lambda a uma fonte de eventos de polling**
+
+👉 A AWS cria um **poller automático**
+
+---
+
+## 🔹 Serviços que usam Event Source Mapping
+
+* SQS
+* Kinesis Data Streams
+* DynamoDB Streams
+
+---
+
+## 🧠 Diferença IMPORTANTE (CAI NA PROVA)
+
+| Tipo                        | Como funciona        |
+| --------------------------- | -------------------- |
+| Push (S3, SNS, EventBridge) | Serviço envia evento |
+| Polling (ESM)               | Lambda busca evento  |
+
+👉 Event Source Mapping = **polling**
+
+---
+
+# ⚡ 1️⃣5️⃣ Como funciona por baixo dos panos
+
+```id="q3r7n9"
+Event Source → Poller → Batch → Lambda
+```
+
+---
+
+## 🔹 Componentes
+
+* Poller (AWS gerenciado)
+* Batcher
+* Invoker (Lambda)
+
+---
+
+# 📦 1️⃣6️⃣ Batching (MUITO IMPORTANTE)
+
+➡️ Eventos são agrupados antes de invocar Lambda
+
+---
+
+## 🔹 Configurações
+
+* Batch size (quantidade de mensagens)
+* Batch window (tempo de espera)
+
+---
+
+## 🔹 Regra
+
+👉 **1 batch = 1 execução de Lambda**
+
+---
+
+# ⚔️ 1️⃣7️⃣ Comportamento por serviço
+
+---
+
+## 🟢 SQS
+
+### 🔹 Características
+
+* Pull model
+* Sem ordem (Standard queue)
+* Com ordem (FIFO)
+
+---
+
+### 🔹 Batch
+
+* Até **10 mensagens por batch**
+
+---
+
+### 🔹 Escala (IMPORTANTE)
+
+👉 Começa com:
+
+* **5 execuções concorrentes**
+
+👉 Pode escalar até:
+
+* **+60 execuções por minuto**
+
+👉 Máximo:
+
+* **1000 execuções concorrentes**
+
+---
+
+### 🔹 Retry
+
+* Mensagem volta pra fila se falhar
+* Controlado pelo visibility timeout
+
+---
+
+### 🚨 Pegadinhas
+
+❗ Lambda NÃO remove mensagem manualmente
+❗ SQS gerencia retry
+
+---
+
+## 🔵 Kinesis Data Streams
+
+### 🔹 Características
+
+* Baseado em shards
+* Ordem garantida por shard
+
+---
+
+### 🔹 Batch
+
+* Até **10.000 registros**
+* Máx **6 MB por batch**
+
+---
+
+### 🔹 Escala
+
+👉 **1 shard = 1 execução concorrente**
+
+---
+
+### 🔹 Throughput por shard
+
+* **1 MB/s write**
+* **2 MB/s read**
+* **1000 records/s**
+
+---
+
+### 🔹 Retry
+
+* Retry até expirar (24h default retention)
+
+---
+
+### 🚨 Pegadinhas
+
+❗ Paralelismo depende de shards
+❗ Ordem só dentro do shard
+
+---
+
+## 🟣 DynamoDB Streams
+
+### 🔹 Características
+
+* Similar ao Kinesis
+* Trigger baseado em mudanças na tabela
+
+---
+
+### 🔹 Batch
+
+* Até **1000 registros**
+* Máx **6 MB**
+
+---
+
+### 🔹 Escala
+
+👉 Igual Kinesis:
+
+* **1 shard = 1 execução**
+
+---
+
+### 🔹 Retry
+
+* Até expirar (24h)
+
+---
+
+---
+
+# 🚀 1️⃣8️⃣ Parallelization Factor
+
+➡️ Aumenta paralelismo por shard
+
+---
+
+## 🔹 Valor
+
+* Até **10**
+
+---
+
+## 🔹 Exemplo
+
+```id="pb2v6j"
+1 shard + factor 2 → 2 execuções paralelas
+```
+
+---
+
+## 🚨 Pegadinha
+
+👉 Pode quebrar ordem lógica (cuidado)
+
+---
+
+# ⏱️ 1️⃣9️⃣ Tempo e controle
+
+---
+
+## 🔹 Batch Window
+
+➡️ Tempo máximo pra formar batch
+
+* Até **5 minutos**
+
+---
+
+## 🔹 Iterator Age (Kinesis/Dynamo)
+
+➡️ Mede atraso no processamento
+
+💡 Muito cobrado
+
+---
+
+# ⚠️ 2️⃣0️⃣ Erros e Retry
+
+---
+
+## 🔹 SQS
+
+* Retry via visibility timeout
+* DLQ configurável
+
+---
+
+## 🔹 Kinesis/Dynamo
+
+* Retry até expirar
+* Pode bloquear shard
+
+---
+
+## 🔹 Bisect Batch (🔥 importante)
+
+➡️ Divide batch em caso de erro
+
+---
+
+# ⚔️ 2️⃣1️⃣ Comparação geral
+
+| Feature   | SQS      | Kinesis   | DynamoDB  |
+| --------- | -------- | --------- | --------- |
+| Tipo      | Queue    | Stream    | Stream    |
+| Ordem     | Opcional | Por shard | Por shard |
+| Batch max | 10       | 10.000    | 1000      |
+| Escala    | Alta     | Shards    | Shards    |
+
+---
+
+# 🚨 Pegadinhas de prova
+
+## ❗ SQS escala automaticamente
+
+👉 Não depende de shard
+
+---
+
+## ❗ Kinesis depende de shard
+
+👉 Quer mais escala → mais shards
+
+---
+
+## ❗ Batch = 1 execução
+
+👉 Sempre
+
+---
+
+## ❗ Polling vs Push
+
+👉 SQS/Kinesis/Dynamo → polling
+👉 S3/SNS/EventBridge → push
+
+---
+
+# 🧠 Regra de ouro
+
+👉 Event Source Mapping = polling
+👉 Batch = execução
+👉 Shard = paralelismo
+
+---
+
+# 🎯 Resumo final (DECORA)
+
+👉 SQS:
+
+* Até 10 mensagens
+* Escala até 1000 concorrência
+
+👉 Kinesis:
+
+* 1 shard = 1 Lambda
+* 1000 records/s
+
+👉 DynamoDB Streams:
+
+* Igual Kinesis
+
+---
+
+
+
 
