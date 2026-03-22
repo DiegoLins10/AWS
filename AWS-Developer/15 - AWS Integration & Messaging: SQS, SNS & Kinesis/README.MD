@@ -1067,6 +1067,131 @@ App → Firehose → S3 / Redshift / etc
 
 ---
 
+# ➕ 1️⃣7️⃣ Kinesis Data Streams + Firehose juntos 🤝
+
+## 1️⃣ Pode usar os dois?
+
+👉 **SIM, e é muito comum**
+
+Você usa:
+
+* 🌊 **Amazon Kinesis Data Streams** → processar
+* 🔥 **Amazon Kinesis Data Firehose** → entregar
+
+---
+
+## 🧠 Ideia principal
+
+* Kinesis = cérebro 🧠 (processa)
+* Firehose = caminhão 🚚 (entrega)
+
+---
+
+## 2️⃣ Arquitetura típica (🔥 CAI NA PROVA)
+
+```id="combo-flow"
+Producers → Kinesis Data Streams → Firehose → S3 / Redshift
+```
+
+---
+
+## 3️⃣ Quando usar os dois?
+
+👉 Quando você quer:
+
+### ✅ Processar + armazenar
+
+Exemplo:
+
+1. Dados chegam (logs, eventos)
+2. Você processa em tempo real (Lambda / analytics)
+3. Depois salva no S3
+
+---
+
+## 4️⃣ Cenário real (estilo prova)
+
+> “Aplicação precisa processar eventos em tempo real e armazenar no data lake”
+
+👉 Arquitetura correta:
+
+* Kinesis Data Streams → processamento
+* Firehose → entrega no S3
+
+---
+
+## 5️⃣ Por que não usar só Firehose?
+
+Porque Firehose:
+
+* ❌ Não permite lógica complexa
+* ❌ Não tem replay
+* ❌ Não é totalmente real-time
+
+---
+
+## 6️⃣ Por que não usar só Kinesis?
+
+Porque Kinesis:
+
+* ❌ Você precisa construir entrega
+* ❌ Mais complexo
+* ❌ Mais código
+
+---
+
+## 7️⃣ Comparação rápida 🧠
+
+| Cenário               | Solução                |
+| --------------------- | ---------------------- |
+| Só enviar para S3     | Firehose               |
+| Processar streaming   | Kinesis                |
+| Processar + armazenar | **Kinesis + Firehose** |
+
+---
+
+## 🔥 Pegadinha de prova
+
+### ❗ Cenário híbrido
+
+> “Processar dados E enviar para S3 com baixo esforço”
+
+👉 Melhor resposta:
+
+* **Kinesis Data Streams + Firehose**
+
+---
+
+### ❗ “Menor esforço operacional”
+
+👉 Firehose direto (sem Kinesis)
+
+---
+
+### ❗ “Replay necessário”
+
+👉 Precisa de Kinesis (Firehose não serve)
+
+---
+
+## 🧠 Mnemonic
+
+* **Streams = pensar**
+* **Firehose = enviar**
+* **Juntos = pipeline completo**
+
+---
+
+## ⚡ Resumo final (PROVA)
+
+* Pode usar juntos ✅
+* Streams processa
+* Firehose entrega
+* Arquitetura comum e recomendada
+
+---
+
+
 
 
 
