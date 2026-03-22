@@ -190,6 +190,93 @@ fields @timestamp, @message
 👉 Identifica gargalos (ex: DB lento)
 
 ---
+# ⏱️ 6️⃣ CloudWatch Resolution (High vs Standard)
+
+## 📌 O que é Resolution?
+
+➡️ Define **a frequência dos dados das métricas**
+
+👉 Quanto menor o intervalo → mais detalhado (mais caro)
+
+---
+
+## 🟢 Standard Resolution (Low Resolution)
+
+➡️ **1 minuto (60s)**
+
+### 🔹 Características
+
+* Default do CloudWatch
+* Menor custo
+* Menos detalhado
+
+### 🔹 Exemplo
+
+* CPU de EC2 padrão
+* Métricas da maioria dos serviços AWS
+
+💡 **Resumo**
+👉 Mais barato
+👉 Menos granular
+
+---
+
+## 🔴 High Resolution
+
+➡️ **1 segundo (1s)**
+
+### 🔹 Características
+
+* Muito mais detalhado
+* Precisa ser **custom metric**
+* Mais caro
+
+### 🔹 Exemplo
+
+* Monitoramento em tempo real
+* Sistemas críticos / trading / streaming
+
+💡 **Importante**
+👉 Só funciona com **Custom Metrics**
+
+---
+
+## ⚔️ Comparação
+
+| Feature   | Standard 🟢 | High 🔴    |
+| --------- | ----------- | ---------- |
+| Intervalo | 60s         | 1s         |
+| Custo     | Baixo       | Alto       |
+| Tipo      | Default     | Custom     |
+| Uso       | Geral       | Tempo real |
+
+---
+
+## 🚨 Pegadinhas de prova
+
+❗ EC2 Detailed Monitoring = **1 minuto (não é high resolution)**
+
+❗ High resolution:
+
+* Só com `PutMetricData`
+* Precisa configurar explicitamente
+
+---
+
+## 🧠 Regra de ouro
+
+👉 **Precisa de precisão alta (segundos)** → High Resolution
+👉 **Monitoramento normal** → Standard
+
+---
+
+## 🔥 Resumo rápido (decoração)
+
+👉 Standard = 1 min (default, barato)
+👉 High = 1 sec (custom, caro)
+
+---
+
 
 ## 1️⃣1️⃣ AWS CloudTrail 📜
 
