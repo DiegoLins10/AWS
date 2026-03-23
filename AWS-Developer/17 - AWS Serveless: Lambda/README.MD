@@ -1464,6 +1464,349 @@ Event Source → Poller → Batch → Lambda
 
 ---
 
+# 🚀 AWS Lambda — Final Topics (DVA-C02)
+
+---
+
+# 3️⃣1️⃣ Lambda & CloudFormation 📦
+
+## 📌 O que é
+
+➡️ Infraestrutura como código (IaC)
+
+---
+
+## 🔹 Usos
+
+* Criar Lambda automaticamente
+* Configurar triggers
+* Versionamento
+
+---
+
+## 🔹 Recursos comuns
+
+* `AWS::Lambda::Function`
+* `AWS::Lambda::Permission`
+
+---
+
+## 🚨 Pegadinha
+
+👉 CloudFormation gerencia infra, NÃO código runtime
+
+---
+
+# 3️⃣2️⃣ Lambda Container Images 🐳
+
+## 📌 O que é
+
+➡️ Lambda pode rodar via container
+
+---
+
+## 🔹 Limite
+
+👉 Até **10 GB**
+
+---
+
+## 🔹 Quando usar
+
+* Dependências grandes
+* Apps complexos
+
+---
+
+## ⚠️ Comparação
+
+| Tipo      | Limite |
+| --------- | ------ |
+| ZIP       | 50 MB  |
+| Container | 10 GB  |
+
+---
+
+## 🚨 Pegadinha
+
+👉 Container ≠ ECS
+👉 Continua sendo Lambda
+
+---
+
+# 3️⃣3️⃣ Lambda Versions & Aliases 🔖
+
+## 📌 Versions
+
+➡️ Snapshot imutável da função
+
+---
+
+## 📌 Aliases
+
+➡️ Ponteiro para versão
+
+### 🔹 Exemplo
+
+```text id="2u9w7d"
+prod → v3
+dev → v1
+```
+
+---
+
+## 🔹 Uso
+
+* Deploy seguro
+* Rollback fácil
+
+---
+
+## 🚨 Pegadinha
+
+👉 Version = imutável
+👉 Alias = mutável
+
+---
+
+# 3️⃣4️⃣ Lambda + CodeDeploy 🚀
+
+## 📌 O que faz
+
+➡️ Deploy gradual
+
+---
+
+## 🔹 Tipos
+
+* Linear
+* Canary
+
+---
+
+## 🔹 Exemplo
+
+```text id="15k4xg"
+10% tráfego → nova versão
+90% → antiga
+```
+
+---
+
+## 🚨 Pegadinha
+
+👉 Usado com aliases
+
+---
+
+# 3️⃣5️⃣ Lambda Function URL 🌐
+
+## 📌 O que é
+
+➡️ URL HTTP direta para Lambda
+
+---
+
+## 🔹 Características
+
+* Mais simples que API Gateway
+* Sem configuração complexa
+
+---
+
+## 🔹 Segurança
+
+* IAM auth
+* Public (opcional)
+
+---
+
+## 🚨 Pegadinha
+
+👉 Simples, mas menos robusto que API Gateway
+
+---
+
+# 3️⃣6️⃣ Lambda + CodeGuru 🤖
+
+## 📌 O que é
+
+➡️ Analisa performance e bugs
+
+---
+
+## 🔹 Uso
+
+* Detectar problemas
+* Melhorar código
+
+---
+
+## 🚨 Pegadinha
+
+👉 NÃO executa código
+👉 Só analisa
+
+---
+
+# 3️⃣7️⃣ Lambda Limits (🔥 DECORA ISSO)
+
+---
+
+## ⚡ Execution
+
+| Item         | Valor              |
+| ------------ | ------------------ |
+| Memória      | 128 MB → 10 GB     |
+| Timeout      | **15 min (900s)**  |
+| /tmp storage | 512 MB → 10 GB     |
+| Env vars     | **4 KB**           |
+| Concurrency  | **1000 (default)** |
+
+---
+
+## 📦 Deployment
+
+| Item         | Valor      |
+| ------------ | ---------- |
+| ZIP (upload) | **50 MB**  |
+| Unzipped     | **250 MB** |
+
+---
+
+## 🚨 Pegadinhas
+
+❗ Timeout máximo = 15 min
+❗ Env vars = 4 KB
+❗ ZIP limitado
+
+---
+
+# 3️⃣8️⃣ Lambda Best Practices 🧠
+
+---
+
+## ⚡ Performance
+
+✔️ Inicializar fora do handler
+
+```text id="v49r8b"
+DB connection fora do handler
+```
+
+---
+
+## 🔹 Environment Variables
+
+✔️ Não hardcode
+
+✔️ Use:
+
+* KMS
+* Secrets Manager
+
+---
+
+## 📦 Package
+
+✔️ Reduzir tamanho
+
+✔️ Usar:
+
+* Layers
+* Separar funções
+
+---
+
+## ⚠️ Evitar
+
+❌ Recursividade (Lambda chamando ela mesma)
+
+---
+
+## 🔥 Boas práticas chave
+
+* Reutilizar conexões
+* Evitar cold start pesado
+* Minimizar dependências
+
+---
+
+# 🎯 Resumo FINAL da prova (ULTRA IMPORTANTE)
+
+---
+
+## ⚡ Lambda Core
+
+👉 Sync = RequestResponse
+👉 Async = Event
+
+---
+
+## ⚡ Concurrency
+
+👉 1000 default
+👉 100 unreserved mínimo
+
+---
+
+## ⚡ Event Source Mapping
+
+👉 Polling
+👉 Batch = execução
+
+---
+
+## ⚡ Streams
+
+👉 1 shard = 1 execução
+
+---
+
+## ⚡ Storage
+
+👉 Pequeno → Base64
+👉 Grande → S3
+
+---
+
+## ⚡ Segurança
+
+👉 IAM Role = permissões
+👉 SG = rede
+
+---
+
+## ⚡ Deploy
+
+👉 Version + Alias
+👉 CodeDeploy para rollout
+
+---
+
+## ⚡ Performance
+
+👉 Memória ↑ → CPU ↑
+👉 Provisioned → evita cold start
+
+---
+
+# 🧠 DICA FINAL (PROVA)
+
+Se a questão falar:
+
+* “scale” → Lambda + SQS/EventBridge
+* “file large” → S3
+* “debug latency” → X-Ray
+* “who did action” → CloudTrail
+* “shared dependencies” → Layers
+
+---
+
+# 🚀 FINAL
+
+👉 Você cobriu praticamente **todo o escopo de Lambda da DVA**
+
 
 
 
