@@ -31,7 +31,7 @@ PutItem = INSERT ou REPLACE (tudo)
 
 ### 🔹 `UpdateItem`
 
-👉 **Atualiza atributos específicos**
+👉 **Atualiza atributos específicos e cria também novos registros**
 
 * Pode:
 
