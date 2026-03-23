@@ -1158,5 +1158,312 @@ Event Source → Poller → Batch → Lambda
 
 ---
 
+# ⚡ AWS Lambda — Performance, Layers & Concurrency (DVA-C02)
+
+---
+
+# 1️⃣ Lambda Performance 🚀
+
+## 📌 Fatores que impactam performance
+
+### 🔹 1. Memória (MUITO IMPORTANTE)
+
+➡️ Aumentar memória → aumenta CPU automaticamente
+
+💡 Ex:
+
+* 128 MB → pouca CPU
+* 1024 MB → muito mais CPU
+
+---
+
+## 🔹 2. Duration
+
+➡️ Tempo de execução
+
+👉 Custo = **memória × tempo**
+
+---
+
+## 🔹 3. Cold Start ❄️
+
+➡️ Tempo para inicializar Lambda
+
+### 🔹 Impactado por:
+
+* VPC (mais lento)
+* Linguagem (Java mais lento)
+* Tamanho do código
+
+---
+
+## 🧠 Otimizações
+
+✔️ Aumentar memória
+✔️ Reutilizar conexões (fora handler)
+✔️ Evitar VPC se não precisar
+
+---
+
+## 🚨 Pegadinha
+
+👉 Mais memória = mais caro?
+👉 Nem sempre (pode reduzir duration)
+
+---
+
+# 2️⃣ Lambda Layers 📦
+
+## 📌 O que é
+
+➡️ Forma de **compartilhar código/dependências**
+
+---
+
+## 🔹 Exemplos
+
+* Bibliotecas (numpy, requests)
+* SDKs
+* Código comum
+
+---
+
+## 🔹 Benefícios
+
+✔️ Reuso
+✔️ Deploy menor
+✔️ Separação de responsabilidades
+
+---
+
+## 🔹 Limites
+
+* Até **5 layers por função**
+
+---
+
+## 🚨 Pegadinha
+
+👉 Layers NÃO melhoram performance diretamente
+👉 Servem para organização/reuso
+
+---
+
+# 3️⃣ Lambda File System Mounting (EFS) 💾
+
+## 📌 O que é
+
+➡️ Lambda pode montar **Amazon EFS**
+
+---
+
+## 🔹 Uso
+
+* Arquivos grandes
+* ML models
+* Dados compartilhados
+
+---
+
+## 🔹 Características
+
+✔️ Persistente
+✔️ Compartilhado entre Lambdas
+
+---
+
+## ⚠️ Importante
+
+👉 Requer Lambda dentro da VPC
+
+---
+
+## 🚨 Pegadinha
+
+👉 EFS ≠ S3
+👉 EFS é filesystem, S3 é object storage
+
+---
+
+# 4️⃣ Lambda Concurrency ⚡
+
+## 📌 O que é
+
+➡️ Número de execuções simultâneas
+
+---
+
+## 🔹 Default (MUITO COBRADO)
+
+👉 **1000 por conta por região**
+
+---
+
+## 🔹 Tipos
+
+### 🟢 Unreserved
+
+* Pool compartilhado
+
+---
+
+### 🔵 Reserved Concurrency
+
+➡️ Garante capacidade para função
+
+✔️ Isola
+✔️ Evita competição
+
+---
+
+### 🟣 Provisioned Concurrency
+
+➡️ Evita cold start
+
+✔️ Instâncias pré-aquecidas
+
+---
+
+## ⚠️ Regra importante
+
+👉 Sempre **100 unreserved mínimo**
+
+---
+
+## 🚨 Pegadinhas
+
+❗ Throttling = limite atingido
+❗ Reserved protege função crítica
+
+---
+
+# 5️⃣ Scaling Behavior 📈
+
+## 🔹 Lambda escala automaticamente
+
+👉 Baseado em eventos
+
+---
+
+## 🔹 Exemplos
+
+* SQS → escala com fila
+* Kinesis → baseado em shards
+* API Gateway → requisições
+
+---
+
+## 🚨 Pegadinha
+
+👉 Lambda escala rápido, mas não infinito
+👉 Limitado por concurrency
+
+---
+
+# 6️⃣ Lambda External Dependencies 📦
+
+## 📌 O que é
+
+➡️ Bibliotecas externas usadas na função
+
+---
+
+## 🔹 Formas de incluir
+
+### 🟢 Diretamente no deployment
+
+* Zip com dependências
+
+---
+
+### 🔵 Lambda Layers
+
+* Reutilizável
+
+---
+
+### 🟣 Container Image
+
+* Até 10 GB
+
+---
+
+## 🔹 Boas práticas
+
+✔️ Reduzir tamanho do pacote
+✔️ Evitar dependências desnecessárias
+✔️ Usar layers para libs comuns
+
+---
+
+## 🚨 Pegadinha
+
+👉 Pacote grande = cold start maior
+
+---
+
+# ⚔️ Comparação rápida
+
+| Feature   | Uso                 |
+| --------- | ------------------- |
+| Layers    | Reuso               |
+| EFS       | Storage persistente |
+| S3        | Storage de objetos  |
+| Container | Apps grandes        |
+
+---
+
+# 🧠 Regras de ouro (DVA)
+
+👉 Memória ↑ → CPU ↑
+👉 Layers = organização
+👉 EFS = arquivos persistentes
+👉 Concurrency = limite de escala
+👉 Provisioned = evita cold start
+
+---
+
+# 🎯 Cenários de prova
+
+## 📌 App lento
+
+👉 Aumentar memória
+
+---
+
+## 📌 Evitar cold start
+
+👉 Provisioned concurrency
+
+---
+
+## 📌 Compartilhar libs
+
+👉 Layers
+
+---
+
+## 📌 Arquivos grandes
+
+👉 EFS
+
+---
+
+## 📌 Throttling
+
+👉 Ajustar concurrency
+
+---
+
+# 🔥 Resumo final
+
+👉 Performance = memória + cold start
+👉 Layers = dependências compartilhadas
+👉 EFS = filesystem persistente
+👉 Concurrency = escala da Lambda
+
+---
+
+
 
 
