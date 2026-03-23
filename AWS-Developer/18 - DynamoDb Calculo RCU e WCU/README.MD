@@ -12,6 +12,9 @@
 * Leitura fortemente consistentente:  16 Itens * (12kb por item/4kb RCU) = 16 * 3  = 48 RCUs
 
 ## Uma aplicação realiza 16 leituras por segundo em uma tabela do DynamoDB. Cada item possui tamanho de 12 KB.
+- calculo:  16 Itens * (12kb por item/4kb RCU) = 16 * 3  = 48 RCUs
+
+- RCU =  leituras por segundo x ceil(Tamanho do item em KB / 4) 
 
 * fortemente consistente → 48 RCU
 * eventualmente consistente → 48 / 2 = 24 RCU
