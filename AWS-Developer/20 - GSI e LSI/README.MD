@@ -274,3 +274,8 @@ Se isso aparecer na prova:
 
 ---
 
+## 📘 Por que usar GSI e não LSI?
+# 🧠 Resposta direta (nível prova)
+ - GSI → quando você quer mudar COMO buscar
+ - LSI → quando você quer mudar COMO ordenar
+
