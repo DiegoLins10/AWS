@@ -9,6 +9,7 @@
 * **1 RCU = 1 leitura fortemente consistente de até 4 KB / segundo**
 * **Eventually consistent** → usa **½ RCU**
 * **Transactional read** → usa **2x RCU**
+* Leitura fortemente consistentente:  16 Itens * (12kb por item/4kb RCU) = 16 * 3  = 48 RCUs
 
 ---
 
