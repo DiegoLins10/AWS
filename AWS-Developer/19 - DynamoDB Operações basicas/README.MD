@@ -45,6 +45,13 @@ PutItem = INSERT ou REPLACE (tudo)
 
 ```text
 UpdateItem = UPDATE parcial
+
+UpdateItem:
+✔ Atualiza se existir
+✔ Cria se NÃO existir
+
+Para evitar:
+→ ConditionExpression (attribute_exists)
 ```
 
 ---
