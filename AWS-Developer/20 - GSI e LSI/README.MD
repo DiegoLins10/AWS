@@ -129,3 +129,148 @@ Usado quando:
 ```
 
 ---
+
+
+# 📘 DynamoDB — LSI (Local Secondary Index)
+
+---
+
+## 1️⃣ Ideia principal 🧠
+
+```text
+LSI = outro jeito de ordenar os dados
+DENTRO da mesma Partition Key
+```
+
+👉 Tradução simples:
+
+* Você **NÃO muda quem você está buscando**
+* Você **só muda como os resultados são organizados**
+
+---
+
+👉 Ou seja:
+
+ - Você ainda depende da Partition Key
+ - Mas ganha outra Sort Key
+
+## 2️⃣ Explicando “pra mula” 🐴
+
+Imagina:
+
+```text
+userId = 123
+```
+
+👉 Esse é seu “grupo”
+
+Agora você quer ver os dados desse usuário:
+
+* Por data 📅
+* Por score 🏆
+* Por preço 💰
+
+👉 O usuário é o mesmo
+👉 Só muda a **ordem**
+
+---
+
+## 3️⃣ Sem LSI vs Com LSI 💡
+
+### 🔹 Sem LSI
+
+```text
+PK: userId
+SK: createdAt
+```
+
+👉 Só consegue:
+
+* Buscar usuário
+* Ordenar por data
+
+---
+
+### 🔹 Com LSI
+
+```text
+PK: userId (mesmo)
+SK: score (novo)
+```
+
+👉 Agora consegue:
+
+* Buscar usuário
+* Ordenar por score
+
+---
+
+## 4️⃣ Regra de ouro ⚠️
+
+```text
+LSI NÃO muda a Partition Key
+```
+
+👉 Você ainda precisa dela sempre
+
+---
+
+## 5️⃣ Diferença pra GSI (ESSENCIAL) 💣
+
+```text
+LSI = ORDER BY
+GSI = WHERE
+```
+
+| Tipo | O que muda      |
+| ---- | --------------- |
+| LSI  | Ordenação       |
+| GSI  | Forma de buscar |
+
+---
+
+## 6️⃣ Limitações importantes 🚨
+
+* ❌ Só pode criar **na criação da tabela**
+* ❌ Não pode adicionar depois
+* ❌ Máximo de **5 LSIs**
+* ✅ Suporta **strongly consistent read**
+
+---
+
+## 7️⃣ Quando usar 🧠
+
+👉 Quando você:
+
+* Já tem a Partition Key
+* Quer **outra forma de ordenar**
+
+---
+
+## 🧠 Resumo FINAL (pra prova)
+
+```text
+LSI:
+→ mesma Partition Key
+→ outra Sort Key
+→ outro jeito de ordenar
+
+GSI:
+→ nova Partition Key
+→ outro jeito de buscar
+```
+
+---
+
+Se isso aparecer na prova:
+
+> “preciso mudar a forma de ordenação dentro da mesma chave”
+
+👉 **LSI**
+
+> “preciso buscar por outro atributo”
+
+👉 **GSI**
+
+---
+
