@@ -267,3 +267,197 @@ Se quiser, posso te mandar agora:
 ✅ ou um **simulado completo misturando tudo que você já estudou**
 
 Esse tema aqui sozinho cai fácil **3–5 questões na prova** 🔥
+
+Aqui vai um **README estilo prova DVA-C02** focado nessa arquitetura 👇
+
+---
+
+# 📘 API Gateway – Architecture (DVA-C02)
+
+---
+
+# 1️⃣ Conceito Principal
+
+👉 **API Gateway = Single Entry Point (porta única)** para todos os seus serviços
+
+📌 Ele atua como:
+
+* 🔀 **Router** (direciona requisições)
+* 🔐 **Security layer**
+* ⚙️ **Transformador de requests/responses**
+
+---
+
+# 2️⃣ Arquitetura Geral
+
+👉 Fluxo típico:
+
+```
+Client → API Gateway → Backend Services
+```
+
+Backends podem ser:
+
+* Lambda
+* EC2
+* ECS
+* S3
+* ELB
+
+---
+
+# 3️⃣ Microservices Pattern (🔥 MUITO COBRADO)
+
+👉 API Gateway expõe **uma única API**
+👉 Internamente chama vários serviços
+
+Exemplo:
+
+```
+/service1 → ECS (via ELB)
+/service2 → EC2 (Auto Scaling)
+/docs → S3
+```
+
+✅ Benefícios:
+
+* Abstrai complexidade
+* Centraliza acesso
+* Facilita versionamento
+
+---
+
+# 4️⃣ Integrações possíveis
+
+## 🔗 Com Load Balancer (ELB)
+
+* Usado com:
+
+  * EC2
+  * ECS
+
+👉 API Gateway → ELB → serviços
+
+---
+
+## 🐳 ECS (Containers)
+
+* Microservices em containers
+* Escala automaticamente
+
+---
+
+## 💻 EC2 + Auto Scaling
+
+* Apps tradicionais
+* Escala com demanda
+
+---
+
+## 🪣 S3
+
+* Conteúdo estático
+* Ex: `/docs`
+
+---
+
+# 5️⃣ Custom Domain + Route 53
+
+👉 Você pode usar domínio customizado:
+
+Ex:
+
+```
+api.meusite.com
+```
+
+Usando:
+
+* **Route 53** (DNS)
+* Certificado SSL (HTTPS)
+
+---
+
+# 6️⃣ Transformações no API Gateway (🔥 cai)
+
+👉 Pode modificar:
+
+### Request
+
+* Headers
+* Body
+* Query params
+
+### Response
+
+* Status codes
+* Payload
+
+📌 Usando:
+
+* Mapping Templates
+* Integration Response
+
+---
+
+# 7️⃣ Vantagens (IMPORTANTE PRA PROVA)
+
+✅ Centralização
+✅ Segurança unificada
+✅ Controle de tráfego
+✅ Observabilidade
+✅ Desacoplamento
+
+---
+
+# 8️⃣ Comparação mental (DECORAR)
+
+| Sem API Gateway               | Com API Gateway          |
+| ----------------------------- | ------------------------ |
+| Cliente chama vários serviços | Cliente chama 1 endpoint |
+| Complexidade alta             | Simples                  |
+| Segurança distribuída         | Centralizada             |
+
+---
+
+# 9️⃣ Pegadinhas de prova
+
+* 🔥 API Gateway **não executa lógica pesada**
+* 🔥 Ele é **proxy + controle**, não backend
+* 🔥 Pode integrar com **múltiplos serviços diferentes**
+* 🔥 Suporta **transformação de request/response**
+* 🔥 Trabalha bem com arquitetura de **microservices**
+
+---
+
+# 🔟 Exemplo real (cai muito)
+
+👉 Um app com:
+
+* `/users` → Lambda
+* `/orders` → ECS
+* `/static` → S3
+
+➡️ Tudo exposto via **um único endpoint**
+
+---
+
+# 🧠 Resumo final (pra decorar rápido)
+
+👉 API Gateway = **entrada única + roteamento + segurança**
+
+* Cliente → API Gateway
+* Gateway → múltiplos backends
+* Pode usar:
+
+  * ELB
+  * ECS
+  * EC2
+  * S3
+
+---
+
+Se quiser, posso te mandar:
+✅ 5 questões estilo prova DVA só de arquitetura
+✅ ou um mapa mental juntando API Gateway + Lambda + DynamoDB (cai MUITO junto)
+
