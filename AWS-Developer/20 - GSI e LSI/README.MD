@@ -92,6 +92,11 @@ Agora você pode:
 
 ---
 
+## 🚫 GSI Limitando a Capacidade da Tabela
+
+O Índice Secundário Global (GSI) possui capacidade de leitura (RCU) e escrita (WCU) **independente da tabela principal**. Quando essa capacidade é insuficiente, o GSI sofre **throttling**, o que também impacta operações na tabela base — especialmente escritas, já que elas precisam ser propagadas para o índice.
+
+
 ## 8️⃣ Pegadinha de prova ⚠️
 
 Se a questão disser:
