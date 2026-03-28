@@ -144,3 +144,116 @@ aws ec2 unmonitor-instances --instance-ids i-1234567890abcdef0
 
 Se quiser, posso te fazer um **pacotão EC2 CLI (top 20 comandos + pegadinhas de prova)** que cai MUITO na DVA 👀
 
+
+Boa — essa confusão é **clássica de prova** 😈
+vou te explicar **bem direto e comparativo** (estilo AWS mesmo)
+
+---
+
+# 🧠 Diferença: Lambda Layer vs ARN de Alias
+
+## 🧱 1. Lambda Layer (Camada do Lambda)
+
+* Serviço: AWS Lambda
+
+👉 **O que é:**
+
+* Pacote com:
+
+  * bibliotecas
+  * dependências
+  * código compartilhado
+
+👉 **Função:**
+
+* Reutilizar código entre funções
+
+👉 **Importante:**
+
+* ❌ NÃO executa função
+* ❌ NÃO controla versão de deploy
+* ❌ NÃO resolve problema de ARN
+
+💡 Exemplo:
+
+> colocar `numpy`, `aws-sdk`, libs comuns
+
+---
+
+## 🔗 2. ARN de Alias (Lambda Alias)
+
+👉 **O que é:**
+
+* Um **nome estável (ponteiro)** para uma versão da função
+
+👉 **Função:**
+
+* Controlar deploy/versionamento
+
+👉 **Importante:**
+
+* ✅ Aponta para uma versão específica
+* ✅ Usado em integrações (SQS, API Gateway, etc)
+* ✅ Evita trocar ARN toda hora
+
+💡 Exemplo:
+
+```bash
+minha-funcao:prod → versão 3
+```
+
+---
+
+## ⚔️ Comparação direta (nível prova)
+
+| Conceito                 | Lambda Layer 🧱 | ARN de Alias 🔗 |
+| ------------------------ | --------------- | --------------- |
+| Serve pra deploy?        | ❌ Não           | ✅ Sim           |
+| Executa função?          | ❌ Não           | ✅ Indiretamente |
+| Gerencia versão?         | ❌ Não           | ✅ Sim           |
+| Reutilização de código?  | ✅ Sim           | ❌ Não           |
+| Resolve problema de ARN? | ❌ Não           | ✅ Sim           |
+
+---
+
+## 💀 Pegadinha clássica da prova
+
+A questão mistura:
+
+* “camada”
+* “alias”
+* “ARN”
+
+👉 e tenta fazer você pensar que:
+
+> layer ajuda no deploy
+
+❌ ERRADO
+
+---
+
+## 🧠 Regra de ouro (grava isso)
+
+> 🧱 **Layer = dependência**
+> 🔗 **Alias = deploy/versionamento**
+
+---
+
+## 🎯 Tradução mental pra prova
+
+Se a pergunta falar:
+
+* “evitar atualizar ARN” → 👉 **Alias**
+* “compartilhar código” → 👉 **Layer**
+
+---
+
+## 💬 Resumo simples
+
+* Layer = **código extra**
+* Alias = **controle de versão**
+
+👉 funções totalmente diferentes
+
+---
+
