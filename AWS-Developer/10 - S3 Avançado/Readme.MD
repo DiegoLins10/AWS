@@ -283,3 +283,92 @@ Obs. Não é possivel filtrar por tags e metadata direto do S3, é necessario ut
 | arquivo muito grande                  | Multipart Upload      |
 
 ---
+
+
+# 📘 S3 – Object Ownership
+
+## 1. 🎯 O que é?
+
+* **S3 Object Ownership** define **quem é o dono dos objetos** dentro de um bucket
+* Resolve problemas clássicos de **acesso entre contas (cross-account)**
+
+---
+
+## 2. 🧠 Problema que resolve
+
+* Sem configuração:
+
+  * Quem faz o upload → vira dono do objeto
+  * 😬 Mesmo que seja em um bucket de outra conta
+
+👉 Isso pode quebrar acesso (bucket owner não consegue acessar o objeto)
+
+---
+
+## 3. ⚙️ Modos de Object Ownership
+
+### 3.1 🥇 Bucket owner enforced (RECOMENDADO)
+
+* Bucket owner é dono de **TODOS os objetos**
+* **ACLs são desativadas** 🚫
+* Controle feito **somente por políticas (IAM + Bucket Policy)**
+
+✅ Melhor prática AWS
+✅ Mais simples e seguro
+
+---
+
+### 3.2 🤝 Bucket owner preferred
+
+* Bucket owner vira dono **se o uploader permitir (ACL)**
+* ACLs ainda existem
+
+⚠️ Pode gerar inconsistência
+
+---
+
+### 3.3 👤 Object writer
+
+* Quem faz upload é o dono
+* Comportamento padrão antigo
+
+❌ Pode causar problema de acesso
+
+---
+
+## 4. 🔥 Dica de prova (MUITO COBRADO)
+
+| Situação               | Resposta                |
+| ---------------------- | ----------------------- |
+| Quer eliminar ACLs     | ✅ Bucket owner enforced |
+| Controle centralizado  | ✅ Bucket owner enforced |
+| Problema cross-account | ✅ Bucket owner enforced |
+| AWS Best Practice      | ✅ Bucket owner enforced |
+
+---
+
+## 5. ⚠️ ACL vs Policies
+
+| Feature       | Status com Bucket Owner Enforced |
+| ------------- | -------------------------------- |
+| ACLs          | ❌ Desabilitadas                  |
+| Bucket Policy | ✅ Usado                          |
+| IAM Policy    | ✅ Usado                          |
+
+---
+
+## 6. 🧠 Resumo ultra rápido (⚡)
+
+* **Object Ownership = quem é dono do objeto**
+* Melhor opção → **Bucket owner enforced**
+* **ACLs OFF → Policies ON**
+* Resolve **cross-account issues**
+
+---
+
+Se quiser, posso juntar isso com:
+
+* **S3 ACL vs Bucket Policy vs IAM**
+* **Block Public Access**
+* **Pre-signed URLs**
+
