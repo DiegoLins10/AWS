@@ -257,3 +257,120 @@ Se a pergunta falar:
 
 ---
 
+Perfeita essa — **nível DVA real mesmo** 😈
+e aqui tem uma pegadinha MUITO clássica: **KMS = quase sempre simétrico**
+
+---
+
+# 🧠 O que a questão estava testando
+
+Serviço: AWS Key Management Service
+
+👉 Contexto:
+
+* criptografia de dados (ex: DynamoDB, SDK de criptografia)
+* uso de KMS por baixo
+
+---
+
+# ❌ Por que ASSIMÉTRICA está errada?
+
+A frase chave:
+
+> “SDK de criptografia… chave para cada item”
+
+👉 Isso indica:
+
+* criptografia de **dados em massa**
+* uso interno de chaves
+
+---
+
+## 💀 Regra de prova
+
+> 👉 **KMS para criptografia de dados = SIMÉTRICA**
+
+---
+
+## 🧠 Por quê?
+
+* KMS usa:
+
+  * **data keys (chaves de dados)**
+* Essas chaves:
+
+  * criptografam dados rapidamente
+  * são geradas a partir de uma **KMS key simétrica**
+
+---
+
+## ⚠️ Assimétrica no KMS é usada pra:
+
+* assinatura digital
+* verificação
+* criptografia com chave pública
+
+👉 NÃO é padrão pra:
+
+* criptografar banco
+* criptografar volume grande de dados
+
+---
+
+# 🔥 Tradução da questão (o pulo do gato)
+
+A questão basicamente disse:
+
+> “criptografar itens de tabela com SDK + KMS”
+
+👉 seu cérebro deve pensar:
+
+> **SIMÉTRICA automaticamente**
+
+---
+
+# ⚔️ Comparação prática (AWS)
+
+| Caso                                 | Tipo correto   |
+| ------------------------------------ | -------------- |
+| Criptografar dados (S3, Dynamo, EBS) | 🔵 Simétrica   |
+| TLS / certificados                   | 🔴 Assimétrica |
+| Assinatura digital                   | 🔴 Assimétrica |
+
+---
+
+# 🧠 Frase pra gravar
+
+> 👉 **“KMS padrão = simétrica para dados”**
+
+---
+
+# 💬 Resumo direto
+
+* Você escolheu assimétrica ❌
+* Mas o cenário era:
+
+  * dados
+  * performance
+  * SDK
+
+👉 Logo:
+✅ **Simétrica**
+
+---
+
+## 🚀 Dica nível aprovação
+
+Se aparecer:
+
+* “SDK de criptografia”
+* “dados”
+* “tabela”
+* “alto volume”
+
+👉 **marca simétrica sem pensar muito**
+
+---
+
+
+
