@@ -70,3 +70,77 @@ gp2 = 3 IOPS por GB
 
 divide o limite de 16000 por 3
 16000 / 3 ≈ 5334 GB
+
+Aqui vai no estilo que você curte (README + prova 👇)
+
+---
+
+# 📘 EC2 – Detailed Monitoring (AWS CLI)
+
+## 1. 🎯 O que é Detailed Monitoring?
+
+* Por padrão, o Amazon EC2 envia métricas para o CloudWatch a cada **5 minutos**
+* Com **Detailed Monitoring**, passa a enviar a cada **1 minuto**
+* 🔥 Usado para:
+
+  * Auto Scaling mais preciso
+  * Troubleshooting fino
+  * Métricas mais granulares
+
+---
+
+## 2. ⚙️ Habilitar em instância EXISTENTE
+
+```bash
+aws ec2 monitor-instances --instance-ids i-1234567890abcdef0
+```
+
+✅ Pontos importantes:
+
+* `monitor-instances` → ação correta
+* `--instance-ids` → **sempre no plural**
+* Pode passar **várias instâncias**
+
+---
+
+## 3. 🆕 Habilitar ao CRIAR instância
+
+```bash
+aws ec2 run-instances \
+  --image-id ami-xxxx \
+  --monitoring Enabled=true
+```
+
+✅ Só funciona na criação
+
+---
+
+## 4. ❌ Pegadinhas de prova
+
+| Erro comum                                    | Por que está errado                  |
+| --------------------------------------------- | ------------------------------------ |
+| `--instance-id`                               | ❌ Deve ser plural (`--instance-ids`) |
+| `monitor-instances` com `--monitoring`        | ❌ Parâmetro não existe aqui          |
+| `--monitoring State=enabled`                  | ❌ Sintaxe inválida                   |
+| Usar `run-instances` para instância existente | ❌ Só criação                         |
+
+---
+
+## 5. 🔄 Desabilitar monitoring
+
+```bash
+aws ec2 unmonitor-instances --instance-ids i-1234567890abcdef0
+```
+
+---
+
+## 6. 🧠 Resumo PROVA (⚡ decore isso)
+
+* EXISTENTE → `monitor-instances`
+* NOVA → `run-instances --monitoring Enabled=true`
+* `instance-ids` → sempre plural
+
+---
+
+Se quiser, posso te fazer um **pacotão EC2 CLI (top 20 comandos + pegadinhas de prova)** que cai MUITO na DVA 👀
+
