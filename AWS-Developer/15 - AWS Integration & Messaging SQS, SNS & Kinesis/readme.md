@@ -5,7 +5,8 @@
 ➡️ Serviço de **mensageria totalmente gerenciado (serverless)**  
 ➡️ Permite **desacoplar aplicações**  
 ➡️ Baseado em **filas (queues)**  
-➡️ Tamanho maximo de mensagem **256kb**  
+➡️ Tamanho maximo de mensagem ANTIGO: **256kb**  
+➡️ Tamanho maximo de mensagem ATUAL ATUALIZADO 2026: **1MB**  
 
 💡 **Essência para prova:**
 
