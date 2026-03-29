@@ -5,6 +5,7 @@
 ➡️ Serviço de **mensageria totalmente gerenciado (serverless)**
 ➡️ Permite **desacoplar aplicações**
 ➡️ Baseado em **filas (queues)**
+➡️ Tamanho maximo de mensagem 256kb**
 
 💡 **Essência para prova:**
 
