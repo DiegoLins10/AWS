@@ -432,7 +432,7 @@ aws sqs create-queue \
 
 ➡️ Tamanho máximo da mensagem
 
-* Default: 256 KB
+* Default: 1mb KB
 * Não pode passar disso ❗
 
 ---
