@@ -220,4 +220,104 @@ Integração direta com:
 
 ---
 
+BOA 👀 isso aí é detalhe **nível prova mesmo** — principalmente em **Wait for Task Token**. Bora completar teu README do jeito certo:
+
+---
+
+# 🔄 🔑 13. Callback Pattern (Task Token) — COMPLETO
+
+## 🚀 Conceito
+
+Quando você usa **Wait for Task Token** no AWS Step Functions:
+
+👉 o workflow:
+
+* pausa
+* gera um **taskToken**
+* espera alguém retornar esse token
+
+---
+
+## 🔹 Fluxo
+
+1. Step Function envia `taskToken`
+2. Sistema externo processa
+3. Sistema retorna o token via API AWS
+
+---
+
+## ⚡ Métodos IMPORTANTES (CAI NA PROVA)
+
+### ✅ Success
+
+👉 Finaliza com sucesso:
+
+* **SendTaskSuccess**
+
+```json id="q0r0fg"
+{
+  "taskToken": "...",
+  "output": "{ \"status\": \"OK\" }"
+}
+```
+
+---
+
+### ❌ Failure
+
+👉 Finaliza com erro:
+
+* **SendTaskFailure**
+
+```json id="rd9b77"
+{
+  "taskToken": "...",
+  "error": "ErroX",
+  "cause": "Detalhe do erro"
+}
+```
+
+---
+
+### 💓 Heartbeat (menos comum)
+
+👉 Mantém execução viva:
+
+* **SendTaskHeartbeat**
+
+---
+
+## 🧠 Regra de prova
+
+Se a questão falar:
+
+* "esperar resposta externa"
+* "aprovação manual"
+* "callback"
+
+👉 resposta =
+**Task Token + SendTaskSuccess/Failure**
+
+---
+
+## ⚠️ Pegadinha clássica
+
+❌ NÃO é polling
+❌ NÃO é SQS
+
+👉 é **callback direto via token**
+
+---
+
+## 🔥 TL;DR
+
+> Wait for Task Token = pausa até alguém chamar:
+
+* ✅ SendTaskSuccess
+* ❌ SendTaskFailure
+
+---
+
+
+
 
