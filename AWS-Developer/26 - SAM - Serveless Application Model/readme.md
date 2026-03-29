@@ -252,3 +252,261 @@ SAM suporta eventos:
 * Permite testes locais (`sam local`)
 
 ---
+
+# 🧠 README — AWS SAM (Parte 2)
+
+---
+
+## 1️⃣ 🔐 SAM Policy Templates
+
+### 🧠 O que é?
+
+* Templates prontos de permissões IAM no SAM
+* Evita escrever policies complexas manualmente
+
+---
+
+### 🔥 Exemplo
+
+```yaml
+Policies:
+  - S3ReadPolicy:
+      BucketName: meu-bucket
+```
+
+---
+
+### ✅ Vantagens
+
+* Simples
+* Rápido
+* Menos erro
+
+---
+
+### ⚠️ Pegadinha de prova
+
+> ❗ Policy Templates ≠ IAM Roles completas
+> 👉 São **atalhos**, não substituem tudo
+
+---
+
+### 🧾 Exemplos comuns (CAI)
+
+* `S3ReadPolicy`
+* `DynamoDBCrudPolicy`
+* `SQSPollerPolicy`
+
+---
+
+## 2️⃣ 🚀 SAM + CodeDeploy
+
+### 🧠 O que é?
+
+Integração do SAM com **AWS CodeDeploy** para deploy seguro
+
+---
+
+### 🔥 Objetivo
+
+* Evitar downtime
+* Fazer deploy gradual
+
+---
+
+### 📊 Tipos de deploy
+
+| Tipo      | Descrição              |
+| --------- | ---------------------- |
+| AllAtOnce | Tudo de uma vez        |
+| Canary    | Parte → espera → resto |
+| Linear    | Incremental            |
+
+---
+
+### 🔥 Exemplo
+
+```yaml
+DeploymentPreference:
+  Type: Canary10Percent5Minutes
+```
+
+---
+
+### 🧠 Como funciona?
+
+* Cria versões da Lambda
+* Usa alias
+* Direciona tráfego gradualmente
+
+---
+
+### ⚠️ Pegadinhas de prova
+
+* ❗ Precisa de **versions + alias**
+* ❗ Usa CodeDeploy por baixo
+* ❗ Permite rollback automático
+
+---
+
+## 3️⃣ 🧪 SAM Local Capabilities
+
+### 🧠 O que é?
+
+Executar e testar localmente com Docker
+
+---
+
+### 🔥 Comandos
+
+```bash
+sam local invoke
+```
+
+```bash
+sam local start-api
+```
+
+```bash
+sam local start-lambda
+```
+
+---
+
+### 🧠 O que simula?
+
+* Lambda runtime
+* API Gateway
+
+---
+
+### ⚠️ Limitações (CAI)
+
+* ❗ Não simula 100% AWS
+* ❗ IAM real não é aplicado
+* ❗ Latência pode ser diferente
+
+---
+
+### 🧠 Quando usar?
+
+* Desenvolvimento rápido
+* Teste antes do deploy
+
+---
+
+## 4️⃣ 🌍 SAM — Multiple Environments
+
+### 🧠 Problema
+
+Ter:
+
+* dev
+* staging
+* prod
+
+---
+
+### ✅ Solução SAM
+
+Usar:
+
+* Parâmetros
+* `samconfig.toml`
+
+---
+
+### 🔥 Exemplo de parâmetros
+
+```yaml
+Parameters:
+  Environment:
+    Type: String
+```
+
+---
+
+### 🔥 Deploy por ambiente
+
+```bash
+sam deploy --config-env dev
+sam deploy --config-env prod
+```
+
+---
+
+### 🧠 `samconfig.toml`
+
+Define configs por ambiente:
+
+```toml
+[dev.deploy.parameters]
+stack_name = "app-dev"
+
+[prod.deploy.parameters]
+stack_name = "app-prod"
+```
+
+---
+
+### ⚠️ Pegadinhas de prova
+
+* ❗ SAM suporta multi-env nativamente
+* ❗ Usa `samconfig.toml`
+* ❗ Não precisa duplicar template
+
+---
+
+## 🧠 RESUMO FINAL (RETA FINAL PROVA)
+
+### 🔐 Policy Templates
+
+* Atalhos de IAM
+* Simples e rápidos
+
+---
+
+### 🚀 CodeDeploy
+
+* Deploy seguro (Canary / Linear)
+* Usa alias + version
+* Rollback automático
+
+---
+
+### 🧪 Local
+
+* `sam local`
+* Teste com Docker
+* Não 100% igual AWS
+
+---
+
+### 🌍 Multi-env
+
+* `samconfig.toml`
+* `--config-env`
+* Um template, vários ambientes
+
+---
+
+## 🧠 DICA DE PROVA (IMPORTANTE)
+
+Se a questão disser:
+
+* “deploy gradual Lambda”
+  👉 **CodeDeploy + SAM**
+
+---
+
+* “testar localmente Lambda/API”
+  👉 **sam local**
+
+---
+
+* “gerenciar ambientes”
+  👉 **samconfig.toml**
+
+---
+
+
