@@ -151,3 +151,108 @@
 
 ---
 
+
+# 🔐 Client-Side Encryption + KMS (como funcionam as chaves)
+
+## 1. 🧠 Resposta direta (pra prova)
+
+👉 **SIM, pode usar KMS na client-side encryption**
+👉 **MAS o KMS NÃO criptografa o dado diretamente**
+
+---
+
+## 2. 🔑 Quais chaves são usadas?
+
+### 👉 1. Data Key (🔴 principal)
+
+* Usada para criptografar o dado
+* Gerada via KMS (`GenerateDataKey`)
+* Existe em duas formas:
+
+  * **Plaintext (para criptografar)**
+  * **Encrypted (para armazenar junto com o dado)**
+
+---
+
+### 👉 2. CMK (Customer Master Key) / KMS Key (🟡)
+
+* Fica dentro do AWS Key Management Service
+* **NÃO criptografa o dado diretamente**
+* Serve para:
+
+  * Criptografar a Data Key
+  * Descriptografar a Data Key depois
+
+---
+
+## 3. 🔁 Fluxo completo (Client-side + KMS)
+
+### 📌 Encrypt
+
+1. Cliente chama KMS → `GenerateDataKey`
+2. KMS retorna:
+
+   * Data key (plaintext)
+   * Data key (encrypted com CMK)
+3. Cliente usa a **plaintext data key** para criptografar o dado
+4. Cliente:
+
+   * Descarta a plaintext key ❌
+   * Armazena:
+
+     * dado criptografado
+     * data key criptografada
+
+---
+
+### 📌 Decrypt
+
+1. Cliente pega:
+
+   * dado criptografado
+   * data key criptografada
+2. Cliente chama KMS → `Decrypt`
+3. KMS devolve a **data key em plaintext**
+4. Cliente descriptografa o dado
+
+---
+
+## 4. 🎯 Importante (pegadinha de prova)
+
+* ❗ KMS **NUNCA vê o dado**
+* ❗ KMS só lida com a **data key**
+* ❗ Criptografia do dado acontece **no cliente**
+
+---
+
+## 5. ⚔️ Comparação rápida
+
+| Item                    | Server-Side KMS   | Client-Side + KMS |
+| ----------------------- | ----------------- | ----------------- |
+| Quem criptografa o dado | AWS               | Cliente           |
+| KMS criptografa dado?   | ❌ (indiretamente) | ❌                 |
+| Uso da data key         | AWS usa           | Cliente usa       |
+| Segurança               | Alta              | 🔥 Máxima         |
+
+---
+
+## 6. 🧠 Macete de prova
+
+* **"GenerateDataKey" → Client-side encryption**
+* **"KMS não vê os dados" → Client-side**
+* **"Envelope encryption" → Client-side + KMS**
+* **"AWS faz encrypt/decrypt automaticamente" → Server-side**
+
+---
+
+Se aparecer algo tipo:
+
+> "application must encrypt data before sending to S3 and AWS should not access the plaintext"
+
+👉 resposta quase sempre:
+**Client-side encryption + KMS (envelope encryption)** ✅
+
+---
+
+
+
