@@ -554,4 +554,71 @@ futuro → WithoutPlaintext
 
 ---
 
+Boa — isso **cai direto na prova** e tem pegadinha 👇
+
+---
+
+# 🔄 🔐 KMS Key Rotation (quando as chaves giram)
+
+## 1️⃣ 📅 Automatic Rotation
+
+* Acontece **automaticamente a cada 1 ano (365 dias)**
+* Só para:
+  ✅ **Symmetric Customer Managed Keys**
+
+📌 NÃO funciona para:
+
+* ❌ Asymmetric keys
+* ❌ AWS Managed (você não controla)
+
+---
+
+## 2️⃣ 🎯 Importante (PEGADINHA)
+
+👉 Quando a chave gira:
+
+* ❌ **ID da chave NÃO muda**
+* ❌ **ARN NÃO muda**
+* ❌ **Alias NÃO muda**
+
+✅ Apenas o **material criptográfico por trás muda**
+
+---
+
+## 3️⃣ 🧠 Impacto na prática
+
+* Dados antigos continuam funcionando ✅
+* KMS sabe qual versão da chave usar
+* Não precisa recriptografar nada
+
+---
+
+## 4️⃣ 🔄 Rotation manual
+
+Você pode:
+
+👉 Criar uma nova chave + usar `ReEncrypt`
+
+📌 Usado quando:
+
+* compliance forte
+* troca de chave urgente
+
+---
+
+## 5️⃣ 🔥 RESUMO DE PROVA
+
+* Rotation automática → **1x por ano**
+* Só → **symmetric CMK**
+* Não muda → **ID / ARN / Alias**
+* Transparente → **dados continuam acessíveis**
+
+---
+
+## 🧠 MACETE
+
+> “KMS troca o motor, não troca o carro”
+
+---
+
 
