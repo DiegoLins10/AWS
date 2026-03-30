@@ -431,3 +431,127 @@ Para usar KMS precisa:
 * IAM + Key Policy → obrigatório
 
 ---
+
+Perfeito — isso é **normal**, KMS confunde mesmo pelos nomes 😅
+Vou te dar um **mapa mental + macete de prova** pra nunca mais errar 👇
+
+---
+
+# 🧠 🔐 KMS — COMO DECORAR (SEM CONFUNDIR)
+
+## 1️⃣ 🎯 Regra simples (DECORA ISSO)
+
+| Nome                            | O que faz                  | Dica mental                        |
+| ------------------------------- | -------------------------- | ---------------------------------- |
+| Encrypt                         | Criptografa direto (≤ 4KB) | **Simples e pequeno**              |
+| Decrypt                         | Descriptografa             | **Reverter**                       |
+| GenerateDataKey                 | Cria chave + plaintext     | **USAR AGORA**                     |
+| GenerateDataKeyWithoutPlaintext | Só chave criptografada     | **USAR DEPOIS**                    |
+| GenerateRandom                  | Bytes aleatórios           | **Nada a ver com crypto de dados** |
+
+---
+
+## 2️⃣ 🧠 MACETE QUE CAI NA PROVA
+
+### 👉 “DATA KEY = arquivo grande”
+
+Sempre que ver:
+
+* arquivo grande
+* S3 upload
+* criptografia manual
+* performance
+
+💥 resposta: **GenerateDataKey**
+
+---
+
+### 👉 “WITHOUT PLAINTEXT = segurança máxima”
+
+* não quer expor chave
+* uso futuro
+* outro serviço vai usar
+
+💥 resposta: **GenerateDataKeyWithoutPlaintext**
+
+---
+
+### 👉 “Encrypt = pequeno e direto”
+
+* payload pequeno
+* token, senha curta
+
+💥 resposta: **Encrypt**
+
+---
+
+## 3️⃣ 🔥 COMO DIFERENCIAR NA PROVA (RÁPIDO)
+
+Pergunta fala:
+
+### 📦 "arquivo grande"
+
+👉 GenerateDataKey
+
+---
+
+### 🔒 "AWS não pode ver o dado"
+
+👉 Client-side + GenerateDataKey
+
+---
+
+### 🕒 "usar chave depois"
+
+👉 GenerateDataKeyWithoutPlaintext
+
+---
+
+### ⚡ "até 4KB"
+
+👉 Encrypt
+
+---
+
+## 4️⃣ 🧠 HISTORINHA (FIXAÇÃO RÁPIDA)
+
+Imagina:
+
+👨‍💻 Você vai criptografar um arquivo grande:
+
+1. Você pede pro KMS:
+   👉 **GenerateDataKey**
+
+2. Ele te dá:
+
+* 🔓 chave aberta (usa agora)
+* 🔒 chave fechada (guarda)
+
+3. Você:
+
+* criptografa o arquivo
+* joga fora a chave aberta
+
+📌 Isso é **Envelope Encryption**
+
+---
+
+## 5️⃣ ⚠️ PEGADINHAS QUE DERRUBAM
+
+❗ “Encrypt arquivo grande” → ❌ errado
+❗ “DataKey só retorna 1 chave” → ❌
+❗ “WithoutPlaintext dá plaintext” → ❌
+
+---
+
+## 6️⃣ 🧠 RESUMO FINAL (DECORA ISSO)
+
+```
+≤ 4KB → Encrypt  
+> 4KB → GenerateDataKey  
+futuro → WithoutPlaintext  
+```
+
+---
+
+
