@@ -154,6 +154,7 @@ Vou montar no estilo README direto pra revisão 👇
 ## 🧠 O que é
 
 👉 Permissão que permite um usuário/serviço **passar uma IAM Role para um serviço AWS**
+👉 iam:PassRole = permissão para você (usuário/role) associar uma IAM Role a um serviço AWS  
 
 ---
 
