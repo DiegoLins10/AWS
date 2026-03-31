@@ -1,0 +1,150 @@
+Perfeito — essa questão é **clássica de prova DVA** e mistura **IAM + STS + cross-account** 😈
+Vou te destrinchar de forma **simples + memorizável** 👇
+
+---
+
+# 🧠 🎯 IDEIA CENTRAL (GRAVA ISSO)
+
+👉 **Quem tem o recurso = cria o role**
+👉 **Quem quer acessar = assume o role**
+
+---
+
+# 🏗️ 📦 CENÁRIO
+
+* Conta **A** → dona da fila SQS
+* Conta **B** → quer acessar
+
+---
+
+# 🔑 🔄 FLUXO CORRETO (PASSO A PASSO)
+
+## 1️⃣ Conta A (dona do recurso)
+
+### ✅ Cria um IAM Role
+
+Esse role vai dar acesso à fila
+
+---
+
+### ✅ Policy de PERMISSÃO
+
+Define o que pode fazer:
+
+```json
+sqs:ReceiveMessage
+sqs:DeleteMessage
+```
+
+👉 Isso é:
+🟢 **Permissions Policy**
+
+---
+
+### ✅ Trust Policy (ESSENCIAL)
+
+Permite quem pode assumir o role:
+
+```json
+Principal: Conta B
+Action: sts:AssumeRole
+```
+
+👉 Isso é:
+🔵 **Trust Policy**
+
+---
+
+## 2️⃣ Conta B (quem quer acessar)
+
+### ✅ Policy permitindo assumir o role
+
+```json
+Action: sts:AssumeRole
+Resource: Role da conta A
+```
+
+---
+
+# 🔥 🔄 RESUMO VISUAL
+
+```id="4j4z0z"
+Conta B → assume role → Conta A → acessa SQS
+```
+
+---
+
+# 🧠 COMO NÃO ERRAR NA PROVA
+
+## 📌 REGRA DE OURO
+
+| Conceito           | Quem configura |
+| ------------------ | -------------- |
+| Role               | Conta A        |
+| Permissions Policy | Conta A        |
+| Trust Policy       | Conta A        |
+| AssumeRole         | Conta B        |
+
+---
+
+# ❌ POR QUE AS OUTRAS ESTÃO ERRADAS
+
+## ❌ “principal serviço AWS”
+
+👉 Errado porque:
+
+* aqui é **cross-account**
+* não é Lambda/S3/etc
+
+---
+
+## ❌ “role na conta B”
+
+👉 Errado:
+
+* o recurso está na conta A
+* então o role TEM que estar lá
+
+---
+
+## ❌ “configurar SQS na conta B”
+
+👉 Não existe isso
+
+* SQS não é “compartilhado assim”
+
+---
+
+# 🔥 PEGADINHA DE PROVA
+
+👉 Eles SEMPRE tentam confundir:
+
+* Service principal ❌
+* Role no lugar errado ❌
+* Falta de trust policy ❌
+
+---
+
+# 🧠 MACETE FINAL
+
+> “Quem tem o recurso manda, quem quer acesso pede”
+
+---
+
+# 🚀 RESUMO PRA DECORAR
+
+* Conta A:
+
+  * cria role
+  * permissões na SQS
+  * trust policy com conta B
+
+* Conta B:
+
+  * pode assumir o role (`sts:AssumeRole`)
+
+---
+
+Se quiser, posso:
+👉 montar **3 questões só de cross-account (nível pegadinha absurda)**
+👉 ou fazer um **diagrama visual estilo arquitetura AWS (fica MUITO fácil de lembrar)**
