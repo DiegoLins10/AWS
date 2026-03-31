@@ -12,6 +12,7 @@
 
 > “Descreva sua infra → CloudFormation provisiona”
 
+No AWS CloudFormation, o nome do Export deve ser único por conta e região, ou seja, não pode existir dois exports com o mesmo nome nesse escopo, mas o valor do export pode ser repetido entre diferentes stacks sem problema; além disso, se um valor exportado estiver sendo usado por outro stack via Fn::ImportValue, ele não pode ser alterado nem removido até que as dependências sejam removidas.
 ---
 
 ## 2️⃣ Conceitos principais 🧱
