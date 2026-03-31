@@ -1389,6 +1389,8 @@ Benefícios principais:
 * 💰 **Redução de custo de banco**
 * 📉 **Menos carga no backend**
 * 📈 **Melhor escalabilidade**
+* 📈 **Todos os nós em um cluster Redis devem estar na mesma região.**
+* 📈 **Ao usar o Redis com o modo cluster habilitado, você não pode promover manualmente nenhum dos nós réplica para primário.**
 
 Exemplo comum:
 
