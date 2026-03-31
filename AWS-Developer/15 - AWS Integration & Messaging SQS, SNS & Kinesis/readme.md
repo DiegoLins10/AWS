@@ -833,7 +833,9 @@ App → SNS → SQS1
 
 ### 🌊 **Amazon Kinesis Data Streams**
 
-➡️ Serviço de **streaming real-time com controle total**
+➡️ Serviço de **streaming real-time com controle total**  
+➡️ Quando for necessario enviar para o kinesis metricas de um EC2 usar o agent Kinesis**  
+
 
 ---
 
