@@ -6,7 +6,19 @@
 * Integrado com vários serviços (S3, EBS, RDS, Lambda…)
 * Usa conceito de **Envelope Encryption**
 
+ ## 🧠 💡 Explicando os parâmetros
+
+### 🔹 `x-amz-server-side-encryption`
+
+* Define o tipo de criptografia
+* Valores:
+
+  * `AES256` → SSE-S3
+  * **`aws:kms` → SSE-KMS** ✅
+
 ---
+
+
 
 ## 2️⃣ 🔑 Tipos de Chaves no KMS
 
