@@ -8,10 +8,10 @@
 
 Ex:
 
-“third-party auth” → Lambda Authorizer
-“multi-region” → StackSets
-“não modificar recurso” → immutable
-“falha rápida” → timeout
+* “third-party auth” → Lambda Authorizer
+* “multi-region” → StackSets
+* “não modificar recurso” → immutable
+* “falha rápida” → timeout
 
 👉 Isso sozinho já sobe tua consistência
 
