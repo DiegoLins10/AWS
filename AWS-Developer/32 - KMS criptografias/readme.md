@@ -12,7 +12,7 @@
 
 * Define o tipo de criptografia
 * Valores:
-
+  * x-amz-server-side-encryption: aws:kms
   * `AES256` → SSE-S3
   * **`aws:kms` → SSE-KMS** ✅
 
