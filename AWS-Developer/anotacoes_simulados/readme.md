@@ -1,6 +1,20 @@
 
 1 - Uma fila SQS pode receber um numero ilimitado de mensagens
 
+🔥 Como tirar a sorte da equação
+
+👉 Você não precisa estudar mais 20h
+👉 Só precisa travar padrões de prova
+
+Ex:
+
+“third-party auth” → Lambda Authorizer
+“multi-region” → StackSets
+“não modificar recurso” → immutable
+“falha rápida” → timeout
+
+👉 Isso sozinho já sobe tua consistência
+
 # ⚡ RCU  DynamoDB = conta de 4 em 4 KB
 
 👉 Ele divide o item em **blocos de 4 KB**
